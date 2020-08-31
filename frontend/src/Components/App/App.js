@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import "./App.css";
-import SearchArea from "../Search/SearchArea";
 import { searchAreaDisplayHandler } from "../../helperMethods";
 import { SearchBarContext } from "../../Context/SearchBarContext";
 
@@ -11,11 +10,26 @@ const App = () => {
       <p
         style={{
           display: "inline-block",
+          margin: "8px 0px 8px 8px",
         }}
       >
         Course-Match App
       </p>
-      <button style={{ float: "right" }}>Sign In</button>
+      <a
+        href="/"
+        className="btn btn-secondary btn-lg "
+        role="button"
+        aria-disabled="true"
+        style={{
+          float: "right",
+          height: "40px",
+          paddingTop: "4px",
+          paddingBottom: "4px",
+          marginRight: "5px",
+        }}
+      >
+        Sign in
+      </a>
       {searchAreaDisplayHandler(showSearch, setShowSearch)}
     </div>
   );

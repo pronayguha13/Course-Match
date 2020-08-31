@@ -6,8 +6,6 @@ const SearchArea = () => {
   const { setShowSearch } = useContext(SearchBarContext);
 
   const searchInputHandler = (e) => {
-    console.log("searchInputHandler -> name", e.target.name);
-    console.log("searchInputHandler -> value", e.target.value);
     setState(e.target.value);
   };
 
@@ -17,10 +15,43 @@ const SearchArea = () => {
         type="text"
         name="searchInput"
         value={state}
+        placeholder="Search your Folks..."
         onChange={(e) => searchInputHandler(e)}
-        style={{ outline: "none", border: "none" }}
       />
-      <button onClick={() => setShowSearch(true)}>X</button>
+      {state && state.length ? (
+        <button
+          type="button"
+          className="btn btn-primary btn-sm"
+          onClick={() => {
+            console.log(`Searched term:${state}`);
+            setState("");
+          }}
+          style={{
+            height: 29,
+            borderRadius: 0,
+            marginBottom: "4px",
+            textAlign: "center",
+          }}
+        >
+          Search
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="btn btn-danger btn-sm"
+          onClick={() => setShowSearch(true)}
+          style={{
+            height: 29,
+            borderRadius: 0,
+            // backgroundColor: "#fff",
+            // marginLeft: "10px",
+            marginBottom: "4px",
+            textAlign: "center",
+          }}
+        >
+          X
+        </button>
+      )}
     </div>
   );
 };

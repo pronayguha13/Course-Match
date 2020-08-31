@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import SearchArea from "./Components/Search/SearchArea";
 
@@ -9,7 +9,7 @@ export const searchAreaDisplayHandler = (showSearch, setShowSearch) => {
     <img
       src="./assets/images/icons/search-glass.png"
       alt="magnifying-glass"
-      style={{ color: "#fff" }}
+      style={{ color: "#fff", marginRight: "10px" }}
       onClick={() => setShowSearch(false)}
     />
   );
