@@ -28,7 +28,7 @@ const App = () => {
           marginRight: "5px",
         }}
       >
-        Sign in
+        Sign up
       </a>
       {searchAreaDisplayHandler(showSearch, setShowSearch)}
     </div>

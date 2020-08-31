@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import styles from "./SearchArea.module.css";
 import { SearchBarContext } from "../../Context/SearchBarContext";
+import { searchHandler } from "../../helperMethods";
 const SearchArea = () => {
   const [state, setState] = useState("");
   const { setShowSearch } = useContext(SearchBarContext);
 
-  const searchInputHandler = (e) => {
+  const _searchInputChangeHandler = (e) => {
     setState(e.target.value);
   };
 
@@ -16,14 +17,14 @@ const SearchArea = () => {
         name="searchInput"
         value={state}
         placeholder="Search your Folks..."
-        onChange={(e) => searchInputHandler(e)}
+        onChange={(e) => _searchInputChangeHandler(e)}
       />
       {state && state.length ? (
         <button
           type="button"
           className="btn btn-primary btn-sm"
           onClick={() => {
-            console.log(`Searched term:${state}`);
+            searchHandler(state.trim());
             setState("");
           }}
           style={{

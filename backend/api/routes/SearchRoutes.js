@@ -2,23 +2,18 @@ const router = require("express").Router();
 
 const SearchSchema = require("../models/SearchModel");
 
-router.get("/", (req, res, next) => {
-  console.log(req);
-  res.send({
-    msg: "request received for /search",
-    req: req.headers,
-  });
-});
-
 router.post("/", (req, res, next) => {
-  const searchQuery = new SearchSchema({
-    name: req.body.name,
-    subjectID: req.body.subjectID,
-    subjectName: req.body.subjectName,
-  });
+  // console.log("req:>>", req.body);
+  // const searchValue = Object.values(req.body)[0];
+  // console.log("searchValue", searchValue);
+  // if (typeof searchValue === "string") {
+  //   console.log(`Request for student with name: ${searchValue}`);
+  // } else {
+  //   console.log(`Request for student with ID: ${searchValue}`);
+  // }
   res.status(201).json({
     msg: "request received for /search",
-    req: searchQuery,
+    req: req.body,
   });
 });
 

@@ -19,11 +19,11 @@ const morgan = require("morgan");
 app.use(morgan("dev"));
 
 //body parser
-app.use(
-  express.urlencoded({
-    extended: false,
-  })
-);
+// app.use(
+//   express.urlencoded({
+//     extended: false,
+//   })
+// );
 app.use(express.json());
 
 //CORS ISSUE FIXING

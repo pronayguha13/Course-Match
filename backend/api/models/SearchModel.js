@@ -2,8 +2,7 @@ const mongoose = require("mongoose");
 
 const searchSchema = new mongoose.Schema({
   name: String,
-  subjectID: String,
-  subjectName: String,
+  studentID: Number,
 });
 
 module.exports = mongoose.model("Search", searchSchema);
