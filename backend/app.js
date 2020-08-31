@@ -18,17 +18,19 @@ mongoose.connect(
 const morgan = require("morgan");
 app.use(morgan("dev"));
 
+//body parser
+app.use(express.json());
 app.use(
   express.urlencoded({
     extended: false,
   })
 );
 
+//Middleware for handling routes
 app.use("/", (req, res, next) => {
   res.send({
     msg: "here is the home route",
   });
 });
 
-app.use(express.json());
 module.exports = app;
