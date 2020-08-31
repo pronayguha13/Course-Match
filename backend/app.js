@@ -19,14 +19,31 @@ const morgan = require("morgan");
 app.use(morgan("dev"));
 
 //body parser
-app.use(express.json());
 app.use(
   express.urlencoded({
     extended: false,
   })
 );
+app.use(express.json());
+
+//CORS ISSUE FIXING
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-COntrol-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT,PATCH,POST,DELETE,GET");
+    return res.status(200).json({});
+  }
+  next();
+});
+//route files
+const searchRoutes = require("./api/routes/SearchRoutes");
 
 //Middleware for handling routes
+app.use("/search", searchRoutes);
 app.use("/", (req, res, next) => {
   res.send({
     msg: "here is the home route",
