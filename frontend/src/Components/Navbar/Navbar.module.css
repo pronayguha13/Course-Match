@@ -1,0 +1,10 @@
+.Navbar {
+  color: #fff;
+  text-align: start;
+  border: 2px solid #fff;
+}
+.Navbar img {
+  float: right;
+  height: 39px;
+  width: 39px;
+}

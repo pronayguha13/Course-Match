@@ -1,15 +1,19 @@
 import React from "react";
-import { BrowserRouter as router, generatePath, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import App from "../Components/App/App";
+import auth from "../Components/Authentication/auth";
+import Navbar from "../Components/Navbar/Navabr";
 
-const Routes = () => {
+const BrowserRoutes = () => {
   return (
-    <div>
-      <router>
+    <Router>
+      <Navbar />
+      <Switch>
         <Route path="/" exact component={App} />
-      </router>
-    </div>
+        <Route path="/sign_in" component={auth} />
+      </Switch>
+    </Router>
   );
 };
 
-export default Routes;
+export default BrowserRoutes;
