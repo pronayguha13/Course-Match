@@ -53,4 +53,38 @@ router.post("/", (req, res, next) => {
   });
 });
 
+router.post("/auth", (req, res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.status(400).send("Please enter a valid email and password ");
+  }
+  //check for existing user
+  User.findOne({ email }).then((user) => {
+    if (!user) return res.status(400).send("User Doesnot exist");
+
+    //Validate password
+    bcrypt.compare(password, user.password).then((isMatch) => {
+      if (!isMatch) return res.status(400).send("Invalid Credential");
+
+      jwt.sign(
+        {
+          id: user.id,
+        },
+        config.get("jwtSecret"),
+        { expiresIn: 3600 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({
+            token,
+            user: {
+              id: user.id,
+              name: user.name,
+            },
+          });
+        }
+      );
+    });
+  });
+});
+
 module.exports = router;
