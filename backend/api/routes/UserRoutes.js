@@ -11,18 +11,19 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, roll_number } = req.body;
   if (!name || !email || !password) {
     res.status(400).send("Please enter a valid email and password ");
   }
   //check for existing user
-  User.findOne({ email }).then((user) => {
+  User.findOne({ roll_number }).then((user) => {
     if (user) res.status(400).send("User Already exist");
 
     const newUser = new User({
       name,
       email,
       password,
+      roll_number,
     });
     //create salt and hash
     bcrypt.genSalt(10, (err, salt) => {
@@ -55,7 +56,7 @@ router.post("/", (req, res, next) => {
 
 router.post("/auth", (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password) {
+  if (!roll_number || !password) {
     res.status(400).send("Please enter a valid email and password ");
   }
   //check for existing user
