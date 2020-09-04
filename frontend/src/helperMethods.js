@@ -41,3 +41,30 @@ const axiosGetCallHandler = (queryObject) => {
       console.log("axiosGetCallHandler -> err", err);
     });
 };
+
+export const formValidationHandler = (formData, redirectingPage) => {
+  const roolNumberRegEx = /^169[0-9]{8}/;
+  if (redirectingPage === "Registration") {
+    const { name, email, password, roll_number } = formData;
+    console.log("formValidationHandler -> roll_number", roll_number);
+    console.log("formValidationHandler -> password", password);
+    console.log("formValidationHandler -> email", email);
+    console.log("formValidationHandler -> name", name);
+    return name.length
+      ? email.length
+        ? password.length > 8 && password.length <= 16
+          ? String(roll_number).match(roolNumberRegEx)
+            ? null
+            : "roll NUmber"
+          : "password"
+        : "email"
+      : "name";
+  }
+};
+
+export const RegistrationFormSubmitHandler = ({
+  name,
+  email,
+  roll_number,
+  password,
+}) => {};
