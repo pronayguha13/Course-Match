@@ -33,7 +33,7 @@ export const searchHandler = (query) => {
 
 const axiosGetCallHandler = (queryObject) => {
   axios
-    .post(`${BASE_URL}search/`, queryObject)
+    .post(`${BASE_URL}/search/`, queryObject)
     .then((res) => {
       console.log("axiosGetCallHandler -> res.data:>>", res.data);
     })
@@ -43,28 +43,36 @@ const axiosGetCallHandler = (queryObject) => {
 };
 
 export const formValidationHandler = (formData, redirectingPage) => {
-  const roolNumberRegEx = /^169[0-9]{8}/;
+  const rollNumberRegEx = /^169[0-9]{8}/;
   if (redirectingPage === "Registration") {
     const { name, email, password, roll_number } = formData;
     console.log("formValidationHandler -> roll_number", roll_number);
     console.log("formValidationHandler -> password", password);
     console.log("formValidationHandler -> email", email);
     console.log("formValidationHandler -> name", name);
-    return name.length
-      ? email.length
-        ? password.length > 8 && password.length <= 16
-          ? String(roll_number).match(roolNumberRegEx)
-            ? null
-            : "roll NUmber"
-          : "password"
-        : "email"
-      : "name";
+    return password.length > 8 && password.length <= 16
+      ? String(roll_number).match(rollNumberRegEx)
+        ? null
+        : "roll Number"
+      : "password";
   }
 };
 
-export const RegistrationFormSubmitHandler = ({
-  name,
-  email,
-  roll_number,
-  password,
-}) => {};
+export const RegistrationFormSubmitHandler = (
+  formData,
+  cb,
+  regStateHandler
+) => {
+  axios
+    .post(`${BASE_URL}/user`, formData)
+    .then((res) => {
+      console.log("RegistrationFormSubmitHandler -> res", res);
+      cb(true);
+      regStateHandler();
+    })
+    .catch((err) => {
+      console.log("RegistrationFormSubmitHandler -> err", err);
+      cb(false);
+      regStateHandler();
+    });
+};

@@ -1,11 +1,18 @@
-import React, { useState } from "react";
-import { formValidationHandler } from "../../../helperMethods";
+import React, { useState, useEffect } from "react";
+import {
+  formValidationHandler,
+  RegistrationFormSubmitHandler,
+} from "../../../helperMethods";
+import { useHistory } from "react-router-dom";
 
 const Registration = () => {
+  const history = useHistory();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [roll_number, setRollNumber] = useState("");
+  const [error, setError] = useState(null);
+  const [registrationStatus, setRegistrationStatus] = useState(null);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -21,6 +28,10 @@ const Registration = () => {
     }
   };
 
+  const regStateHandler = () => {
+    registrationStatus ? history.push("/sign_in") : alert("Error");
+  };
+
   const _onSubmitHandler = (e) => {
     e.preventDefault();
     const formData = {
@@ -31,11 +42,13 @@ const Registration = () => {
     };
     const errorField = formValidationHandler(formData, "Registration");
     console.log("_onSubmitHandler -> errorField", errorField);
-    if (errorField === null) {
-      console.log("Form Validated");
-    } else {
-      console.log("Form Is'nt validated");
-    }
+    errorField === null
+      ? RegistrationFormSubmitHandler(
+          formData,
+          setRegistrationStatus,
+          regStateHandler
+        )
+      : setError(errorField);
   };
 
   return (
@@ -78,6 +91,11 @@ const Registration = () => {
               onChange={(e) => _onChangeHandler(e)}
               required
             />
+            {error !== null && error === "roll Number" ? (
+              <small id="passwordHelpBlock" className="form-text text-muted">
+                Please enter valid University roll number
+              </small>
+            ) : null}
           </div>
           <div className="form-group col-md-6">
             <label htmlFor="inputPassword4">Password</label>
@@ -90,6 +108,12 @@ const Registration = () => {
               onChange={(e) => _onChangeHandler(e)}
               required
             />
+            {error === "password" ? (
+              <small id="passwordHelpBlock" className="form-text text-muted">
+                Your password must be 8-16 characters long, contain letters and
+                numbers, and must not contain spaces,and emoji.
+              </small>
+            ) : null}
           </div>
         </div>
         <div className="form-group text-center">
