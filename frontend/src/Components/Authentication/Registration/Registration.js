@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useHistory, Link } from "react-router-dom";
 import {
   formValidationHandler,
   RegistrationFormSubmitHandler,
 } from "../../../helperMethods";
-import { useHistory } from "react-router-dom";
 
 const Registration = () => {
   const history = useHistory();
@@ -12,7 +12,7 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [roll_number, setRollNumber] = useState("");
   const [error, setError] = useState(null);
-  const [registrationStatus, setRegistrationStatus] = useState(null);
+  const [registrationStatus, setRegistrationStatus] = useState(false);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -29,6 +29,7 @@ const Registration = () => {
   };
 
   const regStateHandler = () => {
+    console.log("regStateHandler -> registrationStatus", registrationStatus);
     registrationStatus ? history.push("/sign_in") : alert("Error");
   };
 
@@ -42,13 +43,14 @@ const Registration = () => {
     };
     const errorField = formValidationHandler(formData, "Registration");
     console.log("_onSubmitHandler -> errorField", errorField);
-    errorField === null
+    setError(errorField);
+    !error
       ? RegistrationFormSubmitHandler(
           formData,
           setRegistrationStatus,
           regStateHandler
         )
-      : setError(errorField);
+      : console.log("Error!Check your credentials");
   };
 
   return (
@@ -65,6 +67,7 @@ const Registration = () => {
               className="form-control"
               onChange={(e) => _onChangeHandler(e)}
               required
+              autoFocus
             />
           </div>
           <div className="form-group col-md-6">
@@ -91,7 +94,7 @@ const Registration = () => {
               onChange={(e) => _onChangeHandler(e)}
               required
             />
-            {error !== null && error === "roll Number" ? (
+            {error === "roll Number" ? (
               <small id="passwordHelpBlock" className="form-text text-muted">
                 Please enter valid University roll number
               </small>
@@ -120,6 +123,10 @@ const Registration = () => {
           <button type="submit" className="btn btn-primary">
             Sign Up
           </button>
+          <p>
+            {" "}
+            if you have an account <Link to="/sign_in">Sign In</Link>
+          </p>
         </div>
       </form>
     </div>

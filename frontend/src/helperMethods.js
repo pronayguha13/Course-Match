@@ -52,10 +52,18 @@ export const formValidationHandler = (formData, redirectingPage) => {
     console.log("formValidationHandler -> name", name);
     return password.length > 8 && password.length <= 16
       ? String(roll_number).match(rollNumberRegEx)
-        ? null
+        ? false
         : "roll Number"
       : "password";
   }
+  const { roll_number, password } = formData;
+  console.log("formValidationHandler -> password", password);
+  console.log("formValidationHandler -> roll_number", roll_number);
+  return password.length > 8 && password.length <= 16
+    ? String(roll_number).match(rollNumberRegEx)
+      ? false
+      : "roll Number"
+    : "password";
 };
 
 export const RegistrationFormSubmitHandler = (
@@ -71,7 +79,7 @@ export const RegistrationFormSubmitHandler = (
       regStateHandler();
     })
     .catch((err) => {
-      console.log("RegistrationFormSubmitHandler -> err", err);
+      console.log("RegistrationFormSubmitHandler -> err", err.response.data);
       cb(false);
       regStateHandler();
     });

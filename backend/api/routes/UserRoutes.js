@@ -17,7 +17,7 @@ router.post("/", (req, res, next) => {
   }
   //check for existing user
   User.findOne({ roll_number }).then((user) => {
-    if (user) res.status(400).send("User Already exist");
+    if (user) return res.status(400).send("User Already exist");
 
     const newUser = new User({
       name,
@@ -55,12 +55,12 @@ router.post("/", (req, res, next) => {
 });
 
 router.post("/auth", (req, res, next) => {
-  const { email, password } = req.body;
+  const { roll_number, password } = req.body;
   if (!roll_number || !password) {
-    res.status(400).send("Please enter a valid email and password ");
+    res.status(400).send("Please enter valid credentials");
   }
   //check for existing user
-  User.findOne({ email }).then((user) => {
+  User.findOne({ roll_number }).then((user) => {
     if (!user) return res.status(400).send("User Doesnot exist");
 
     //Validate password
