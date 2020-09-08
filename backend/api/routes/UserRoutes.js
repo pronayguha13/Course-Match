@@ -88,4 +88,22 @@ router.post("/auth", (req, res, next) => {
   });
 });
 
+router.post("/auth/validate", async (req, res, next) => {
+  const token = req.header("x-auth-token");
+
+  //check for token
+  if (!token)
+    return res.status(401).json({
+      msg: "No token ! authorization",
+    });
+  try {
+    //verify token
+    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const user = await User.findById(decoded.id);
+    if (!user) return res.json(false);
+    return res.json(true);
+  } catch (err) {
+    res.status(400).json({ msg: "Invalid Token" });
+  }
+});
 module.exports = router;

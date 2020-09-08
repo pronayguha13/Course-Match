@@ -44,21 +44,14 @@ const axiosGetCallHandler = (queryObject) => {
 
 export const formValidationHandler = (formData, redirectingPage) => {
   const rollNumberRegEx = /^169[0-9]{8}/;
+  const { password, roll_number } = formData;
   if (redirectingPage === "Registration") {
-    const { name, email, password, roll_number } = formData;
-    console.log("formValidationHandler -> roll_number", roll_number);
-    console.log("formValidationHandler -> password", password);
-    console.log("formValidationHandler -> email", email);
-    console.log("formValidationHandler -> name", name);
     return password.length > 8 && password.length <= 16
       ? String(roll_number).match(rollNumberRegEx)
         ? false
         : "roll Number"
       : "password";
   }
-  const { roll_number, password } = formData;
-  console.log("formValidationHandler -> password", password);
-  console.log("formValidationHandler -> roll_number", roll_number);
   return password.length > 8 && password.length <= 16
     ? String(roll_number).match(rollNumberRegEx)
       ? false
@@ -66,21 +59,15 @@ export const formValidationHandler = (formData, redirectingPage) => {
     : "password";
 };
 
-export const RegistrationFormSubmitHandler = (
-  formData,
-  cb,
-  regStateHandler
-) => {
+export const RegistrationFormSubmitHandler = (formData, regStateHandler) => {
   axios
     .post(`${BASE_URL}/user`, formData)
     .then((res) => {
-      console.log("RegistrationFormSubmitHandler -> res", res);
-      cb(true);
-      regStateHandler();
+      window.localStorage.setItem("xAuthToken", res.data.token);
+      window.localStorage.setItem("user", res.data.user);
+      regStateHandler(true);
     })
     .catch((err) => {
-      console.log("RegistrationFormSubmitHandler -> err", err.response.data);
-      cb(false);
-      regStateHandler();
+      regStateHandler(false);
     });
 };

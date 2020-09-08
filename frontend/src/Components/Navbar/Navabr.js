@@ -1,11 +1,26 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import { searchAreaDisplayHandler } from "../../helperMethods";
 import { SearchBarContext } from "../../Context/SearchBarContext";
+import { LoginContext } from "../../Context/LoginContext";
 
 const Navbar = () => {
+  const history = useHistory();
   const { showSearch, setShowSearch } = useContext(SearchBarContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
+  const _logout = () => {
+    window.localStorage.clear();
+    setIsLoggedIn(false);
+  };
+
+  const _login = () => {
+    history.push("/sign_in");
+  };
+
+  useEffect(() => {
+    isLoggedIn ? history.push("/") : console.log(isLoggedIn);
+  }, [isLoggedIn, history]);
   return (
     <div className={styles.Navbar}>
       <Link to="/">
@@ -18,10 +33,8 @@ const Navbar = () => {
           Course-Match App
         </p>
       </Link>
-      <a
-        href="/sign_in"
+      <button
         className="btn btn-secondary btn-lg "
-        role="button"
         aria-disabled="true"
         style={{
           float: "right",
@@ -30,9 +43,10 @@ const Navbar = () => {
           paddingBottom: "4px",
           marginRight: "5px",
         }}
+        onClick={() => (isLoggedIn ? _logout() : _login())}
       >
-        Sign in
-      </a>
+        {isLoggedIn ? "Sign out" : "Sign in"}
+      </button>
       {searchAreaDisplayHandler(showSearch, setShowSearch)}
     </div>
   );

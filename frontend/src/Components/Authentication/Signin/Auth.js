@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./auth.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { formValidationHandler } from "../../../helperMethods";
 import axios from "axios";
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
+import { LoginContext } from "../../../Context/LoginContext";
 const Auth = () => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [isLoggedin, setIsLoggedIn] = useState(false);
   const history = useHistory();
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
+
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
     if (name === "roll_number") {
@@ -35,7 +37,9 @@ const Auth = () => {
       : axios
           .post(`${BASE_URL}/user/auth`, signInForm)
           .then((res) => {
-            console.log("loginFormSubmitHandler -> res", res.data);
+            window.localStorage.setItem("xAuthToken", res.data.token);
+            window.localStorage.setItem("user", res.data.user);
+
             setIsLoggedIn(true);
           })
           .catch((err) => {
@@ -44,8 +48,9 @@ const Auth = () => {
   };
 
   useEffect(() => {
-    isLoggedin ? history.push("/") : console.log(null);
-  }, [isLoggedin, history]);
+    isLoggedIn ? history.push("/") : console.log(isLoggedIn);
+  }, [isLoggedIn, history]);
+
   return (
     <div className={styles.SignIn}>
       <h3>Sign in Page</h3>

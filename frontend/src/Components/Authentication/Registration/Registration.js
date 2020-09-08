@@ -12,7 +12,6 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [roll_number, setRollNumber] = useState("");
   const [error, setError] = useState(null);
-  const [registrationStatus, setRegistrationStatus] = useState(false);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -23,14 +22,14 @@ const Registration = () => {
     } else if (name === "password") {
       setPassword(value.trimLeft());
     } else {
-      const roll = parseInt(value);
-      setRollNumber(roll);
+      const roll = value.trimLeft();
+      roll.length ? setRollNumber(roll) : setRollNumber("");
     }
   };
 
-  const regStateHandler = () => {
-    console.log("regStateHandler -> registrationStatus", registrationStatus);
-    registrationStatus ? history.push("/sign_in") : alert("Error");
+  const regStateHandler = (regStatus) => {
+    console.log("regStateHandler -> registrationStatus", regStatus);
+    regStatus ? history.push("/sign_in") : alert("Error");
   };
 
   const _onSubmitHandler = (e) => {
@@ -45,11 +44,7 @@ const Registration = () => {
     console.log("_onSubmitHandler -> errorField", errorField);
     setError(errorField);
     !error
-      ? RegistrationFormSubmitHandler(
-          formData,
-          setRegistrationStatus,
-          regStateHandler
-        )
+      ? RegistrationFormSubmitHandler(formData, regStateHandler)
       : console.log("Error!Check your credentials");
   };
 
