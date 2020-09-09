@@ -1,13 +1,19 @@
 import React, { useContext, useState } from "react";
 import styles from "./SearchArea.module.css";
 import { SearchBarContext } from "../../Context/SearchBarContext";
-import { searchHandler } from "../../helperMethods";
-const SearchArea = () => {
+import { withRouter } from "react-router-dom";
+// import { searchHandler } from "../../helperMethods";
+const SearchArea = (props) => {
   const [state, setState] = useState("");
-  const { setShowSearch } = useContext(SearchBarContext);
+  const { setShowSearch, setSearchQuery } = useContext(SearchBarContext);
 
   const _searchInputChangeHandler = (e) => {
     setState(e.target.value);
+  };
+
+  const searchHandler = (query) => {
+    setSearchQuery(query);
+    props.history.push(`/search/${query}`);
   };
 
   return (
@@ -57,4 +63,4 @@ const SearchArea = () => {
   );
 };
 
-export default SearchArea;
+export default withRouter(SearchArea);

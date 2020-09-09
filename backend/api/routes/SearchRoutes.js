@@ -1,20 +1,46 @@
 const router = require("express").Router();
 
 const SearchSchema = require("../models/SearchModel");
-
+const UserSchema = require("../models/User");
+const { response } = require("express");
 router.post("/", (req, res, next) => {
-  // console.log("req:>>", req.body);
-  // const searchValue = Object.values(req.body)[0];
-  // console.log("searchValue", searchValue);
-  // if (typeof searchValue === "string") {
-  //   console.log(`Request for student with name: ${searchValue}`);
-  // } else {
-  //   console.log(`Request for student with ID: ${searchValue}`);
-  // }
-  res.status(201).json({
-    msg: "request received for /search",
-    req: req.body,
-  });
+  const query = Object.values(req.body)[0];
+  console.log("query", query);
+  const queryType = typeof query;
+  if (queryType === "number") {
+    UserSchema.findOne({ roll_number: query })
+      .then((user) => {
+        return user !== null
+          ? res.status(200).json({
+              user: {
+                name: user.name,
+                roll_number: user.roll_number,
+              },
+            })
+          : res.status(204).send([]);
+      })
+      .catch((err) => {
+        res.status(500).send(err.message);
+      });
+  } else {
+    UserSchema.find({ name: query })
+      .then((user) => {
+        console.log("user", user);
+        const userList = user.map((usr) => {
+          const student = {
+            name: user.name,
+            roll_number: user.roll_number,
+          };
+          return student;
+        });
+        return userList.length
+          ? res.status(200).json({
+              user: userList,
+            })
+          : res.status(204).send([]);
+      })
+      .catch((err) => res.status(500).send(err.message));
+  }
 });
 
 module.exports = router;
