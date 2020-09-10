@@ -12,10 +12,12 @@ router.post("/", (req, res, next) => {
       .then((user) => {
         return user !== null
           ? res.status(200).json({
-              user: {
-                name: user.name,
-                roll_number: user.roll_number,
-              },
+              user: [
+                {
+                  name: user.name,
+                  roll_number: user.roll_number,
+                },
+              ],
             })
           : res.status(204).send([]);
       })
@@ -28,8 +30,8 @@ router.post("/", (req, res, next) => {
         console.log("user", user);
         const userList = user.map((usr) => {
           const student = {
-            name: user.name,
-            roll_number: user.roll_number,
+            name: usr.name,
+            roll_number: usr.roll_number,
           };
           return student;
         });

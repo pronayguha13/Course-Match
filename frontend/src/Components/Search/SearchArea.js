@@ -50,8 +50,6 @@ const SearchArea = (props) => {
           style={{
             height: 29,
             borderRadius: 0,
-            // backgroundColor: "#fff",
-            // marginLeft: "10px",
             marginBottom: "4px",
             textAlign: "center",
           }}

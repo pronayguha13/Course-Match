@@ -19,7 +19,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    isLoggedIn ? history.push("/") : console.log(isLoggedIn);
+    if (isLoggedIn) history.push("/");
   }, [isLoggedIn, history]);
   return (
     <div className={styles.Navbar}>

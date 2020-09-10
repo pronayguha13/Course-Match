@@ -6,11 +6,6 @@ export const SearchBarContextProvider = ({ children }) => {
   const [showSearch, setShowSearch] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  console.log("SearchBarContextProvider -> searchResult", searchResult);
-  // Object.values(searchResult).length
-  //   ? console.log(searchResult)
-  //   : console.log("No data");
-
   const [isLoading, setIsloading] = useState(true);
 
   useEffect(() => {
@@ -25,15 +20,14 @@ export const SearchBarContextProvider = ({ children }) => {
               studentID: parseInt(query),
             });
         axiosGetCallHandler(queryObject);
-      } else console.log("Invalid query");
+      }
     };
 
     const axiosGetCallHandler = (queryObject) => {
       axios
         .post(`${BASE_URL}/search/`, queryObject)
         .then((res) => {
-          console.log("axiosGetCallHandler -> res.data:>>", res.data);
-          setSearchResult(Object(res.data.user));
+          setSearchResult(res.data.user);
           setIsloading(false);
         })
         .catch((err) => {

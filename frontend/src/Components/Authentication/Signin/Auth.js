@@ -48,7 +48,7 @@ const Auth = () => {
   };
 
   useEffect(() => {
-    isLoggedIn ? history.push("/") : console.log(isLoggedIn);
+    if (isLoggedIn) history.push("/");
   }, [isLoggedIn, history]);
 
   return (
