@@ -19,7 +19,7 @@ router.post("/", (req, res, next) => {
                 },
               ],
             })
-          : res.status(204).send([]);
+          : res.status(204).json({ user: [] });
       })
       .catch((err) => {
         res.status(500).send(err.message);
@@ -39,7 +39,7 @@ router.post("/", (req, res, next) => {
           ? res.status(200).json({
               user: userList,
             })
-          : res.status(204).send([]);
+          : res.status(204).json({ user: [] });
       })
       .catch((err) => res.status(500).send(err.message));
   }

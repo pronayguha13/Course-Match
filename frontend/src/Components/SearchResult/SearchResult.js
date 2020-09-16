@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import styles from "./SearchResult.module.css";
 import { SearchBarContext } from "../../Context/SearchBarContext";
+import Card from "../StudentInfoCard/Card";
+import NotFoundCard from "../Layout/NotFoundCard";
 const SearchResult = (props) => {
   const { isLoading, searchResult } = useContext(SearchBarContext);
   return (
@@ -8,15 +10,16 @@ const SearchResult = (props) => {
       <p>Search Result for: {props.match.params.query}</p>
       {isLoading ? (
         <p>Loading</p>
-      ) : Object(searchResult) && Object.values(searchResult).length ? (
+      ) : searchResult !== undefined &&
+        Object(searchResult) &&
+        Object.values(searchResult).length ? (
         searchResult.map((student, index) => (
           <div key={index}>
-            <p>name:{student["name"]}</p>
-            <p>Roll Number:{student["roll_number"]}</p>
+            <Card name={student["name"]} roll_number={student["roll_number"]} />
           </div>
         ))
       ) : (
-        <p>No Friend Found!Check your Details </p>
+        <NotFoundCard />
       )}
     </div>
   );

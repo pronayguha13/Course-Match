@@ -42,7 +42,9 @@ const userRoutes = require("./api/routes/UserRoutes.js");
 
 //Middleware for handling routes
 app.use("/search", searchRoutes);
+
 app.use("/user", userRoutes);
+
 app.use("/", (req, res, next) => {
   res.send({
     msg: "here is the home route",
