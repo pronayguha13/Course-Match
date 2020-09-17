@@ -8,7 +8,7 @@ export const searchAreaDisplayHandler = (showSearch, setShowSearch) => {
     <SearchArea />
   ) : (
     <img
-      src="./assets/images/icons/search-glass.png"
+      src="/assets/images/icons/search-glass.png"
       alt="magnifying-glass"
       style={{ color: "#fff", marginRight: "10px" }}
       onClick={() => setShowSearch(false)}

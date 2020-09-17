@@ -4,11 +4,13 @@ import styles from "./Navbar.module.css";
 import { searchAreaDisplayHandler } from "../../helperMethods";
 import { SearchBarContext } from "../../Context/SearchBarContext";
 import { LoginContext } from "../../Context/LoginContext";
+import SearchArea from "../Search/SearchArea";
 
 const Navbar = () => {
   const history = useHistory();
   const { showSearch, setShowSearch } = useContext(SearchBarContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
+
   const _logout = () => {
     window.localStorage.clear();
     setIsLoggedIn(false);
@@ -34,7 +36,7 @@ const Navbar = () => {
         </p>
       </Link>
       <button
-        className="btn btn-secondary btn-lg "
+        className="btn btn-secondary btn-lg"
         aria-disabled="true"
         style={{
           float: "right",
