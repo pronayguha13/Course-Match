@@ -27,7 +27,6 @@ export const SearchBarContextProvider = ({ children }) => {
       axios
         .post(`${BASE_URL}/search/`, queryObject)
         .then((res) => {
-          console.log("axiosGetCallHandler -> res", res.data.user);
           setSearchResult(res.data.user);
           setIsloading(false);
         })

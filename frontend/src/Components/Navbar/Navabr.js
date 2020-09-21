@@ -4,7 +4,6 @@ import styles from "./Navbar.module.css";
 import { searchAreaDisplayHandler } from "../../helperMethods";
 import { SearchBarContext } from "../../Context/SearchBarContext";
 import { LoginContext } from "../../Context/LoginContext";
-import SearchArea from "../Search/SearchArea";
 
 const Navbar = () => {
   const history = useHistory();
