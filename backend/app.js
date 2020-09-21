@@ -39,11 +39,14 @@ app.use((req, res, next) => {
 //route files
 const searchRoutes = require("./api/routes/SearchRoutes");
 const userRoutes = require("./api/routes/UserRoutes.js");
+const homeRoutes = require("./api/routes/HomeRoutes");
 
 //Middleware for handling routes
 app.use("/search", searchRoutes);
 
 app.use("/user", userRoutes);
+
+app.use("/index", homeRoutes);
 
 app.use("/", (req, res, next) => {
   res.send({
