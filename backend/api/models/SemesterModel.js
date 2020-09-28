@@ -7,4 +7,4 @@ const semSchema = Schema({
     required: true,
   },
 });
-module.exports = Semester = mongoose.model("semseter", semSchema);
+module.exports = Semester = mongoose.model("Semester", semSchema);

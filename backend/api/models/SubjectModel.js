@@ -11,6 +11,16 @@ const subjectSchema = Schema({
     type: String,
     required: true,
   },
+  semester: {
+    type: Schema.Types.ObjectId,
+    ref: "Semester",
+    required: true,
+  },
+  department: {
+    type: Schema.Types.ObjectId,
+    ref: "Department",
+    required: true,
+  },
 });
 
 module.exports = Subject = mongoose.model("Subject", subjectSchema);

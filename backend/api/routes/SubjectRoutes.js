@@ -4,6 +4,9 @@ const router = express.Router();
 
 //import subject model
 const subject = require("../models/SubjectModel");
+//import  semester and department model
+const semester = require("../models/SemesterModel");
+const department = require("../models/DepartmentModel");
 
 //desc:Route for getting all the subjects
 //method:GET
@@ -11,6 +14,9 @@ const subject = require("../models/SubjectModel");
 router.get("/", (req, res) => {
   subject
     .find()
+    .populate("semester")
+    .populate("department")
+    .exec()
     .then((sub) => {
       console.log(sub);
       res.status(200).send(sub);
@@ -24,29 +30,51 @@ router.get("/", (req, res) => {
 //method:POST
 
 router.post("/", (req, res) => {
-  const { name, code } = req.body;
+  const { name, code, deptCode, sem } = req.body;
 
   //check for existence of same subject before creating it
   subject
     .findOne({ code: code })
     .then((sub) => {
-      if (sub) {
+      if (sub && sub.dept_code === deptCode) {
         return res.status(409).send("Subject with the given code exists");
       }
-
-      const newSubject = new subject({
-        name: name,
-        code: code,
-      });
-
-      newSubject
-        .save()
-        .then((sub) => {
-          console.log(sub);
-          res.status(200).json(sub);
+      let deptID, semID;
+      semester
+        .findOne({ sem: sem })
+        .exec()
+        .then((s) => {
+          semID = s._id;
+          console.log("semID-->", semID);
         })
         .catch((err) => {
-          res.status(500).send(err.message);
+          console.log(err);
+        });
+
+      department
+        .findOne({ dept_code: deptCode })
+        .then((dept) => {
+          deptID = dept._id;
+          console.log("deptID-->", deptID);
+          const newSubject = new subject({
+            name: name,
+            code: code,
+            semester: semID,
+            department: deptID,
+          });
+
+          newSubject
+            .save()
+            .then((sub) => {
+              console.log(sub);
+              res.status(200).json(sub);
+            })
+            .catch((err) => {
+              res.status(500).send(err.message);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
         });
     })
     .catch((err) => {
