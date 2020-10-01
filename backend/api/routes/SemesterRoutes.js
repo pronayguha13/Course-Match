@@ -6,7 +6,6 @@ const semester = require("../models/SemesterModel");
 
 //desc:Route for getting all the semester
 //method:GET
-
 router.get("/", (req, res) => {
   semester
     .find()

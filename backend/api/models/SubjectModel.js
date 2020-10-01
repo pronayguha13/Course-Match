@@ -9,6 +9,7 @@ const subjectSchema = Schema({
   },
   code: {
     type: String,
+    unique: true,
     required: true,
   },
   semester: {
@@ -16,13 +17,6 @@ const subjectSchema = Schema({
     ref: "Semester",
     required: true,
   },
-  department: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Department",
-      required: true,
-    },
-  ],
 });
 
-module.exports = Subject = mongoose.model("Subject", subjectSchema);
+module.exports = mongoose.model("Subject", subjectSchema);

@@ -15,40 +15,14 @@ router.get("/", (req, res) => {
   subject
     .find()
     .populate("semester")
-    .populate("department")
     .exec()
     .then((sub) => {
       console.log(sub);
-      res.status(200).json(sub);
+      res.status(200).json({ subjects: sub });
     })
     .catch((err) => {
       res.json(500).json(err.message);
     });
-});
-
-//desc:route for getting subjects by department
-//method:GET
-router.get("/:dept", (req, res) => {
-  const { dept } = req.params;
-  department.findOne({ dept_code: dept }).then((dep) => {
-    if (dep) {
-      console.log("dep", dep);
-      subject
-        .find({ department: dep._id })
-        .populate("semester")
-        .populate("department")
-        .exec()
-        .then((sub) => {
-          console.log(sub);
-          res.status(200).json(sub);
-        })
-        .catch((err) => {
-          res.json(500).json(err.message);
-        });
-    } else {
-      res.status(400).json(`No subject found with department: ${dept}`);
-    }
-  });
 });
 
 //desc:route for getting subjects by semester
@@ -61,11 +35,10 @@ router.get("/sem/:sem", (req, res) => {
       subject
         .find({ semester: s._id })
         .populate("semester")
-        .populate("department")
         .exec()
         .then((sub) => {
           console.log(sub);
-          res.status(200).json(sub);
+          res.status(200).json({ subjects: sub });
         })
         .catch((err) => {
           res.json(500).json(err.message);
@@ -76,107 +49,75 @@ router.get("/sem/:sem", (req, res) => {
   });
 });
 
-//desc:route for getting subjects by semester and by department
-//method:GET
-router.get("/search/:semDept", async (req, res) => {
-  const { semDept } = req.params;
-  const passedParams = semDept.split("_");
-  const dept = passedParams[0];
-  const sem = parseInt(passedParams[1]);
-  console.log("passedParams", passedParams);
-  const searchedSem = await semester.findOne({ sem: sem });
-  if (searchedSem) {
-    console.log("searchedSem", searchedSem);
-    const searchedDept = await department.findOne({
-      dept_code: dept,
-    });
-    if (searchedDept) {
-      console.log("searchedDept", searchedDept);
-      const searchedSubject = await subject
-        .find({
-          semester: searchedSem._id,
-          department: searchedDept._id,
-        })
-        .populate("semester")
-        .populate("department");
-      if (searchedSubject && searchedSubject.length) {
-        console.log("searchedSubject", searchedSubject);
-        res.status(200).json({ subject: searchedSubject });
-      } else {
-        res
-          .status(400)
-          .json(
-            `No subject found with department: ${dept} and semester:${sem}`
-          );
-      }
-    } else {
-      res.status(400).json(`No subject found with department: ${dept}`);
-    }
-  } else {
-    res.status(400).json(`No subject found with semester: ${sem}`);
-  }
-});
-
 //desc:Route for creating new subject
 //method:POST
 
 router.post("/", (req, res) => {
-  const { name, code, deptCode, sem } = req.body;
+  const { name, code, sem } = req.body;
+  //check for existence of semester
+  semester
+    .findOne({ sem: sem })
+    .then((s) => {
+      if (s) {
+        subject.findOne({ code: code }).then((sub) => {
+          //check for existence of same subject before creating it
+          if (sub) {
+            sub
+              .populate("semester")
+              .execPopulate()
+              .then((s) => {
+                console.log("Subject--->", s);
+                res.status(409).json({
+                  message: "Subject exist with given code ",
+                  subject: s,
+                  subjects: null,
+                });
+              })
+              .catch((err) => {
+                console.log(
+                  "error while searching for duplicaate subject---------",
+                  err
+                );
+                res.status(500).json({
+                  message: "Error!while searching for duplicaate subject ",
+                  subjects: null,
+                });
+              });
+          }
+          //if no subject found creating new subject with given info
+          else {
+            console.log("---------------Creating new Subject-----------------");
 
-  //check for existence of same subject before creating it
-  let depID = [];
-  console.log("deptID", depID);
-
-  deptCode.forEach((element) => {
-    console.log("element", element);
-    department
-      .findOne({
-        dept_code: element,
-      })
-      .then((d) => {
-        console.log("d", d);
-        depID.push(d._id);
-      });
-  });
-
-  subject
-    .findOne({ code: code, department: depID })
-    .then((sub) => {
-      if (sub) {
-        return res.status(409).json("Subject with the given code exists");
-      }
-
-      let semID;
-      semester
-        .findOne({ sem: sem })
-        .exec()
-        .then((s) => {
-          semID = s._id;
-          console.log("semID-->", semID);
-          const newSubject = new subject({
-            name: name,
-            code: code,
-            semester: semID,
-            department: depID,
-          });
-
-          newSubject
-            .save()
-            .then((sub) => {
-              console.log(sub);
-              res.status(200).json(sub);
-            })
-            .catch((err) => {
-              res.status(500).json(err.message);
+            const newSubject = new subject({
+              name: name,
+              code: code,
+              semester: s._id,
             });
-        })
-        .catch((err) => {
-          console.log(err);
+
+            newSubject
+              .save()
+              .then((newSub) => {
+                console.log("new Subject:", newSub);
+                res.status(200).json({
+                  message: "New Subject created",
+                  newSubject: newSub,
+                });
+              })
+              .catch((err) => {
+                console.log("Error from line:88", err);
+                res.status(500).json({
+                  message: "Error!!Cannot create new subjects",
+                  newSubject: null,
+                });
+              });
+          }
         });
+      } else {
+        res.status(400).json({ message: "Invalid semester", subject: null });
+      }
     })
     .catch((err) => {
-      console.log(err);
-      return res.status(500).json("Internal server error");
+      res.status(500).json({ message: "Error", subjects: null });
     });
 });
 
