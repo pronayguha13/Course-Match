@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const department = require("./DepartmentModel");
 
 const Schema = mongoose.Schema;
 
 const courseSchema = Schema({
-  _id: Schema.Types.ObjectId,
-  stream: { type: Schema.Types.ObjectId, ref: department },
+  stream: { type: Schema.Types.ObjectId, ref: "Department" },
+  semester: { type: Schema.Types.ObjectId, ref: "Semester" },
+  subject: { type: Schema.Types.ObjectId, ref: "Subject" },
 });
 
-module.exports = Course = mongoose.model("course", courseSchema);
+module.exports = Course = mongoose.model("Course", courseSchema);

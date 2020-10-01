@@ -5,7 +5,7 @@ const config = require("config");
 const User = require("../models/User");
 
 router.get("/", (req, res, next) => {
-  res.send({
+  res.json({
     msg: "Get request for /user route",
   });
 });
@@ -13,11 +13,11 @@ router.get("/", (req, res, next) => {
 router.post("/", (req, res, next) => {
   const { name, email, password, roll_number } = req.body;
   if (!name || !email || !password) {
-    res.status(400).send("Please enter a valid email and password ");
+    res.status(400).json("Please enter a valid email and password ");
   }
   //check for existing user
   User.findOne({ roll_number }).then((user) => {
-    if (user) return res.status(400).send("User Already exist");
+    if (user) return res.status(400).json("User Already exist");
 
     const newUser = new User({
       name,
@@ -57,15 +57,15 @@ router.post("/", (req, res, next) => {
 router.post("/auth", (req, res, next) => {
   const { roll_number, password } = req.body;
   if (!roll_number || !password) {
-    res.status(400).send("Please enter valid credentials");
+    res.status(400).json("Please enter valid credentials");
   }
   //check for existing user
   User.findOne({ roll_number }).then((user) => {
-    if (!user) return res.status(400).send("User Doesnot exist");
+    if (!user) return res.status(400).json("User Doesnot exist");
 
     //Validate password
     bcrypt.compare(password, user.password).then((isMatch) => {
-      if (!isMatch) return res.status(400).send("Invalid Credential");
+      if (!isMatch) return res.status(400).json("Invalid Credential");
 
       jwt.sign(
         {

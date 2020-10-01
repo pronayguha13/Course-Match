@@ -13,10 +13,10 @@ router.get("/", (req, res) => {
     .exec()
     .then((sem) => {
       console.log(sem);
-      res.status(200).send(sem);
+      res.status(200).json(sem);
     })
     .catch((err) => {
-      res.send(500).send(err.message);
+      res.json(500).json(err.message);
     });
 });
 
@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
   const { sem } = req.body;
   semester.findOne({ sem: sem }).then((s) => {
     if (s) {
-      return res.status(409).send("Semester exists");
+      return res.status(409).json("Semester exists");
     }
     const newSem = new semester({
       sem: sem,
@@ -37,11 +37,11 @@ router.post("/", (req, res) => {
       .save()
       .then((resp) => {
         console.log(resp);
-        res.status(201).send("Semester Created");
+        res.status(201).json("Semester Created");
       })
       .catch((err) => {
         console.log(err);
-        return res.status(500).send("Error");
+        return res.status(500).json("Error");
       });
   });
 });

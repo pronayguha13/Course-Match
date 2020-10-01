@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     })
     .catch((err) => {
       console.log("err-->", err);
-      res.status(400).send("error");
+      res.status(400).json("error");
     });
 });
 
@@ -23,7 +23,7 @@ router.post("/", (req, res, next) => {
   const { dept_code, name } = req.body;
   department.findOne({ dept_code: dept_code }).then((dept) => {
     if (dept) {
-      return res.status(409).send("Department exists");
+      return res.status(409).json("Department exists");
     }
     const stream = new department({
       dept_code: dept_code,
@@ -34,11 +34,11 @@ router.post("/", (req, res, next) => {
       .save()
       .then((resp) => {
         console.log(resp);
-        res.status(201).send("Department Created");
+        res.status(201).json("Department Created");
       })
       .catch((err) => {
         console.log(err);
-        return res.status(500).send("Error");
+        return res.status(500).json("Error");
       });
   });
 });

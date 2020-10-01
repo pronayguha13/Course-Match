@@ -43,6 +43,7 @@ const homeRoutes = require("./api/routes/HomeRoutes");
 const deptRoutes = require("./api/routes/DepartmentRoutes");
 const subRoutes = require("./api/routes/SubjectRoutes.js");
 const semRoutes = require("./api/routes/SemesterRoutes");
+const courseRoutes = require("./api/routes/CourseRoutes");
 
 //Middleware for handling routes
 app.use("/search", searchRoutes);
@@ -55,9 +56,10 @@ app.use("/admin/department", deptRoutes);
 
 app.use("/admin/subject", subRoutes);
 app.use("/admin/semester", semRoutes);
+app.use("/admin/course", courseRoutes);
 
 app.use("/", (req, res, next) => {
-  res.send({
+  res.json({
     msg: "here is the home route",
   });
 });
