@@ -40,17 +40,22 @@ router.post("/", async (req, res) => {
       console.log("dept", dept);
       const semester = await Semester.findOne({ sem: sem });
       if (semester) {
-        const subject = await Subject.findOne({
-          semester: semester,
-          department: dept,
-          code: subCode,
+        let subID = [];
+        subCode.forEach(async (sub) => {
+          const subject = await Subject.findOne({
+            semester: semester,
+            code: sub,
+          });
+          if (subject) {
+            subID.push(subject._id);
+          }
         });
-        if (subject) {
-          console.log("subject-->", subject);
+        if (subID && subID.length) {
+          console.log("subjects-->", subID);
           const searchedCourse = await Course.findOne({
             stream: dept,
             semester: semester,
-            subject: subject,
+            subject: subID,
           });
           if (searchedCourse) {
             console.log("searchedCourse->", searchedCourse);
@@ -62,26 +67,26 @@ router.post("/", async (req, res) => {
             const newCourse = new Course({
               stream: dept._id,
               semester: semester._id,
-              subject: subject._id,
+              subject: subID,
             });
             const createdCourse = await newCourse.save();
-            console.log(createdCourse);
+            console.log("new created course:", createdCourse);
             res.status(200).json({
-              Status: "course Created",
-              newCourse: newCourse,
+              message: "course Created",
+              course: newCourse,
             });
           }
         } else {
-          console.log("No Subject found");
-          res.status(400).json("No Subject found");
+          console.log("--------No Subject found---------");
+          res.status(400).json({ message: "No Subject found", course: null });
         }
       } else {
-        console.log("No Semester found");
-        res.status(400).json("No Semester found");
+        console.log("--------No Semester found---------");
+        res.status(400).json({ message: "No Semester found", course: null });
       }
     } else {
-      console.log("No department found");
-      res.status(400).json("No department found");
+      console.log("-------No department found----------");
+      res.status(400).json({ message: "No department found", course: null });
     }
   } catch (err) {}
 });
