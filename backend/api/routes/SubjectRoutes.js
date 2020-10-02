@@ -121,30 +121,6 @@ router.post("/", (req, res) => {
     });
 });
 
-//desc:update a subject with given code
-//method:PATCH
-
-router.patch("/:subCode", (req, res) => {
-  const { subCode } = req.params;
-  subject
-    .findOne({ code: subCode })
-    .then((subj) => {
-      if (subj) {
-        for (let b in req.body) {
-          subj[b] = req.body[b];
-        }
-
-        subj.save();
-        res.status(201).json(subj);
-      } else {
-        res.status(400).json(`No subject exist with code:${subCode}`);
-      }
-    })
-    .catch((err) => {
-      res.status(500).json("Error!Unable to update");
-    });
-});
-
 //desc:route for deleting a single subject
 //method:DELETE
 router.delete("/:sub_code", (req, res) => {
@@ -155,14 +131,20 @@ router.delete("/:sub_code", (req, res) => {
       if (sub) {
         subject
           .deleteOne({ _id: sub._id })
-          .then(() => res.status(200).json("Subject deleted"));
+          .then(() =>
+            res
+              .status(200)
+              .json({ message: "Subject deleted", deletedSub: sub })
+          );
       } else {
-        return res.status(404).json("subject does not exist");
+        return res
+          .status(404)
+          .json({ message: "subject does not exist", deletedSub: null });
       }
     })
     .catch((err) => {
       console.log("err", err);
-      return res.status(500).json(err.message);
+      return res.status(500).json({ message: err.message, deletedSub: null });
     });
 });
 
