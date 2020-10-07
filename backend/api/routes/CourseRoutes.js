@@ -47,9 +47,12 @@ router.post("/", async (req, res) => {
             code: sub,
           });
           if (subject) {
+            console.log("subject", subject);
             subID.push(subject._id);
           }
         });
+
+        console.log("subID", subID);
         if (subID && subID.length) {
           console.log("subjects-->", subID);
           const searchedCourse = await Course.findOne({
