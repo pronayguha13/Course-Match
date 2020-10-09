@@ -1,4 +1,5 @@
 const express = require("express");
+const { exists } = require("../models/CourseModel");
 const router = express.Router();
 
 // import the course ,department,semster and subject model
@@ -32,66 +33,89 @@ router.get("/", async (req, res) => {
 });
 
 //DESC: CREATING A COURSE
-router.post("/", async (req, res) => {
+router.post("/", (req, res) => {
   const { subCode, deptID, sem } = req.body;
-  const dept = await Department.findOne({ dept_code: deptID });
-  try {
-    if (dept) {
-      console.log("dept", dept);
-      const semester = await Semester.findOne({ sem: sem });
-      if (semester) {
-        let subID = [];
-        subCode.forEach(async (sub) => {
-          const subject = await Subject.findOne({
-            semester: semester,
-            code: sub,
-          });
-          if (subject) {
-            console.log("subject", subject);
-            subID.push(subject._id);
-          }
-        });
+  Department.findOne({ dept_code: deptID })
+    .then((dept) => {
+      if (dept) {
+        console.log("Department Found with code : -- > ", deptID);
+        Semester.findOne({ sem: sem })
+          .then((semester) => {
+            if (semester) {
+              let subjects = [];
+              console.log("Semester Found");
 
-        console.log("subID", subID);
-        if (subID && subID.length) {
-          console.log("subjects-->", subID);
-          const searchedCourse = await Course.findOne({
-            stream: dept,
-            semester: semester,
-            subject: subID,
+              let subId = [];
+              subCode.forEach((s) => {
+                Subject.findOne({ code: s })
+                  .then((sub) => {
+                    console.log("sub", sub);
+                    if (sub) {
+                      subId.push(sub._id);
+                    } else {
+                      console.log("Subject Not Found with Code :", s);
+                      res.status(400).json({
+                        message: `Subject with code ${s} not Found`,
+                        course: null,
+                      });
+                    }
+                    console.log("Subject ID List:", subId);
+                  })
+                  .catch((err) => {
+                    console.log("Error:->", err);
+                    res
+                      .status(500)
+                      .json({ message: "Internal Server Error", course: null });
+                  });
+              });
+              Course.findOne({
+                stream: dept,
+                semester: semester,
+                subject: subId,
+              }).then((course) => {
+                if (course) {
+                  console.log("course Exist");
+                  res
+                    .status(409)
+                    .json({ message: "Course Exist", course: null });
+                } else {
+                  console.log("course DoesNot exists");
+                  const newCourse = new Course({
+                    stream: dept,
+                    semester: semester,
+                    subject: subId,
+                  });
+                  newCourse.save().then((newC) => {
+                    console.log("Newly Created Course", newC);
+                    res.status(200).json({
+                      message: "Course Created Successfully",
+                      course: newC,
+                    });
+                  });
+                }
+              });
+            } else {
+              console.log("Semester not found");
+              res
+                .status(400)
+                .json({ message: "Semester Not found", course: null });
+            }
+          })
+          .catch((err) => {
+            console.log("Error-->", err);
+            res
+              .status(500)
+              .json({ message: "Internal Server Error", course: null });
           });
-          if (searchedCourse) {
-            console.log("searchedCourse->", searchedCourse);
-            res.status(409).json({
-              msg: "Course already exists",
-              course: searchedCourse,
-            });
-          } else {
-            const newCourse = new Course({
-              stream: dept._id,
-              semester: semester._id,
-              subject: subID,
-            });
-            const createdCourse = await newCourse.save();
-            console.log("new created course:", createdCourse);
-            res.status(200).json({
-              message: "course Created",
-              course: newCourse,
-            });
-          }
-        } else {
-          console.log("--------No Subject found---------");
-          res.status(400).json({ message: "No Subject found", course: null });
-        }
+        // res.status(200).json({ message: "Department Found", dept: dept });
       } else {
-        console.log("--------No Semester found---------");
-        res.status(400).json({ message: "No Semester found", course: null });
+        console.log("department not found");
+        res.status(400).json({ message: "department Not found", course: null });
       }
-    } else {
-      console.log("-------No department found----------");
-      res.status(400).json({ message: "No department found", course: null });
-    }
-  } catch (err) {}
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
+  // res.status(200).json({ subjects: req.body.subCode });
 });
-
 module.exports = router;
