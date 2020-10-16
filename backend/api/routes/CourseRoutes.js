@@ -32,6 +32,83 @@ router.get("/", async (req, res) => {
   }
 });
 
+//DESC:GETTING COURSES BY SEMESTER
+router.get("/sem/:sem", async (req, res) => {
+  const { sem } = req.params;
+  const semID = await Semester.findOne({ sem: sem });
+  if (semID) {
+    const courses = await Course.find({ semester: semID })
+      .populate("stream")
+      .populate("semester")
+      .populate("subject");
+    console.log("courses", courses);
+    if (courses && courses.length) {
+      console.log("courses-->", courses);
+      res.status(200).json({
+        message: `Here is the Course for semester ${sem}`,
+        courses: courses,
+      });
+    } else {
+      console.log("no courses Found");
+      res.status(404).json({ mesaage: "No course found", courses: [] });
+    }
+  } else {
+    console.log("No Semester Found");
+    res.status(404).json({
+      message: `No Semester found with code : ${sem}`,
+      course: null,
+    });
+  }
+});
+
+//DESC:GETTING COURSES BY DEPARTMENT  and SEMESTER
+router.post("/department/:department", async (req, res) => {
+  const { department } = req.params;
+  console.log("req.body", req.body);
+  const { sem } = req.body;
+  console.log("sem", sem);
+  const deptID = await Department.findOne({ dept_code: department });
+  if (deptID) {
+    console.log("deptID", deptID);
+    const semID = await Semester.findOne({ sem: sem });
+    if (semID) {
+      const course = await Course.findOne({
+        stream: deptID._id,
+        semester: semID._id,
+      })
+        .populate("stream")
+        .populate("semester")
+        .populate("subject");
+      console.log("course", course);
+      if (course) {
+        console.log("course-->", course);
+        res.status(200).json({
+          message: `Here is the Course for Stream:${department} Semester: ${sem} `,
+          course: course,
+        });
+      } else {
+        console.log(`No course Found for ${department} Semester:${sem}`);
+        res.status(404).json({
+          mesaage: `No course Found for ${department} Semester:${sem}`,
+          course: null,
+        });
+      }
+    } else {
+      console.log("No Semester Found");
+      res.status(404).json({
+        message: `No Semester found with code : ${sem}`,
+        course: null,
+      });
+    }
+  } else {
+    console.log("No Department Found");
+    res.status(404).json({
+      message: `No department found with code : ${department}`,
+      course: null,
+    });
+  }
+});
+
 //DESC: CREATING A COURSE
 router.post("/", (req, res) => {
   const { subCode, deptID, sem } = req.body;
@@ -71,7 +148,6 @@ router.post("/", (req, res) => {
               Course.findOne({
                 stream: dept,
                 semester: semester,
-                subject: subId,
               }).then((course) => {
                 if (course) {
                   console.log("course Exist");
