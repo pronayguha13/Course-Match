@@ -1,3 +1,4 @@
+//import express package
 const express = require("express");
 
 const router = express.Router();
@@ -26,7 +27,7 @@ router.post("/", (req, res) => {
   const { sem } = req.body;
   semester.findOne({ sem: sem }).then((s) => {
     if (s) {
-      return res.status(409).json("Semester exists");
+      return res.status(409).json({ message: "Semester exists", newSem: null });
     }
     const newSem = new semester({
       sem: sem,
@@ -36,11 +37,11 @@ router.post("/", (req, res) => {
       .save()
       .then((resp) => {
         console.log(resp);
-        res.status(201).json("Semester Created");
+        res.status(200).json({ mesasage: "Semester Created", newSem: resp });
       })
       .catch((err) => {
         console.log(err);
-        return res.status(500).json("Error");
+        return res.status(500).json({ message: "Error", newSem: null });
       });
   });
 });
