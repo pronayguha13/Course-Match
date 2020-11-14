@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const config = require("config");
+
 //mongoose setup
 mongoose.connect(
   `mongodb+srv://courseMatchBackend:${config.get(
