@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import styles from "./auth.module.css";
 import { Link, useHistory } from "react-router-dom";
-import { formValidationHandler } from "../../../helperMethods";
 import axios from "axios";
+import styles from "./auth.module.css";
+import { formValidationHandler } from "../../../helperMethods";
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
 import { LoginContext } from "../../../Context/LoginContext";
+
 const Auth = () => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -30,8 +31,7 @@ const Auth = () => {
       roll_number: rollNumber,
       password: password,
     };
-    const isValidated = formValidationHandler(signInForm, "sign_in");
-    console.log("_formSubmitHandler -> isValidated", isValidated);
+    let isValidated = formValidationHandler(signInForm, "sign_in");
     isValidated !== false
       ? setError(isValidated)
       : axios
@@ -39,11 +39,10 @@ const Auth = () => {
           .then((res) => {
             window.localStorage.setItem("xAuthToken", res.data.token);
             window.localStorage.setItem("user", res.data.user);
-
             setIsLoggedIn(true);
           })
           .catch((err) => {
-            console.log("loginFormSubmitHandler -> err", err.response.data);
+            setError(true);
           });
   };
 
@@ -69,11 +68,6 @@ const Auth = () => {
               required
               autoFocus
             />
-            {error === "roll Number" ? (
-              <small id="passwordHelpBlock" className="form-text text-muted">
-                Please enter valid University roll number
-              </small>
-            ) : null}
           </div>
         </div>
         <div className="form-group row">
@@ -90,10 +84,9 @@ const Auth = () => {
               onChange={(e) => _onChangeHandler(e)}
               required
             />
-            {error === "password" ? (
+            {error !== null ? (
               <small id="passwordHelpBlock" className="form-text text-muted">
-                Your password must be 8-16 characters long, contain letters and
-                numbers, and must not contain spaces,and emoji.
+                Please enter valid credential
               </small>
             ) : null}
           </div>
@@ -103,7 +96,7 @@ const Auth = () => {
             <button type="submit" className="btn btn-primary">
               Sign in
             </button>
-            <p>
+            <p style={{ marginTop: "20px" }}>
               {" "}
               if you dont have an account <Link to="/register">Sign Up</Link>
             </p>

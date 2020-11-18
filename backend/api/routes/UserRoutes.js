@@ -10,6 +10,8 @@ router.get("/", (req, res, next) => {
   });
 });
 
+//desc:route for handling the regitration
+//method:POST
 router.post("/", (req, res, next) => {
   const { name, email, password, roll_number } = req.body;
   if (!name || !email || !password) {
@@ -54,18 +56,27 @@ router.post("/", (req, res, next) => {
   });
 });
 
+// route for handling the login
+// method:POST
 router.post("/auth", (req, res, next) => {
   const { roll_number, password } = req.body;
   if (!roll_number || !password) {
-    res.status(400).json("Please enter valid credentials");
+    res
+      .status(400)
+      .json({ message: "Please enter valid credentials", loginStatus: false });
   }
   //check for existing user
   User.findOne({ roll_number }).then((user) => {
-    if (!user) return res.status(400).json("User Doesnot exist");
-
+    if (!user)
+      return res
+        .status(400)
+        .json({ message: "User Does'nt exist", loginStatus: false });
     //Validate password
     bcrypt.compare(password, user.password).then((isMatch) => {
-      if (!isMatch) return res.status(400).json("Invalid Credential");
+      if (!isMatch)
+        return res
+          .status(400)
+          .json({ message: "Invalid Credential", loginStatus: false });
 
       jwt.sign(
         {
@@ -75,12 +86,14 @@ router.post("/auth", (req, res, next) => {
         { expiresIn: 3600 },
         (err, token) => {
           if (err) throw err;
-          res.json({
-            token,
+          res.status(200).json({
+            message: "Log in successful",
+            token: token,
             user: {
               id: user.id,
               name: user.name,
             },
+            loginStatus: true,
           });
         }
       );
