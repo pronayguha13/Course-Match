@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const config = require("config");
+
 //mongoose setup
 mongoose.connect(
   `mongodb+srv://courseMatchBackend:${config.get(
@@ -10,6 +11,7 @@ mongoose.connect(
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,
+    useCreateIndex: true,
   },
   () => {
     console.log("MONGODB CONNECTED");
@@ -39,14 +41,27 @@ app.use((req, res, next) => {
 //route files
 const searchRoutes = require("./api/routes/SearchRoutes");
 const userRoutes = require("./api/routes/UserRoutes.js");
+const homeRoutes = require("./api/routes/HomeRoutes");
+const deptRoutes = require("./api/routes/DepartmentRoutes");
+const subRoutes = require("./api/routes/SubjectRoutes.js");
+const semRoutes = require("./api/routes/SemesterRoutes");
+const courseRoutes = require("./api/routes/CourseRoutes");
 
 //Middleware for handling routes
 app.use("/search", searchRoutes);
 
 app.use("/user", userRoutes);
 
+app.use("/index", homeRoutes);
+
+app.use("/admin/department", deptRoutes);
+
+app.use("/admin/subject", subRoutes);
+app.use("/admin/semester", semRoutes);
+app.use("/admin/course", courseRoutes);
+
 app.use("/", (req, res, next) => {
-  res.send({
+  res.json({
     msg: "here is the home route",
   });
 });

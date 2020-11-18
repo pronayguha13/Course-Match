@@ -22,7 +22,7 @@ router.post("/", (req, res, next) => {
           : res.status(204).json({ user: [] });
       })
       .catch((err) => {
-        res.status(500).send(err.message);
+        res.status(500).json(err.message);
       });
   } else {
     UserSchema.find({ name: query })
@@ -41,7 +41,7 @@ router.post("/", (req, res, next) => {
             })
           : res.status(204).json({ user: [] });
       })
-      .catch((err) => res.status(500).send(err.message));
+      .catch((err) => res.status(500).json(err.message));
   }
 });
 

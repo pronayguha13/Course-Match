@@ -45,3 +45,14 @@ export const RegistrationFormSubmitHandler = (formData, regStateHandler) => {
       regStateHandler(false);
     });
 };
+
+export const getUserCount = (setCount) => {
+  axios
+    .get(`${BASE_URL}/index`)
+    .then((res) => {
+      setCount(res.data.count);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
