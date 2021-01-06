@@ -5,16 +5,19 @@ import "./index.css";
 import App from "./Components/App/App";
 import { SearchBarContextProvider } from "./Context/SearchBarContext";
 import { Login } from "./Context/LoginContext";
+import { DisplayMode } from "./Context/DisplayContext";
 import BrowserRoutes from "./Routes/routes";
 ReactDOM.render(
   <React.StrictMode>
-    <Login>
-      <SearchBarContextProvider>
-        <BrowserRoutes>
-          <App />
-        </BrowserRoutes>
-      </SearchBarContextProvider>
-    </Login>
+    <DisplayMode>
+      <Login>
+        <SearchBarContextProvider>
+          <BrowserRoutes>
+            <App />
+          </BrowserRoutes>
+        </SearchBarContextProvider>
+      </Login>
+    </DisplayMode>
   </React.StrictMode>,
   document.getElementById("root")
 );

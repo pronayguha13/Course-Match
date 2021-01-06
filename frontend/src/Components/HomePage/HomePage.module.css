@@ -1,0 +1,57 @@
+.HomePageContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.HeaderSection {
+  border-bottom: 2px solid #fff;
+}
+
+.MainSectionContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 89vh;
+}
+
+.UtilitySection {
+  width: 70%;
+  border: 2px solid #fff;
+  border-top: 0;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.CurrSemCourseSelection {
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  margin-bottom: 5px;
+  flex-grow: 1;
+}
+
+.FriendCourseSelection {
+  border-top: 2px solid #fff;
+  margin-top: 5px;
+  flex-grow: 1;
+}
+
+.UserDetailsSection {
+  border: 2px solid #fff;
+  border-top: 0;
+  width: 30%;
+}
+
+.AccountDetails {
+  display: flex;
+  justify-content: space-between;
+}
+.AccountDetails img {
+  margin: 8px;
+  height: 3rem;
+  width: 20%;
+}
+.UserPersonalDetails {
+  width: 70%;
+  flex-wrap: wrap;
+}

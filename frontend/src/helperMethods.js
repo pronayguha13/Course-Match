@@ -50,9 +50,18 @@ export const getUserCount = (setCount) => {
   axios
     .get(`${BASE_URL}/index`)
     .then((res) => {
+      console.log(
+        "🚀 ~ file: helperMethods.js ~ line 53 ~ .then ~ res",
+        res.data.count
+      );
       setCount(res.data.count);
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+//display mode handler
+export const displayModeHandler = (displayMode) => {
+  displayMode === "dark" ? console.log("Dark Mode") : console.log("Light Mode");
 };

@@ -1,14 +1,19 @@
 import React, { useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import { searchAreaDisplayHandler } from "../../helperMethods";
+import {
+  searchAreaDisplayHandler,
+  displayModeHandler,
+} from "../../helperMethods";
 import { SearchBarContext } from "../../Context/SearchBarContext";
 import { LoginContext } from "../../Context/LoginContext";
+import { DisplayContext } from "../../Context/DisplayContext";
 
 const Navbar = () => {
   const history = useHistory();
   const { showSearch, setShowSearch } = useContext(SearchBarContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
+  const { displayMode, setDisplayMode } = useContext(DisplayContext);
 
   const _logout = () => {
     window.localStorage.clear();
@@ -46,9 +51,14 @@ const Navbar = () => {
         }}
         onClick={() => (isLoggedIn ? _logout() : _login())}
       >
-        {isLoggedIn ? "Sign out" : "Sign in"}
+        {isLoggedIn ? "Log out" : "Log in"}
       </button>
       {searchAreaDisplayHandler(showSearch, setShowSearch)}
+      <img
+        src="/assets/images/icons/dark.png"
+        alt="dark"
+        onClick={() => displayModeHandler(displayMode)}
+      />
     </div>
   );
 };
