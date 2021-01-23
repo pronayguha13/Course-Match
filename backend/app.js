@@ -62,6 +62,7 @@ app.use("/", (req, res, next) => {
   res.json({
     msg: "here is the home route",
   });
+  next();
 });
 
 module.exports = app;
