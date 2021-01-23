@@ -1,3 +1,4 @@
 /node_modules
 yarn.lock
 frontend/debug.log
+*.env

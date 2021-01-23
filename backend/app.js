@@ -1,13 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const config = require("config");
+require("dotenv").config();
 
 //mongoose setup
 mongoose.connect(
-  `mongodb+srv://courseMatchBackend:${config.get(
-    "MONGODB_PWD"
-  )}@course-match.ywvgn.mongodb.net/Course-Match?retryWrites=true&w=majority`,
+  `mongodb+srv://courseMatchBackend:${process.env.MONGODB_PWD}@course-match.ywvgn.mongodb.net/Course-Match?retryWrites=true&w=majority`,
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,

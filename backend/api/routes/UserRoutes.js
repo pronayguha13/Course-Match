@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 const User = require("../models/User");
 
 router.get("/", (req, res, next) => {
@@ -37,7 +36,7 @@ router.post("/", (req, res, next) => {
             {
               id: user.id,
             },
-            config.get("jwtSecret"),
+            process.env.jwtSecret,
             { expiresIn: 3600 },
             (err, token) => {
               if (err) throw err;
@@ -82,7 +81,7 @@ router.post("/auth", (req, res, next) => {
         {
           id: user.id,
         },
-        config.get("jwtSecret"),
+        process.env.jwtSecret,
         { expiresIn: 3600 },
         (err, token) => {
           if (err) throw err;
@@ -111,7 +110,7 @@ router.post("/auth/validate", async (req, res, next) => {
     });
   try {
     //verify token
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const decoded = jwt.verify(token, process.env.jwtSecret);
     const user = await User.findById(decoded.id);
     if (!user) return res.json(false);
     return res.json(true);
