@@ -2,3 +2,4 @@
 yarn.lock
 frontend/debug.log
 *.env
+/build
