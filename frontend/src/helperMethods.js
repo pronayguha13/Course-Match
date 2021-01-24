@@ -62,3 +62,9 @@ export const getUserCount = (setCount) => {
 export const displayModeHandler = (displayMode) => {
   displayMode === "dark" ? console.log("Dark Mode") : console.log("Light Mode");
 };
+
+//password view change handler
+export const changePasswordView = (isHidden, setIsHidden) => {
+  const currentViewState = isHidden;
+  setIsHidden(!currentViewState);
+};
