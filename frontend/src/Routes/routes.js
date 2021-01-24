@@ -57,12 +57,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       render={(props) =>
         isLoggedIn ? (
           <Component {...props} />
-        ) : loading ? (
-          <Redirect
-            to={{
-              pathname: "/logging_in",
-            }}
-          />
         ) : (
           <Redirect
             to={{

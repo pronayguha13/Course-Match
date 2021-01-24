@@ -1,5 +1,4 @@
 import React, { createContext, useState } from "react";
-import { Redirect } from "react-router-dom";
 export const LoginContext = createContext();
 export const Login = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
