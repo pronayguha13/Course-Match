@@ -17,7 +17,7 @@ const Auth = () => {
   const [isPwdActive, setIsPwdActive] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
   const history = useHistory();
-  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
+  const { isLoggedIn, setIsLoggedIn, setLoading } = useContext(LoginContext);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -47,6 +47,7 @@ const Auth = () => {
       : axios
           .post(`${BASE_URL}/user/auth`, signInForm)
           .then((res) => {
+            setLoading(true);
             window.localStorage.setItem("xAuthToken", res.data.token);
             window.localStorage.setItem("user", res.data.user);
             setIsLoggedIn(true);

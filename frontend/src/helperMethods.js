@@ -50,7 +50,6 @@ export const getUserCount = (setCount) => {
   axios
     .get(`${BASE_URL}/index/`)
     .then((res) => {
-      console.log("🚀 ~ file: helperMethods.js ~ line 53 ~ .then ~ res", res);
       setCount(res.data.count);
     })
     .catch((err) => {
