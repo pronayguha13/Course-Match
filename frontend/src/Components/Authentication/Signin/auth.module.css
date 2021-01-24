@@ -2,5 +2,15 @@
   text-align: center;
 }
 
-.signInFormContainer {
+.showHidePassword {
+  position: absolute;
+  top: 20%;
+  left: 85%;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 500px) {
+  .showHidePassword {
+    left: 90%;
+  }
 }
