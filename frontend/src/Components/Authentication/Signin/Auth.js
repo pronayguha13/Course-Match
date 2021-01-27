@@ -12,12 +12,13 @@ const Auth = () => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [isRollActive, setIsRollActive] = useState(false);
   const [rollError, setRollError] = useState(false);
   const [isPwdActive, setIsPwdActive] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
   const history = useHistory();
-  const { isLoggedIn, setIsLoggedIn, setLoading } = useContext(LoginContext);
+  const { isLoggedIn, setIsLoggedIn, loading, setLoading } = useContext(
+    LoginContext
+  );
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -37,6 +38,7 @@ const Auth = () => {
 
   const _formSubmitHandler = (e) => {
     e.preventDefault();
+    setLoading(true);
     const signInForm = {
       roll_number: rollNumber,
       password: password,
@@ -47,14 +49,21 @@ const Auth = () => {
       : axios
           .post(`${BASE_URL}/user/auth`, signInForm)
           .then((res) => {
-            setLoading(true);
             window.localStorage.setItem("xAuthToken", res.data.token);
             window.localStorage.setItem("user", res.data.user);
             setIsLoggedIn(true);
+            setLoading(false);
           })
           .catch((err) => {
             setError(true);
+            setLoading(false);
           });
+  };
+
+  const loaderHandler = () => {
+    if (error) {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -63,77 +72,84 @@ const Auth = () => {
 
   return (
     <div className={styles.SignIn}>
-      <h3>Sign in Page</h3>
-      <form onSubmit={_formSubmitHandler}>
-        <div className="form-group row">
-          <label htmlFor="roll_number" className="col-sm-2 col-form-label">
-            University Roll Number
-          </label>
+      <div style={{ opacity: loading ? 1 : 0 }}>
+        <p>Loading......</p>
+      </div>
+      <div style={{ opacity: loading ? 0.5 : 1 }}>
+        <h3>Sign in Page</h3>
+        <form onSubmit={_formSubmitHandler}>
+          <div className="form-group row">
+            <label htmlFor="roll_number" className="col-sm-2 col-form-label">
+              University Roll Number
+            </label>
 
-          <div className="col-sm-10">
-            <input
-              type="text"
-              className="form-control"
-              name="roll_number"
-              value={rollNumber}
-              onChange={(e) => _onChangeHandler(e)}
-              style={
-                rollError
-                  ? { border: "5px outset #D64933" }
-                  : { border: "4px solid #ADEEE3" }
-              }
-              required
-              autoFocus
-            />
+            <div className="col-sm-10">
+              <input
+                type="text"
+                className="form-control"
+                name="roll_number"
+                value={rollNumber}
+                onChange={(e) => _onChangeHandler(e)}
+                style={
+                  rollError
+                    ? { border: "5px outset #D64933" }
+                    : { border: "4px solid #ADEEE3" }
+                }
+                required
+                autoFocus
+              />
+            </div>
           </div>
-        </div>
-        <div className="form-group row">
-          <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">
-            Password
-          </label>
-          <div className="col-sm-10">
-            <input
-              type={isHidden ? "password" : "text"}
-              className="form-control"
-              id="inputPassword3"
-              value={password}
-              name="password"
-              onChange={(e) => _onChangeHandler(e)}
-              onFocus={() => setIsPwdActive(true)}
-              onBlur={() => setIsPwdActive(false)}
-              required
-            />
-            <img
-              src={
-                isHidden
-                  ? "/assets/images/icons/eye.png"
-                  : "/assets/images/icons/closed-eye.png"
-              }
-              alt="show-password"
-              className={
-                isPwdActive || password.length ? styles.showHidePassword : null
-              }
-              onClick={() => changePasswordView(isHidden, setIsHidden)}
-            />
-            {error !== null ? (
-              <small id="passwordHelpBlock" className="form-text text-muted">
-                Please enter valid credential
-              </small>
-            ) : null}
+          <div className="form-group row">
+            <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">
+              Password
+            </label>
+            <div className="col-sm-10">
+              <input
+                type={isHidden ? "password" : "text"}
+                className="form-control"
+                id="inputPassword3"
+                value={password}
+                name="password"
+                onChange={(e) => _onChangeHandler(e)}
+                onFocus={() => setIsPwdActive(true)}
+                onBlur={() => setIsPwdActive(false)}
+                required
+              />
+              <img
+                src={
+                  isHidden
+                    ? "/assets/images/icons/eye.png"
+                    : "/assets/images/icons/closed-eye.png"
+                }
+                alt="show-password"
+                className={
+                  isPwdActive || password.length
+                    ? styles.showHidePassword
+                    : null
+                }
+                onClick={() => changePasswordView(isHidden, setIsHidden)}
+              />
+              {error !== null ? (
+                <small id="passwordHelpBlock" className="form-text text-muted">
+                  Please enter valid credential
+                </small>
+              ) : null}
+            </div>
           </div>
-        </div>
-        <div className="form-group row">
-          <div className="col-sm-10">
-            <button type="submit" className="btn btn-primary">
-              Sign in
-            </button>
-            <p styles={{ marginTop: "20px" }}>
-              {" "}
-              if you dont have an account <Link to="/register">Sign Up</Link>
-            </p>
+          <div className="form-group row">
+            <div className="col-sm-10">
+              <button type="submit" className="btn btn-primary">
+                Sign in
+              </button>
+              <p styles={{ marginTop: "20px" }}>
+                {" "}
+                if you dont have an account <Link to="/register">Sign Up</Link>
+              </p>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

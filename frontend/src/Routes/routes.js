@@ -13,7 +13,6 @@ import { LoginContext } from "../Context/LoginContext";
 import axios from "axios";
 import { BASE_URL } from "../Context/AXIOS_BASE_URL";
 import SearchResult from "../Components/SearchResult/SearchResult";
-import Loading from "../Components/Layout/Loading";
 
 const BrowserRoutes = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
@@ -42,7 +41,6 @@ const BrowserRoutes = () => {
         <PrivateRoute path="/search/:query" component={SearchResult} />
         <Route path="/sign_in" component={Auth} />
         <Route path="/register" component={Registration} />
-        <Route path="/logging_in" component={Loading} />
         <PrivateRoute path="/" exact component={App} />
       </Switch>
     </Router>
@@ -50,7 +48,7 @@ const BrowserRoutes = () => {
 };
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { isLoggedIn, loading } = useContext(LoginContext);
+  const { isLoggedIn } = useContext(LoginContext);
   return (
     <Route
       {...rest}
