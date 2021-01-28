@@ -61,15 +61,18 @@ const Auth = () => {
           });
   };
 
-  const loaderHandler = () => {
-    if (error) {
-      setLoading(false);
-    }
-  };
+  // const loaderHandler = () => {
+  //   if (error) {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     if (isLoggedIn) history.push("/");
-  }, [isLoggedIn, history]);
+    if (error) {
+      setLoading(false);
+    }
+  }, [isLoggedIn, history, error, setLoading]);
 
   return (
     <div className={styles.SignIn}>
