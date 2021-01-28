@@ -8,6 +8,7 @@ import {
 } from "../../../helperMethods";
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
 import { LoginContext } from "../../../Context/LoginContext";
+import Loading from "../../Layout/Loading";
 const Auth = () => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -72,10 +73,8 @@ const Auth = () => {
 
   return (
     <div className={styles.SignIn}>
-      <div style={{ opacity: loading ? 1 : 0 }}>
-        <p>Loading......</p>
-      </div>
-      <div style={{ opacity: loading ? 0.5 : 1 }}>
+      <Loading loading={loading} />
+      <div style={{ opacity: loading ? 0.2 : 1 }}>
         <h3>Sign in Page</h3>
         <form onSubmit={_formSubmitHandler}>
           <div className="form-group row">

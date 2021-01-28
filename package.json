@@ -10,6 +10,7 @@
     "dev": "concurrently \"cd backend && yarn run dev\" \"cd frontend && yarn start\" "
   },
   "dependencies": {
-    "concurrently": "^5.3.0"
+    "concurrently": "^5.3.0",
+    "react-loader-spinner": "^3.1.14"
   }
 }
