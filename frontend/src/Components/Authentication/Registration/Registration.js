@@ -5,6 +5,7 @@ import {
   RegistrationFormSubmitHandler,
   changePasswordView,
 } from "../../../helperMethods";
+import Loading from "../../Layout/Loading";
 
 const Registration = () => {
   const history = useHistory();
@@ -16,18 +17,25 @@ const Registration = () => {
   const [isRollActive, SetIsRollActive] = useState(false);
   const [isPwdActive, SetIsPwdActive] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
-    if (name === "name") {
-      setName(value.trimLeft());
-    } else if (name === "email") {
-      setEmail(value.trimLeft());
-    } else if (name === "password") {
-      setPassword(value.trimLeft());
-    } else {
-      const roll = value.trimLeft();
-      roll.length ? setRollNumber(roll) : setRollNumber("");
+
+    switch (name) {
+      case "name":
+        setName(value.trimLeft());
+        break;
+      case "email":
+        setEmail(value.trimLeft());
+        break;
+      case "password":
+        setPassword(value.trimLeft());
+        break;
+      default:
+        const roll = value.trimLeft();
+        roll.length ? setRollNumber(roll) : setRollNumber("");
+        break;
     }
   };
 
@@ -44,12 +52,12 @@ const Registration = () => {
       password: password,
       roll_number: roll_number,
     };
-    const errorField = formValidationHandler(formData, "Registration");
-    console.log("_onSubmitHandler -> errorField", errorField);
+    let errorField = formValidationHandler(formData, "Registration");
     setError(errorField);
-    !error
-      ? RegistrationFormSubmitHandler(formData, regStateHandler)
-      : console.log("Error!Check your credentials");
+    if (!error) {
+      setLoading(false);
+      RegistrationFormSubmitHandler(formData, regStateHandler, setLoading);
+    }
   };
 
   const onActiveHandler = (inputField) => {
@@ -169,95 +177,98 @@ const Registration = () => {
 
   return (
     <div>
-      <h3>Registration Page</h3>
-      <form onSubmit={(e) => _onSubmitHandler(e)}>
-        <div className="form-row">
-          <div className="form-group col-md-6">
-            <label htmlFor="Name" style={labelStyle}>
-              Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={name}
-              className="form-control"
-              onChange={(e) => _onChangeHandler(e)}
-              required
-              autoFocus
-            />
+      <Loading loading={loading} />
+      <div style={{ opacity: loading ? 0.2 : 1 }}>
+        <h3>Registration Page</h3>
+        <form onSubmit={(e) => _onSubmitHandler(e)}>
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="Name" style={labelStyle}>
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={name}
+                className="form-control"
+                onChange={(e) => _onChangeHandler(e)}
+                required
+                autoFocus
+              />
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="inputEmail4" style={labelStyle}>
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={email}
+                className="form-control"
+                id="inputEmail4"
+                onChange={(e) => _onChangeHandler(e)}
+                required
+              />
+            </div>
           </div>
-          <div className="form-group col-md-6">
-            <label htmlFor="inputEmail4" style={labelStyle}>
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={email}
-              className="form-control"
-              id="inputEmail4"
-              onChange={(e) => _onChangeHandler(e)}
-              required
-            />
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label
+                htmlFor="inputRoll"
+                style={isRollActive ? labelWithInfoStyle : labelStyle}
+              >
+                University Roll Number
+              </label>
+              {rollNumberInfo}
+              <input
+                type="text"
+                className="form-control"
+                name="roll_number"
+                value={roll_number}
+                onChange={(e) => _onChangeHandler(e)}
+                onFocus={() => onActiveHandler("rollNumber")}
+                onBlur={() => SetIsRollActive(false)}
+                placeholder={rollNumberPlaceholder}
+                required
+              />
+              {rollNumberErrorInfo}
+            </div>
+            <div className="form-group col-md-6">
+              <label
+                htmlFor="inputPassword4"
+                style={isPwdActive ? labelWithInfoStyle : labelStyle}
+              >
+                Password
+              </label>
+              {showHidePwd}
+              {passwordInfo}
+              <input
+                type={isHidden ? "password" : "text"}
+                name="password"
+                className="form-control"
+                id="inputPassword4"
+                value={password}
+                onChange={(e) => _onChangeHandler(e)}
+                onFocus={() => onActiveHandler("password")}
+                onBlur={() => SetIsPwdActive(false)}
+                placeholder={passwordPlaceholder}
+                style={pwdBorder}
+                required
+              />
+              {error === "password" ? passwordErrorInfo : null}
+            </div>
           </div>
-        </div>
-        <div className="form-row">
-          <div className="form-group col-md-6">
-            <label
-              htmlFor="inputRoll"
-              style={isRollActive ? labelWithInfoStyle : labelStyle}
-            >
-              University Roll Number
-            </label>
-            {rollNumberInfo}
-            <input
-              type="text"
-              className="form-control"
-              name="roll_number"
-              value={roll_number}
-              onChange={(e) => _onChangeHandler(e)}
-              onFocus={() => onActiveHandler("rollNumber")}
-              onBlur={() => SetIsRollActive(false)}
-              placeholder={rollNumberPlaceholder}
-              required
-            />
-            {rollNumberErrorInfo}
+          <div className="form-group text-center">
+            <button type="submit" className="btn btn-primary">
+              Sign Up
+            </button>
+            <p>
+              {" "}
+              if you have an account <Link to="/sign_in">Sign In</Link>
+            </p>
           </div>
-          <div className="form-group col-md-6">
-            <label
-              htmlFor="inputPassword4"
-              style={isPwdActive ? labelWithInfoStyle : labelStyle}
-            >
-              Password
-            </label>
-            {showHidePwd}
-            {passwordInfo}
-            <input
-              type={isHidden ? "password" : "text"}
-              name="password"
-              className="form-control"
-              id="inputPassword4"
-              value={password}
-              onChange={(e) => _onChangeHandler(e)}
-              onFocus={() => onActiveHandler("password")}
-              onBlur={() => SetIsPwdActive(false)}
-              placeholder={passwordPlaceholder}
-              style={pwdBorder}
-              required
-            />
-            {error === "password" ? passwordErrorInfo : null}
-          </div>
-        </div>
-        <div className="form-group text-center">
-          <button type="submit" className="btn btn-primary">
-            Sign Up
-          </button>
-          <p>
-            {" "}
-            if you have an account <Link to="/sign_in">Sign In</Link>
-          </p>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

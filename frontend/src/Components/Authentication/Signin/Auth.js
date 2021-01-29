@@ -61,12 +61,6 @@ const Auth = () => {
           });
   };
 
-  // const loaderHandler = () => {
-  //   if (error) {
-  //     setLoading(false);
-  //   }
-  // };
-
   useEffect(() => {
     if (isLoggedIn) history.push("/");
     if (error) {
