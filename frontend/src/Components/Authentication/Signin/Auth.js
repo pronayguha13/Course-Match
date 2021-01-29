@@ -16,10 +16,9 @@ const Auth = () => {
   const [rollError, setRollError] = useState(false);
   const [isPwdActive, setIsPwdActive] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const { isLoggedIn, setIsLoggedIn, loading, setLoading } = useContext(
-    LoginContext
-  );
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
