@@ -9,6 +9,11 @@ import {
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
 import { LoginContext } from "../../../Context/LoginContext";
 import Loading from "../../Layout/Loading";
+import ErrorPage from "../../Layout/ErrorPage";
+import SuccessPage from "../../Layout/SuccessPage";
+
+let pause;
+
 const Auth = () => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -17,8 +22,11 @@ const Auth = () => {
   const [isPwdActive, setIsPwdActive] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isAuthSuccess, setIsAuthSuccess] = useState(false);
   const history = useHistory();
-  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
+
+  const { setIsLoggedIn } = useContext(LoginContext);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -39,40 +47,73 @@ const Auth = () => {
   const _formSubmitHandler = (e) => {
     e.preventDefault();
     setLoading(true);
-    const signInForm = {
+
+    const formData = {
       roll_number: rollNumber,
       password: password,
     };
-    let isValidated = formValidationHandler(signInForm, "sign_in");
-    isValidated !== false
-      ? setError(isValidated)
-      : axios
-          .post(`${BASE_URL}/user/auth`, signInForm)
-          .then((res) => {
-            window.localStorage.setItem("xAuthToken", res.data.token);
-            window.localStorage.setItem("user", res.data.user);
-            setIsLoggedIn(true);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setError(true);
-            setLoading(false);
-          });
+
+    let authError = formValidationHandler(formData);
+
+    if (authError !== false) {
+      setError(true);
+      setShowModal(true);
+    } else {
+      setShowModal(true);
+      axios
+        .post(`${BASE_URL}/user/auth`, formData)
+        .then((res) => {
+          window.localStorage.setItem("xAuthToken", res.data.token);
+          window.localStorage.setItem("user", res.data.user);
+          setIsAuthSuccess(true);
+        })
+        .catch((err) => {
+          setError(true);
+        });
+    }
+  };
+
+  const clearField = () => {
+    setRollNumber("");
+    setPassword("");
   };
 
   useEffect(() => {
-    if (isLoggedIn) history.push("/");
-    if (error) {
+    if (isAuthSuccess) {
       setLoading(false);
+      pause = setTimeout(() => {
+        setIsAuthSuccess(false);
+        setIsLoggedIn(true);
+        history.push("/");
+      }, 2000);
+    } else if (error) {
+      setLoading(false);
+      pause = setTimeout(() => {
+        clearField();
+        setError(false);
+      }, 1000);
     }
-  }, [isLoggedIn, history, error, setLoading]);
+    return () => {
+      clearTimeout(pause);
+    };
+  }, [history, isAuthSuccess, setIsLoggedIn, error, setLoading, setError]);
 
   return (
     <div className={styles.SignIn}>
       <Loading loading={loading} />
-      <div style={{ opacity: loading ? 0.2 : 1 }}>
+      {isAuthSuccess && showModal ? (
+        <SuccessPage regSuccess={isAuthSuccess} />
+      ) : null}
+      {error && showModal ? (
+        <ErrorPage
+          opError={error}
+          error={{ info: "Enter Valid Credentials" }}
+        />
+      ) : null}
+
+      <div style={{ opacity: loading || error || isAuthSuccess ? 0.2 : 1 }}>
         <h3>Sign in Page</h3>
-        <form onSubmit={_formSubmitHandler}>
+        <form onSubmit={(e) => _formSubmitHandler(e)}>
           <div className="form-group row">
             <label htmlFor="roll_number" className="col-sm-2 col-form-label">
               University Roll Number
@@ -125,11 +166,6 @@ const Auth = () => {
                 }
                 onClick={() => changePasswordView(isHidden, setIsHidden)}
               />
-              {error !== null ? (
-                <small id="passwordHelpBlock" className="form-text text-muted">
-                  Please enter valid credential
-                </small>
-              ) : null}
             </div>
           </div>
           <div className="form-group row">

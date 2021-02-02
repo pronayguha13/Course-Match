@@ -14,11 +14,19 @@ router.get("/", (req, res, next) => {
 router.post("/", (req, res, next) => {
   const { name, email, password, roll_number } = req.body;
   if (!name || !email || !password) {
-    res.status(400).json("Please enter a valid email and password ");
+    res.status(400).json({
+      ERR_STATUS: 400,
+      ERR_INFO: "Please enter a valid email and password ",
+    });
   }
   //check for existing user
   User.findOne({ roll_number }).then((user) => {
-    if (user) return res.status(400).json("User Already exist");
+    if (user)
+      return res.status(400).json({
+        user: roll_number,
+        ERR_STATUS: 400,
+        ERR_INFO: "User Already exist",
+      });
 
     const newUser = new User({
       name,

@@ -1,0 +1,17 @@
+.infopage {
+  position: absolute;
+  top: 5%;
+  width: 20%;
+  left: 40%;
+  color: #fff;
+  background-color: #248232;
+  text-align: center;
+  z-index: 100;
+}
+@media only screen and (max-width: 600px) {
+  .infopage {
+    width: 40%;
+    left: 30%;
+    top: 6%;
+  }
+}

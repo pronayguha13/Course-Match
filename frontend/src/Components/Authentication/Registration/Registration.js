@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import {
   formValidationHandler,
@@ -6,7 +6,9 @@ import {
   changePasswordView,
 } from "../../../helperMethods";
 import Loading from "../../Layout/Loading";
-
+import SuccessPage from "../../Layout/SuccessPage";
+import ErrorPage from "../../Layout/ErrorPage";
+let pause;
 const Registration = () => {
   const history = useHistory();
   const [name, setName] = useState("");
@@ -18,10 +20,27 @@ const Registration = () => {
   const [isPwdActive, SetIsPwdActive] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
+  const [isRegistrationError, setIsRegistrationError] = useState(false);
+
+  useEffect(() => {
+    if (isRegistrationSuccess) {
+      pause = setTimeout(() => {
+        setIsRegistrationSuccess(false);
+        history.push("/sign_in");
+      }, 2000);
+    } else if (isRegistrationError) {
+      pause = setTimeout(() => {
+        setIsRegistrationError(false);
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(pause);
+    };
+  }, [history, isRegistrationSuccess, isRegistrationError]);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
-
     switch (name) {
       case "name":
         setName(value.trimLeft());
@@ -40,8 +59,14 @@ const Registration = () => {
   };
 
   const regStateHandler = (regStatus) => {
-    console.log("regStateHandler -> registrationStatus", regStatus);
-    regStatus ? history.push("/sign_in") : alert("Error");
+    if (regStatus) {
+      setIsRegistrationSuccess(true);
+    } else {
+      setError({
+        info: "User already exist....",
+      });
+      setIsRegistrationError(true);
+    }
   };
 
   const _onSubmitHandler = (e) => {
@@ -52,9 +77,22 @@ const Registration = () => {
       password: password,
       roll_number: roll_number,
     };
-    let errorField = formValidationHandler(formData, "Registration");
-    setError(errorField);
-    if (!error) {
+    let errorField = formValidationHandler(formData);
+    if (errorField !== false) {
+      setIsRegistrationError(true);
+      let errorInfo;
+      if (errorField === "roll number") {
+        errorInfo = "Please enter valid University roll number";
+      } else {
+        errorInfo =
+          "Your password must be 8-16 characters long, contain letters and numbers,and must not contain spaces,and emoji.";
+      }
+      const errorObject = {
+        field: errorField,
+        info: errorInfo,
+      };
+      setError(errorObject);
+    } else {
       setLoading(false);
       RegistrationFormSubmitHandler(formData, regStateHandler, setLoading);
     }
@@ -105,28 +143,11 @@ const Registration = () => {
     </small>
   );
 
-  const rollNumberErrorInfo = (
-    <small
-      id="passwordHelpBlock"
-      className="form-text text-muted"
-      style={{ display: error === "roll Number" ? "block" : "none" }}
-    >
-      Please enter valid University roll number
-    </small>
-  );
-
   const rollNumberPlaceholder =
     (!isRollActive && window.innerWidth > 620 && window.innerWidth < 770) ||
     window.innerWidth > 1250
       ? "Enter your university Roll number starting with 169"
       : "";
-
-  const passwordErrorInfo = (
-    <small id="passwordHelpBlock" className="form-text text-muted">
-      Your password must be 8-16 characters long, contain letters and numbers,
-      and must not contain spaces,and emoji.
-    </small>
-  );
 
   const passwordInfo = (
     <small
@@ -178,7 +199,16 @@ const Registration = () => {
   return (
     <div>
       <Loading loading={loading} />
-      <div style={{ opacity: loading ? 0.2 : 1 }}>
+      <SuccessPage regSuccess={isRegistrationSuccess} />
+      {error !== null ? (
+        <ErrorPage opError={isRegistrationError} error={error} />
+      ) : null}
+      <div
+        style={{
+          opacity:
+            loading || isRegistrationSuccess || isRegistrationError ? 0.1 : 1,
+        }}
+      >
         <h3>Registration Page</h3>
         <form onSubmit={(e) => _onSubmitHandler(e)}>
           <div className="form-row">
@@ -231,7 +261,6 @@ const Registration = () => {
                 placeholder={rollNumberPlaceholder}
                 required
               />
-              {rollNumberErrorInfo}
             </div>
             <div className="form-group col-md-6">
               <label
@@ -255,7 +284,6 @@ const Registration = () => {
                 style={pwdBorder}
                 required
               />
-              {error === "password" ? passwordErrorInfo : null}
             </div>
           </div>
           <div className="form-group text-center">
