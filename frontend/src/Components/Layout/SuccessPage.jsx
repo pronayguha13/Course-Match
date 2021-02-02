@@ -5,7 +5,7 @@ const SuccessPage = ({ regSuccess }) => {
   return (
     <div
       className={style.infopage}
-      style={{ display: regSuccess ? "block" : "block" }}
+      style={{ display: regSuccess ? "block" : "none" }}
     >
       <p>Success!Redirecting...</p>
     </div>

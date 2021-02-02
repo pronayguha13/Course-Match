@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import styles from "./Registration.module.css";
 import {
   formValidationHandler,
   RegistrationFormSubmitHandler,
@@ -8,6 +9,7 @@ import {
 import Loading from "../../Layout/Loading";
 import SuccessPage from "../../Layout/SuccessPage";
 import ErrorPage from "../../Layout/ErrorPage";
+import { DisplayContext } from "../../../Context/DisplayContext";
 let pause;
 const Registration = () => {
   const history = useHistory();
@@ -22,6 +24,8 @@ const Registration = () => {
   const [loading, setLoading] = useState(false);
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
   const [isRegistrationError, setIsRegistrationError] = useState(false);
+
+  const { theme } = useContext(DisplayContext);
 
   useEffect(() => {
     if (isRegistrationSuccess) {
@@ -187,8 +191,8 @@ const Registration = () => {
         }
       : password.length === 0
       ? {
-          borderTop: "2px solid #fff",
-          borderBottom: "2px solid #fff",
+          borderTop: "2px solid #98ded9",
+          borderBottom: "2px solid #98ded9",
         }
       : {
           borderTop: "2px solid red",
@@ -197,7 +201,7 @@ const Registration = () => {
   //style object
 
   return (
-    <div>
+    <div className={styles.Registration} style={theme}>
       <Loading loading={loading} />
       <SuccessPage regSuccess={isRegistrationSuccess} />
       {error !== null ? (

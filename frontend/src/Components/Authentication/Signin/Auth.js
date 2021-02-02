@@ -8,6 +8,7 @@ import {
 } from "../../../helperMethods";
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
 import { LoginContext } from "../../../Context/LoginContext";
+import { DisplayContext } from "../../../Context/DisplayContext";
 import Loading from "../../Layout/Loading";
 import ErrorPage from "../../Layout/ErrorPage";
 import SuccessPage from "../../Layout/SuccessPage";
@@ -27,6 +28,7 @@ const Auth = () => {
   const history = useHistory();
 
   const { setIsLoggedIn } = useContext(LoginContext);
+  const { theme } = useContext(DisplayContext);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -99,7 +101,7 @@ const Auth = () => {
   }, [history, isAuthSuccess, setIsLoggedIn, error, setLoading, setError]);
 
   return (
-    <div className={styles.SignIn}>
+    <div className={styles.SignIn} style={theme}>
       <Loading loading={loading} />
       {isAuthSuccess && showModal ? (
         <SuccessPage regSuccess={isAuthSuccess} />
@@ -152,20 +154,18 @@ const Auth = () => {
                 onBlur={() => setIsPwdActive(false)}
                 required
               />
-              <img
-                src={
-                  isHidden
-                    ? "/assets/images/icons/eye.png"
-                    : "/assets/images/icons/closed-eye.png"
-                }
-                alt="show-password"
-                className={
-                  isPwdActive || password.length
-                    ? styles.showHidePassword
-                    : null
-                }
-                onClick={() => changePasswordView(isHidden, setIsHidden)}
-              />
+              {isPwdActive || password.length ? (
+                <img
+                  src={
+                    isHidden
+                      ? "/assets/images/icons/eye.png"
+                      : "/assets/images/icons/closed-eye.png"
+                  }
+                  alt="show-password"
+                  className={styles.showHidePassword}
+                  onClick={() => changePasswordView(isHidden, setIsHidden)}
+                />
+              ) : null}
             </div>
           </div>
           <div className="form-group row">

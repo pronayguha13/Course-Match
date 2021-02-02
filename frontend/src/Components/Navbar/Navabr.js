@@ -13,7 +13,7 @@ const Navbar = () => {
   const history = useHistory();
   const { showSearch, setShowSearch } = useContext(SearchBarContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
-  const { displayMode, setDisplayMode } = useContext(DisplayContext);
+  const { displayMode, setDisplayMode, theme } = useContext(DisplayContext);
 
   const _logout = () => {
     window.localStorage.clear();
@@ -28,7 +28,7 @@ const Navbar = () => {
     if (isLoggedIn) history.push("/");
   }, [isLoggedIn, history]);
   return (
-    <div className={styles.Navbar}>
+    <div className={styles.Navbar} style={theme}>
       <Link to="/">
         <p
           style={{
@@ -54,11 +54,19 @@ const Navbar = () => {
         {isLoggedIn ? "Log out" : "Log in"}
       </button>
       {searchAreaDisplayHandler(showSearch, setShowSearch)}
-      <img
-        src="/assets/images/icons/dark.png"
-        alt="dark"
-        onClick={() => displayModeHandler(displayMode)}
-      />
+      {displayMode === "light" ? (
+        <img
+          src="/assets/images/icons/dark.png"
+          alt="dark"
+          onClick={() => displayModeHandler(displayMode, setDisplayMode)}
+        />
+      ) : (
+        <img
+          src="/assets/images/icons/light.png"
+          alt="Light"
+          onClick={() => displayModeHandler(displayMode, setDisplayMode)}
+        />
+      )}
     </div>
   );
 };
