@@ -27,9 +27,10 @@ const Registration = () => {
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
   const [isRegistrationError, setIsRegistrationError] = useState(false);
 
-  const { theme } = useContext(DisplayContext);
+  const { themeSwitcher } = useContext(DisplayContext);
 
   useEffect(() => {
+    themeSwitcher();
     if (isRegistrationSuccess) {
       pause = setTimeout(() => {
         setIsRegistrationSuccess(false);
@@ -43,7 +44,7 @@ const Registration = () => {
     return () => {
       clearTimeout(pause);
     };
-  }, [history, isRegistrationSuccess, isRegistrationError]);
+  }, [themeSwitcher, history, isRegistrationSuccess, isRegistrationError]);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -203,7 +204,7 @@ const Registration = () => {
   //style object
 
   return (
-    <div className={styles.Registration} style={theme}>
+    <div className={styles.Registration}>
       <Loading loading={loading} />
       <SuccessPage regSuccess={isRegistrationSuccess} />
       {error !== null ? (
@@ -217,7 +218,7 @@ const Registration = () => {
       >
         <h3>Registration Page</h3>
         <form onSubmit={(e) => _onSubmitHandler(e)}>
-          <div className="form-row">
+          <div className="form-row" style={{ width: "100%" }}>
             <div className="form-group col-md-6">
               <label htmlFor="Name" style={labelStyle}>
                 Name
@@ -247,7 +248,7 @@ const Registration = () => {
               />
             </div>
           </div>
-          <div className="form-row">
+          <div className="form-row" style={{ width: "100%" }}>
             <div className="form-group col-md-6">
               <label
                 htmlFor="inputRoll"

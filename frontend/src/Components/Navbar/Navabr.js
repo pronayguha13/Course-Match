@@ -30,29 +30,17 @@ const Navbar = () => {
   return (
     <div className={styles.Navbar} style={theme}>
       <Link to="/">
-        <p
-          style={{
-            display: "inline-block",
-            margin: "8px 0px 8px 8px",
-          }}
-        >
-          Course-Match App
-        </p>
+        <p>Course-Match App</p>
       </Link>
-      <button
-        className="btn btn-secondary btn-lg"
-        aria-disabled="true"
-        style={{
-          float: "right",
-          height: "40px",
-          paddingTop: "4px",
-          paddingBottom: "4px",
-          marginRight: "5px",
-        }}
-        onClick={() => (isLoggedIn ? _logout() : _login())}
-      >
-        {isLoggedIn ? "Log out" : "Log in"}
-      </button>
+      {isLoggedIn ? (
+        <button
+          className="btn btn-secondary btn-lg"
+          aria-disabled="true"
+          onClick={() => (isLoggedIn ? _logout() : _login())}
+        >
+          Log out
+        </button>
+      ) : null}
       {isLoggedIn ? searchAreaDisplayHandler(showSearch, setShowSearch) : null}
       {displayMode === "light" ? (
         <img
