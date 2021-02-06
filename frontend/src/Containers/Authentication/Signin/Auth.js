@@ -9,9 +9,9 @@ import {
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
 import { LoginContext } from "../../../Context/LoginContext";
 import { DisplayContext } from "../../../Context/DisplayContext";
-import Loading from "../../Layout/Loading";
-import ErrorPage from "../../Layout/ErrorPage";
-import SuccessPage from "../../Layout/SuccessPage";
+import Loading from "../../../Components/Layout/Loading";
+import ErrorPage from "../../../Components/Layout/ErrorPage";
+import SuccessPage from "../../../Components/Layout/SuccessPage";
 
 let pause;
 
@@ -28,7 +28,7 @@ const Auth = () => {
   const history = useHistory();
 
   const { setIsLoggedIn } = useContext(LoginContext);
-  const { theme } = useContext(DisplayContext);
+  const { themeSwitcher } = useContext(DisplayContext);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -81,6 +81,7 @@ const Auth = () => {
   };
 
   useEffect(() => {
+    themeSwitcher();
     if (isAuthSuccess) {
       setLoading(false);
       pause = setTimeout(() => {
@@ -98,10 +99,18 @@ const Auth = () => {
     return () => {
       clearTimeout(pause);
     };
-  }, [history, isAuthSuccess, setIsLoggedIn, error, setLoading, setError]);
+  }, [
+    themeSwitcher,
+    history,
+    isAuthSuccess,
+    setIsLoggedIn,
+    error,
+    setLoading,
+    setError,
+  ]);
 
   return (
-    <div className={styles.SignIn} style={theme}>
+    <div className={styles.SignIn}>
       <Loading loading={loading} />
       {isAuthSuccess && showModal ? (
         <SuccessPage regSuccess={isAuthSuccess} />
@@ -116,18 +125,19 @@ const Auth = () => {
       <div style={{ opacity: loading || error || isAuthSuccess ? 0.2 : 1 }}>
         <h3>Sign in Page</h3>
         <form onSubmit={(e) => _formSubmitHandler(e)}>
-          <div className="form-group row">
+          <div className={styles.formGroupRow}>
             <label htmlFor="roll_number" className="col-sm-2 col-form-label">
               University Roll Number
             </label>
 
-            <div className="col-sm-10">
+            <div className={styles.inputDiv}>
               <input
                 type="text"
                 className="form-control"
                 name="roll_number"
                 value={rollNumber}
                 onChange={(e) => _onChangeHandler(e)}
+                placeholder="Enter your University Roll number"
                 style={
                   rollError
                     ? { border: "5px outset #D64933" }
@@ -138,11 +148,11 @@ const Auth = () => {
               />
             </div>
           </div>
-          <div className="form-group row">
+          <div className={styles.formGroupRow}>
             <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">
               Password
             </label>
-            <div className="col-sm-10">
+            <div className={styles.inputDiv}>
               <input
                 type={isHidden ? "password" : "text"}
                 className="form-control"
@@ -168,16 +178,14 @@ const Auth = () => {
               ) : null}
             </div>
           </div>
-          <div className="form-group row">
-            <div className="col-sm-10">
-              <button type="submit" className="btn btn-primary">
-                Sign in
-              </button>
-              <p styles={{ marginTop: "20px" }}>
-                {" "}
-                if you dont have an account <Link to="/register">Sign Up</Link>
-              </p>
-            </div>
+          <div className={styles.SignInButtonContainer}>
+            <button type="submit" className="btn btn-primary">
+              Sign in
+            </button>
+            <p styles={{ marginTop: "20px" }}>
+              {" "}
+              if you dont have an account <Link to="/register">Sign Up</Link>
+            </p>
           </div>
         </form>
       </div>

@@ -13,12 +13,23 @@ export const DisplayMode = ({ children }) => {
   };
   const theme = displayMode === "dark" ? Dark : Light;
 
+  const themeSwitcher = () => {
+    if (displayMode === "dark") {
+      document.body.style.backgroundColor = "#000";
+      document.body.style.color = "#fff";
+    } else {
+      document.body.style.backgroundColor = "#fff";
+      document.body.style.color = "#000";
+    }
+  };
+
   return (
     <DisplayContext.Provider
       value={{
         displayMode: displayMode,
         setDisplayMode: setDisplayMode,
         theme: theme,
+        themeSwitcher: themeSwitcher,
       }}
     >
       {children}
