@@ -10,7 +10,9 @@ import Loading from "../../Layout/Loading";
 import SuccessPage from "../../Layout/SuccessPage";
 import ErrorPage from "../../Layout/ErrorPage";
 import { DisplayContext } from "../../../Context/DisplayContext";
+
 let pause;
+
 const Registration = () => {
   const history = useHistory();
   const [name, setName] = useState("");

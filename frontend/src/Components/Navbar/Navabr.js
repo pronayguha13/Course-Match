@@ -53,7 +53,7 @@ const Navbar = () => {
       >
         {isLoggedIn ? "Log out" : "Log in"}
       </button>
-      {searchAreaDisplayHandler(showSearch, setShowSearch)}
+      {isLoggedIn ? searchAreaDisplayHandler(showSearch, setShowSearch) : null}
       {displayMode === "light" ? (
         <img
           src="/assets/images/icons/dark.png"
