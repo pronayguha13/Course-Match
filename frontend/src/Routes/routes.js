@@ -6,9 +6,9 @@ import {
   Redirect,
 } from "react-router-dom";
 import App from "../Components/App/App";
-import Auth from "../Components/Authentication/Signin/Auth";
+import Auth from "../Containers/Authentication/Signin/Auth";
 import Navbar from "../Components/Navbar/Navabr";
-import Registration from "../Components/Authentication/Registration/Registration";
+import Registration from "../Containers/Authentication/Registration/Registration";
 import { LoginContext } from "../Context/LoginContext";
 import axios from "axios";
 import { BASE_URL } from "../Context/AXIOS_BASE_URL";
