@@ -28,7 +28,7 @@ const Auth = () => {
   const history = useHistory();
 
   const { setIsLoggedIn } = useContext(LoginContext);
-  const { theme } = useContext(DisplayContext);
+  const { themeSwitcher } = useContext(DisplayContext);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -81,6 +81,7 @@ const Auth = () => {
   };
 
   useEffect(() => {
+    themeSwitcher();
     if (isAuthSuccess) {
       setLoading(false);
       pause = setTimeout(() => {
@@ -98,10 +99,18 @@ const Auth = () => {
     return () => {
       clearTimeout(pause);
     };
-  }, [history, isAuthSuccess, setIsLoggedIn, error, setLoading, setError]);
+  }, [
+    themeSwitcher,
+    history,
+    isAuthSuccess,
+    setIsLoggedIn,
+    error,
+    setLoading,
+    setError,
+  ]);
 
   return (
-    <div className={styles.SignIn} style={theme}>
+    <div className={styles.SignIn}>
       <Loading loading={loading} />
       {isAuthSuccess && showModal ? (
         <SuccessPage regSuccess={isAuthSuccess} />
