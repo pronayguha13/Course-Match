@@ -13,6 +13,7 @@ import { LoginContext } from "../Context/LoginContext";
 import axios from "axios";
 import { BASE_URL } from "../Context/AXIOS_BASE_URL";
 import SearchResult from "../Components/SearchResult/SearchResult";
+import CourseDetailsForm from "../Components/RegistrationForms/CourseDetailsForm";
 
 const BrowserRoutes = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
@@ -41,6 +42,10 @@ const BrowserRoutes = () => {
         <PrivateRoute path="/search/:query" component={SearchResult} />
         <Route path="/sign_in" component={Auth} />
         <Route path="/register" component={Registration} />
+        <Route
+          path="/courseSelection/:userName"
+          component={CourseDetailsForm}
+        />
         <PrivateRoute path="/" exact component={App} />
       </Switch>
     </Router>
