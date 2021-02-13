@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { formValidationHandler, changePasswordView } from "../../helperMethods";
-
+import ErrorPage from "../Layout/ErrorPage";
+let pause;
 const PersonalDetailsForm = ({
   error,
   onActiveHandler,
@@ -17,6 +18,19 @@ const PersonalDetailsForm = ({
   const [isRollActive, SetIsRollActive] = useState(false);
   const [isPwdActive, SetIsPwdActive] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
+  const [isValidationError, setIsValidationError] = useState(false);
+
+  useEffect(() => {
+    if (isValidationError) {
+      pause = setTimeout(() => {
+        setIsValidationError(false);
+        setError(null);
+      }, 2000);
+    }
+    return () => {
+      clearTimeout(pause);
+    };
+  }, [isValidationError]);
 
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -39,10 +53,9 @@ const PersonalDetailsForm = ({
 
   const validationHandler = () => {
     let errorField = formValidationHandler({ roll_number, password });
-
     if (errorField !== false) {
       let errorInfo;
-      if (errorField === "roll number") {
+      if (errorField === "roll Number") {
         errorInfo = "Please enter valid University roll number";
       } else {
         errorInfo =
@@ -54,6 +67,7 @@ const PersonalDetailsForm = ({
       };
 
       setError(errorObject);
+      setIsValidationError(true);
     } else {
       const personalFormData = {
         userName: userName,
@@ -153,13 +167,10 @@ const PersonalDetailsForm = ({
 
   return (
     <div>
-      <div
-        style={{
-          opacity:
-            loading || isRegistrationSuccess || isRegistrationError ? 0.1 : 1,
-        }}
-      >
-        <h3>Registration Page</h3>
+      {isValidationError ? (
+        <ErrorPage opError={isValidationError} error={error} />
+      ) : null}
+      <div style={{ opacity: isValidationError ? 0.1 : 1 }}>
         <form>
           <div className="form-row" style={{ width: "100%" }}>
             <div className="form-group col-md-6">

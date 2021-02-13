@@ -3,3 +3,4 @@ yarn.lock
 frontend/debug.log
 *.env
 /build
+*-error.log

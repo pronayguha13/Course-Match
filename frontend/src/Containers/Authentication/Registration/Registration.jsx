@@ -7,6 +7,7 @@ import CourseDetailsForm from "../../../Components/RegistrationForms/CourseDetai
 import Loading from "../../../Components/Layout/Loading";
 import SuccessPage from "../../../Components/Layout/SuccessPage";
 import ErrorPage from "../../../Components/Layout/ErrorPage";
+import { RegistrationFormSubmitHandler } from "../../../helperMethods";
 
 let pause;
 
@@ -31,6 +32,7 @@ const Registration = () => {
     } else if (isRegistrationError) {
       pause = setTimeout(() => {
         setIsRegistrationError(false);
+        window.location.reload();
       }, 1000);
     }
     return () => {
@@ -58,44 +60,29 @@ const Registration = () => {
     }
   };
 
-  // const _onSubmitHandler = (e) => {
-  //   e.preventDefault();
-  //   const formData = {
-  //     name: name,
-  //     email: email,
-  //     password: password,
-  //     roll_number: roll_number,
-  //   };
-  //   let errorField = formValidationHandler(formData);
-  //   if (errorField !== false) {
-  //     setIsRegistrationError(true);
-  //     let errorInfo;
-  //     if (errorField === "roll number") {
-  //       errorInfo = "Please enter valid University roll number";
-  //     } else {
-  //       errorInfo =
-  //         "Your password must be 8-16 characters long, contain letters and numbers,and must not contain spaces,and emoji.";
-  //     }
-  //     const errorObject = {
-  //       field: errorField,
-  //       info: errorInfo,
-  //     };
-  //     setError(errorObject);
-  //   } else {
-  //     setLoading(false);
-  //     RegistrationFormSubmitHandler(formData, regStateHandler, setLoading);
-  //   }
-  // };
+  const registrationHandler = (e, courseDetails) => {
+    e.preventDefault();
+    setLoading(false);
+    const newUserData = {
+      ...personalData,
+      ...courseDetails,
+    };
+    RegistrationFormSubmitHandler(newUserData, regStateHandler, setLoading);
+  };
 
   return (
     <div className={styles.Registration}>
+      <h3>Registration Page</h3>
       <Loading loading={loading} />
       <SuccessPage regSuccess={isRegistrationSuccess} />
       {error !== null ? (
         <ErrorPage opError={isRegistrationError} error={error} />
       ) : null}
       {Object.keys(personalData).length ? (
-        <CourseDetailsForm />
+        <CourseDetailsForm
+          user={personalData.userName}
+          registrationHandler={registrationHandler}
+        />
       ) : (
         <PersonalDetailsForm
           error={error}

@@ -35,12 +35,20 @@ export const RegistrationFormSubmitHandler = (
   axios
     .post(`${BASE_URL}/user`, formData)
     .then((res) => {
+      console.log("🚀 ~ file: helperMethods.js ~ line 38 ~ .then ~ res", res);
       window.localStorage.setItem("xAuthToken", res.data.token);
       window.localStorage.setItem("user", res.data.user);
       regStateHandler(true);
       setLoading(false);
     })
     .catch((err) => {
+      if (err.response) {
+        console.log(
+          "🚀 ~ file: helperMethods.js ~ line 44 ~ err",
+          err.response.data.ERR_STATUS,
+          err.response.data.ERR_INFO
+        );
+      }
       regStateHandler(false);
       setLoading(false);
     });

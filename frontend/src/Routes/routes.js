@@ -8,7 +8,7 @@ import {
 import App from "../Components/App/App";
 import Auth from "../Containers/Authentication/Signin/Auth";
 import Navbar from "../Components/Navbar/Navabr";
-import Registration from "../Containers/Authentication/Registration/Registration";
+import Registration from "../Containers/Authentication/Registration/Registration.jsx";
 import { LoginContext } from "../Context/LoginContext";
 import axios from "axios";
 import { BASE_URL } from "../Context/AXIOS_BASE_URL";
