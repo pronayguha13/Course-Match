@@ -8,12 +8,10 @@ router.get("/", (req, res) => {
   department
     .find()
     .then((dept) => {
-      //   console.log(dept);
-      res.json(dept);
+      res.status(200).json({ dept: dept });
     })
     .catch((err) => {
-      console.log("err-->", err);
-      res.status(400).json("error");
+      res.status(400).json({ dept: null });
     });
 });
 
