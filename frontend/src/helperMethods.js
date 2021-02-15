@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import SearchArea from "./Components/Search/SearchArea";
+import SearchArea from "./Components/Navbar/Search/SearchArea";
 import { BASE_URL } from "./Context/AXIOS_BASE_URL";
 
 export const searchAreaDisplayHandler = (showSearch, setShowSearch) => {

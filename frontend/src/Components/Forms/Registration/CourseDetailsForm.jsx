@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./CourseDetailsForm.module.css";
-import subjectList from "../../Context/SubjectList";
-import SubjectListTable from "../SubjectList/SubjectListTable";
+import subjectList from "../../../Context/SubjectList";
+import SubjectListTable from "../../Layout/SubjectList/SubjectListTable";
 
 const CourseDetailsForm = ({ user, registrationHandler }) => {
   const [stream, setStream] = useState("");

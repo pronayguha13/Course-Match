@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styles from "./SearchArea.module.css";
-import { SearchBarContext } from "../../Context/SearchBarContext";
+import { SearchBarContext } from "../../../Context/SearchBarContext";
 import { withRouter } from "react-router-dom";
 // import { searchHandler } from "../../helperMethods";
 const SearchArea = (props) => {

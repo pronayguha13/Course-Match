@@ -9,7 +9,7 @@ import {
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
 import { LoginContext } from "../../../Context/LoginContext";
 import { DisplayContext } from "../../../Context/DisplayContext";
-import Loading from "../../../Components/Layout/Loading";
+import Loading from "../../../Components/Layout/Loading.jsx";
 import ErrorPage from "../../../Components/Layout/ErrorPage";
 import SuccessPage from "../../../Components/Layout/SuccessPage";
 

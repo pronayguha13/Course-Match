@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import styles from "./SearchResult.module.css";
-import { SearchBarContext } from "../../Context/SearchBarContext";
+import { SearchBarContext } from "../../../Context/SearchBarContext";
 import Card from "../StudentInfoCard/Card";
-import NotFoundCard from "../Layout/NotFoundCard";
+import NotFoundCard from "../NotFoundCard";
 const SearchResult = (props) => {
   const { isLoading, searchResult } = useContext(SearchBarContext);
   return (
