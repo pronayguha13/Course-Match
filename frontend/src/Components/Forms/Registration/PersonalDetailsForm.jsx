@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { formValidationHandler, changePasswordView } from "../../helperMethods";
-import ErrorPage from "../Layout/ErrorPage";
+import {
+  formValidationHandler,
+  changePasswordView,
+} from "../../../helperMethods";
+import ErrorPage from "../../Layout/ErrorPage";
 let pause;
 const PersonalDetailsForm = ({
   error,

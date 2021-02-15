@@ -6,14 +6,14 @@ import {
   Redirect,
 } from "react-router-dom";
 import App from "../Components/App/App";
-import Auth from "../Containers/Authentication/Signin/Auth";
-import Navbar from "../Components/Navbar/Navabr";
+import Auth from "../Containers/Authentication/Signin/Auth.jsx";
+import Navbar from "../Components/Navbar/Navbar.jsx";
 import Registration from "../Containers/Authentication/Registration/Registration.jsx";
 import { LoginContext } from "../Context/LoginContext";
 import axios from "axios";
 import { BASE_URL } from "../Context/AXIOS_BASE_URL";
-import SearchResult from "../Components/SearchResult/SearchResult";
-import CourseDetailsForm from "../Components/RegistrationForms/CourseDetailsForm";
+import SearchResult from "../Components/Layout/SearchResult/SearchResult";
+import CourseDetailsForm from "../Components/Forms/Registration/CourseDetailsForm";
 
 const BrowserRoutes = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
