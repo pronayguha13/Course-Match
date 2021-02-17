@@ -13,6 +13,7 @@ const PersonalDetailsForm = ({
   isRegistrationError,
   setError,
   setPersonalData,
+  display,
 }) => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -169,7 +170,7 @@ const PersonalDetailsForm = ({
   //style object
 
   return (
-    <div>
+    <div style={{ display: display }}>
       {isValidationError ? (
         <ErrorPage opError={isValidationError} error={error} />
       ) : null}
