@@ -3,6 +3,7 @@
 
 .Container {
   display: flex;
+  flex-flow: column;
   position: relative;
   text-align: center;
   width: 100%;
@@ -10,7 +11,7 @@
   background-color: #f2f2f2;
 }
 
-.Container img {
+.Container .HomePageImage {
   height: 54rem;
   width: 80%;
   text-align: left;
@@ -110,3 +111,7 @@
 .CloseButton:hover {
   background-color: #ccc;
 }
+
+/* html:not([data-scroll="640"]) .ContactSection {
+  display: none;
+} */
