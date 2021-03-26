@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 export const DisplayContext = createContext();
 export const DisplayMode = ({ children }) => {
-  const [displayMode, setDisplayMode] = useState("dark");
+  const [displayMode, setDisplayMode] = useState("light");
   const Dark = {
     backgroundColor: "#000",
     color: "#fff",

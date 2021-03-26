@@ -16,7 +16,7 @@ const Registration = () => {
   const [isRegistrationError, setIsRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [personalData, setPersonalData] = useState({});
+  const [personalData, setPersonalData] = useState({ userName: "Pronay Guha" });
 
   const history = useHistory();
 

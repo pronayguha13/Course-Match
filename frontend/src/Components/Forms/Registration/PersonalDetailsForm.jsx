@@ -199,6 +199,7 @@ const PersonalDetailsForm = ({
                 type="email"
                 name="email"
                 value={email}
+                placeholder="email@example.com"
                 className="form-control"
                 id="inputEmail4"
                 onChange={(e) => _onChangeHandler(e)}

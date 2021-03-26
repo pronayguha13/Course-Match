@@ -17,6 +17,7 @@ const CourseDetailsForm = ({
   const [subjects, setSubjects] = useState(undefined);
   const [departments, setDepartments] = useState([]);
   const [showDeptCreateForm, setShowDeptCreateForm] = useState(false);
+  const [showSemesterCreateForm, setShowSemesterCreateForm] = useState(false);
 
   const semesters = [1, 3, 5, 7];
 
@@ -52,6 +53,10 @@ const CourseDetailsForm = ({
     setShowDeptCreateForm(true);
   };
 
+  const createSemesterForm = () => {
+    setShowSemesterCreateForm(true);
+  };
+
   const getStream = (e) => {
     setStream(e.target.innerHTML);
   };
@@ -65,7 +70,12 @@ const CourseDetailsForm = ({
       {departments.length ? (
         <>
           {showDeptCreateForm ? <DepartmentCreateForm /> : null}
-          <div style={{ opacity: showDeptCreateForm ? 0.1 : 1, zIndex: 10 }}>
+          <div
+            style={{
+              display: showDeptCreateForm ? "none" : "block",
+              zIndex: 10,
+            }}
+          >
             <h4>Hello! {user}</h4>
             <button
               onClick={() => goBackButtonHandler()}
@@ -106,8 +116,8 @@ const CourseDetailsForm = ({
                     ))}
                   <button
                     className="dropdown-item"
-                    style={{ backgroundColor: "#00ff00" }}
-                    onClick={() => createDept()}
+                    style={{ backgroundColor: "#FF3366", color: "#fff" }}
+                    onClick={() => createSemesterForm()}
                   >
                     Click to add new stream
                   </button>
