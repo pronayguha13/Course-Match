@@ -14,13 +14,12 @@
   display: flex;
   flex-direction: column;
   padding-left: 30px;
-  padding-right: 5rem;
+  padding-right: 10rem;
   text-align: start;
   border: 2px solid #f2f2f2;
   border-left: none;
   border-top: none;
   border-bottom: none;
-  margin-right: 5rem;
 }
 
 .CompanyName {
@@ -36,14 +35,169 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-left: 5rem;
+  padding-right: 10rem;
+  /* border-right: 2px solid #f2f2f2; */
 }
 
 .contactInfo img {
   padding: 5px;
   border: 2px solid #7a9e9f;
   border-radius: 50%;
+  margin-right: 4rem;
 }
 
 .contactInfo img:hover {
   background-color: #acafa4;
+  box-shadow: -7px -1px 15px 0px rgba(0, 0, 0, 0.75);
+}
+
+.SocialMediaInfo {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  width: 1350px;
+  /* justify-content: space-evenly; */
+}
+
+.SocialMediaConnect {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 5rem;
+}
+
+.SocialMediaConnect > * {
+  display: flex;
+  flex-direction: row;
+}
+
+.SocialMediaConnect > * img {
+  width: 40px;
+  height: 40px;
+}
+
+.SocialMediaConnect > * span {
+  font-family: "Oswald", sans-serif;
+}
+
+.SocialMediaConnect > *:hover {
+  border: 2px solid #738b95;
+  border-radius: 50%;
+  box-shadow: -7px -1px 15px 0px rgba(0, 0, 0, 0.75);
+}
+
+.ConnectHeading {
+  align-self: center;
+  width: 200px;
+  height: 2rem;
+  padding: top 5px;
+  font-family: "Oswald", sans-serif;
+  border: 2px solid #f2f2f2;
+}
+
+.MailToolTip {
+  position: absolute;
+  top: 950px;
+  left: 510px;
+  background-color: midnightblue;
+  width: 195px;
+  height: 30px;
+  border: 2px solid midnightblue;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.MailLink:hover .MailToolTip {
+  visibility: visible;
+}
+
+.LinkedinLink:hover {
+  padding: 6px;
+  padding-bottom: 10px;
+}
+
+.LinkedinTooltip {
+  position: absolute;
+  top: 895px;
+  right: 895px;
+  background-color: midnightblue;
+  width: 270px;
+  height: 30px;
+  border: 2px solid midnightblue;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.LinkedinLink:hover > .LinkedinTooltip {
+  visibility: visible;
+}
+.MediumTooltip {
+  position: absolute;
+  top: 1010px;
+  right: 645px;
+  background-color: midnightblue;
+  width: 195px;
+  height: 30px;
+  border: 2px solid midnightblue;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.MediumLink:hover > .MediumTooltip {
+  visibility: visible;
+}
+
+.GithubTooltip {
+  position: absolute;
+  top: 905px;
+  right: 340px;
+  background-color: midnightblue;
+  width: 195px;
+  height: 30px;
+  border: 2px solid midnightblue;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.GithubLink:hover .GithubTooltip {
+  visibility: visible;
+}
+
+.TwitterTooltip {
+  position: absolute;
+  top: 940px;
+  right: 70px;
+  background-color: midnightblue;
+  width: 250px;
+  height: 30px;
+  border: 2px solid midnightblue;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.TwitterLink:hover {
+  border: 2px solid #f2f2f2;
+  border-radius: 50%;
+}
+
+.TwitterLink:hover .TwitterTooltip {
+  visibility: visible;
+}
+
+/* .Message {
+  /* justify-self
+} */
+
+.CreateMessage {
+  float: left;
+  font-family: "Train One", cursive;
+  margin-left: 26rem;
+  font-size: 20px;
+}
+
+.LicenceMessage {
+  float: right;
+  border-bottom: 2px solid #f2f2f2;
 }
