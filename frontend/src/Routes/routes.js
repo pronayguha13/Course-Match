@@ -15,6 +15,7 @@ import { BASE_URL } from "../Context/AXIOS_BASE_URL";
 import SearchResult from "../Components/Layout/SearchResult/SearchResult";
 import CourseDetailsForm from "../Components/Forms/Registration/CourseDetailsForm";
 import LandingPage from "../Components/LandingPage/LandingPage";
+import Footer from "../Components/Footer/Footer.jsx";
 
 const BrowserRoutes = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
@@ -50,6 +51,7 @@ const BrowserRoutes = () => {
         <Route path="/index" exact component={LandingPage} />
         <PrivateHomeRoute path="/" exact component={App} />
       </Switch>
+      <Footer />
     </Router>
   );
 };
