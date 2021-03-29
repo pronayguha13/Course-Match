@@ -52,7 +52,7 @@ app.use("/user", userRoutes);
 
 app.use("/index", homeRoutes);
 
-app.use("/admin/department", deptRoutes);
+app.use("/department", deptRoutes);
 
 app.use("/admin/subject", subRoutes);
 app.use("/admin/semester", semRoutes);

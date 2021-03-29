@@ -14,6 +14,8 @@ import axios from "axios";
 import { BASE_URL } from "../Context/AXIOS_BASE_URL";
 import SearchResult from "../Components/Layout/SearchResult/SearchResult";
 import CourseDetailsForm from "../Components/Forms/Registration/CourseDetailsForm";
+import LandingPage from "../Components/LandingPage/LandingPage";
+import Footer from "../Components/Footer/Footer.jsx";
 
 const BrowserRoutes = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
@@ -46,8 +48,10 @@ const BrowserRoutes = () => {
           path="/courseSelection/:userName"
           component={CourseDetailsForm}
         />
-        <PrivateRoute path="/" exact component={App} />
+        <Route path="/index" exact component={LandingPage} />
+        <PrivateHomeRoute path="/" exact component={App} />
       </Switch>
+      <Footer />
     </Router>
   );
 };
@@ -72,4 +76,23 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
+const PrivateHomeRoute = ({ component: Component, ...rest }) => {
+  const { isLoggedIn } = useContext(LoginContext);
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        isLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/index",
+            }}
+          />
+        )
+      }
+    ></Route>
+  );
+};
 export default BrowserRoutes;

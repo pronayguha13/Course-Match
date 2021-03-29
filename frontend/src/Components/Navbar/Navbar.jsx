@@ -28,9 +28,11 @@ const Navbar = () => {
     if (isLoggedIn) history.push("/");
   }, [isLoggedIn, history]);
   return (
-    <div className={styles.Navbar} style={theme}>
+    <div className={styles.Navbar}>
       <Link to="/">
-        <p>Course-Match App</p>
+        <p>
+          <img src="/coursematch.png" alt="logo" />
+        </p>
       </Link>
       {isLoggedIn ? (
         <button
@@ -42,19 +44,23 @@ const Navbar = () => {
         </button>
       ) : null}
       {isLoggedIn ? searchAreaDisplayHandler(showSearch, setShowSearch) : null}
-      {displayMode === "light" ? (
+      <img
+        src="/assets/images/icons/menu_black_24dp.svg"
+        alt="hamburger-menu"
+      />
+      {/* {displayMode === "light" ? (
         <img
-          src="/assets/images/icons/dark.png"
+          src="/assets/images/icons/menu_black_24dp.svg"
           alt="dark"
           onClick={() => displayModeHandler(displayMode, setDisplayMode)}
         />
       ) : (
         <img
-          src="/assets/images/icons/light.png"
+          src="/assets/images/icons/menu_black_24dp.svg"
           alt="Light"
           onClick={() => displayModeHandler(displayMode, setDisplayMode)}
         />
-      )}
+      )} */}
     </div>
   );
 };

@@ -16,7 +16,7 @@ const Registration = () => {
   const [isRegistrationError, setIsRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [personalData, setPersonalData] = useState({});
+  const [personalData, setPersonalData] = useState({ userName: "Pronay Guha" });
 
   const history = useHistory();
 
@@ -48,7 +48,9 @@ const Registration = () => {
       handlerMethod(true);
     }
   };
-
+  const goBackButtonHandler = () => {
+    setPersonalData({});
+  };
   const regStateHandler = (regStatus) => {
     if (regStatus) {
       setIsRegistrationSuccess(true);
@@ -78,23 +80,23 @@ const Registration = () => {
       {error !== null ? (
         <ErrorPage opError={isRegistrationError} error={error} />
       ) : null}
-      {Object.keys(personalData).length ? (
-        <CourseDetailsForm
-          user={personalData.userName}
-          registrationHandler={registrationHandler}
-        />
-      ) : (
-        <PersonalDetailsForm
-          error={error}
-          onActiveHandler={onActiveHandler}
-          loading={loading}
-          isRegistrationSuccess={isRegistrationSuccess}
-          isRegistrationError={isRegistrationError}
-          setIsRegistrationError={setIsRegistrationError}
-          setError={setError}
-          setPersonalData={setPersonalData}
-        />
-      )}
+      <CourseDetailsForm
+        user={personalData.userName}
+        registrationHandler={registrationHandler}
+        display={Object.keys(personalData).length > 0 ? "block" : "none"}
+        goBackButtonHandler={goBackButtonHandler}
+      />
+      <PersonalDetailsForm
+        error={error}
+        onActiveHandler={onActiveHandler}
+        loading={loading}
+        isRegistrationSuccess={isRegistrationSuccess}
+        isRegistrationError={isRegistrationError}
+        setIsRegistrationError={setIsRegistrationError}
+        setError={setError}
+        setPersonalData={setPersonalData}
+        display={Object.keys(personalData).length > 0 ? "none" : "block"}
+      />
       <p>
         {" "}
         If you have an account <Link to="/sign_in">Sign In</Link>

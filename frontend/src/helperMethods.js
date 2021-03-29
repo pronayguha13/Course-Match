@@ -75,3 +75,24 @@ export const changePasswordView = (isHidden, setIsHidden) => {
   const currentViewState = isHidden;
   setIsHidden(!currentViewState);
 };
+
+//method for fetching list of departments
+export const getDepartments = (setDepartments) => {
+  let departments = [];
+  axios
+    .get(`${BASE_URL}/department/get`)
+    .then((res) => {
+      res.data.dept.map((d) => {
+        departments.push(d.dept_code);
+      });
+      console.log(
+        "🚀 ~ file: helperMethods.js ~ line 87 ~ res.data.dept.map ~ departments",
+        departments
+      );
+
+      setDepartments(departments);
+    })
+    .catch((err) => {
+      setDepartments([]);
+    });
+};

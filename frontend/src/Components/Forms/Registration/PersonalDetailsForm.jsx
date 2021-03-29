@@ -13,6 +13,7 @@ const PersonalDetailsForm = ({
   isRegistrationError,
   setError,
   setPersonalData,
+  display,
 }) => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -169,7 +170,7 @@ const PersonalDetailsForm = ({
   //style object
 
   return (
-    <div>
+    <div style={{ display: display }}>
       {isValidationError ? (
         <ErrorPage opError={isValidationError} error={error} />
       ) : null}
@@ -198,6 +199,7 @@ const PersonalDetailsForm = ({
                 type="email"
                 name="email"
                 value={email}
+                placeholder="email@example.com"
                 className="form-control"
                 id="inputEmail4"
                 onChange={(e) => _onChangeHandler(e)}

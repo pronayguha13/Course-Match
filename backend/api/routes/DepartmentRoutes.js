@@ -4,14 +4,15 @@ const router = express.Router();
 //import department model
 const department = require("../models/DepartmentModel");
 
-router.get("/", (req, res) => {
+router.get("/get", (req, res) => {
   department
     .find()
     .then((dept) => {
       res.status(200).json({ dept: dept });
     })
     .catch((err) => {
-      res.status(400).json({ dept: null });
+      console.log("err-->", err);
+      res.status(400).json({ dept: dept });
     });
 });
 
