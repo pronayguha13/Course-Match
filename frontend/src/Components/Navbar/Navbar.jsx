@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import {
@@ -8,9 +8,13 @@ import {
 import { SearchBarContext } from "../../Context/SearchBarContext";
 import { LoginContext } from "../../Context/LoginContext";
 import { DisplayContext } from "../../Context/DisplayContext";
+import { MenuDrawerContext } from "../../Context/MenuDrawer";
 
 const Navbar = () => {
   const history = useHistory();
+  const { isMenuDrawerOpen, setIsMenuDrawerOpen } = useContext(
+    MenuDrawerContext
+  );
   const { showSearch, setShowSearch } = useContext(SearchBarContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
   const { displayMode, setDisplayMode, theme } = useContext(DisplayContext);
@@ -27,13 +31,14 @@ const Navbar = () => {
   useEffect(() => {
     if (isLoggedIn) history.push("/");
   }, [isLoggedIn, history]);
+
   return (
     <div className={styles.Navbar}>
-      <Link to="/">
-        <p>
+      <span className={styles.IconWrapper}>
+        <Link to="/">
           <img src="/coursematch.png" alt="logo" />
-        </p>
-      </Link>
+        </Link>
+      </span>
       {isLoggedIn ? (
         <button
           className="btn btn-secondary btn-lg"
@@ -44,10 +49,24 @@ const Navbar = () => {
         </button>
       ) : null}
       {isLoggedIn ? searchAreaDisplayHandler(showSearch, setShowSearch) : null}
-      <img
-        src="/assets/images/icons/menu_black_24dp.svg"
-        alt="hamburger-menu"
-      />
+      <span
+        className={styles.MenuDrawer}
+        onClick={() => {
+          setIsMenuDrawerOpen(!isMenuDrawerOpen);
+        }}
+      >
+        {!isMenuDrawerOpen ? (
+          <img
+            src="/assets/images/icons/menu_black_24dp.svg"
+            alt="hamburger-menu-open"
+          />
+        ) : (
+          <img
+            src="/assets/images/icons/menu_open_black_24dp.svg"
+            alt="hamburger-menu-close"
+          />
+        )}
+      </span>
       {/* {displayMode === "light" ? (
         <img
           src="/assets/images/icons/menu_black_24dp.svg"

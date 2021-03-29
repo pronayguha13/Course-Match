@@ -10,15 +10,18 @@ import Auth from "../Containers/Authentication/Signin/Auth.jsx";
 import Navbar from "../Components/Navbar/Navbar.jsx";
 import Registration from "../Containers/Authentication/Registration/Registration.jsx";
 import { LoginContext } from "../Context/LoginContext";
+import { MenuDrawerContext } from "../Context/MenuDrawer";
 import axios from "axios";
 import { BASE_URL } from "../Context/AXIOS_BASE_URL";
 import SearchResult from "../Components/Layout/SearchResult/SearchResult";
 import CourseDetailsForm from "../Components/Forms/Registration/CourseDetailsForm";
 import LandingPage from "../Components/LandingPage/LandingPage";
 import Footer from "../Components/Footer/Footer.jsx";
+import MenuDrawer from "../Components/Menudrawer/Menudrawer.jsx";
 
 const BrowserRoutes = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
+  const { isMenuDrawerOpen } = useContext(MenuDrawerContext);
 
   useEffect(() => {
     const xAuthToken = window.localStorage.getItem("xAuthToken");
@@ -40,6 +43,7 @@ const BrowserRoutes = () => {
   return (
     <Router>
       <Navbar />
+      <MenuDrawer isOpen={isMenuDrawerOpen} />
       <Switch>
         <PrivateRoute path="/search/:query" component={SearchResult} />
         <Route path="/sign_in" component={Auth} />

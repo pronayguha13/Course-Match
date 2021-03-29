@@ -1,0 +1,9 @@
+.MenuDrawerContainer {
+  position: absolute;
+  width: 400px;
+  height: 100vh;
+  background-color: #ccc;
+  top: 90px;
+  right: 0;
+  z-index: 500;
+}
