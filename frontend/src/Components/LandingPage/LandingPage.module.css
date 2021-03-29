@@ -3,7 +3,7 @@
 
 .Container {
   display: flex;
-  flex-flow: column;
+  /* flex-flow: column; */
   position: relative;
   text-align: center;
   width: 100%;
@@ -11,10 +11,15 @@
   background-color: #f2f2f2;
 }
 
+.HomePageImageContainer {
+  background-color: #7b6663;
+}
+
 .Container .HomePageImage {
   height: 54rem;
-  width: 80%;
+  width: 90%;
   text-align: left;
+  margin-left: 10rem;
 }
 
 .TextBanner {

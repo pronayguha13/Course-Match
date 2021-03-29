@@ -7,11 +7,13 @@ const LandingPage = () => {
 
   return (
     <div className={styles.Container}>
-      <img
-        src="/assets/images/index/Students.jpg"
-        alt="landing page image"
-        className={styles.HomePageImage}
-      />
+      <span className={styles.HomePageImageContainer}>
+        <img
+          src="/assets/images/index/Students.jpg"
+          alt="landing page image"
+          className={styles.HomePageImage}
+        />
+      </span>
       <div className={styles.TextBanner}>
         <span>
           Lay but don't fell back...
