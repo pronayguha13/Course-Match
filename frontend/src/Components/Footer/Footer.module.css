@@ -99,7 +99,7 @@
 
 .MailToolTip {
   position: absolute;
-  top: 950px;
+  top: 1010px;
   left: 510px;
   background-color: midnightblue;
   width: 195px;
@@ -120,7 +120,7 @@
 
 .LinkedinTooltip {
   position: absolute;
-  top: 895px;
+  top: 955px;
   right: 895px;
   background-color: midnightblue;
   width: 270px;
@@ -135,7 +135,7 @@
 }
 .MediumTooltip {
   position: absolute;
-  top: 1010px;
+  top: 1070px;
   right: 645px;
   background-color: midnightblue;
   width: 195px;
@@ -151,7 +151,7 @@
 
 .GithubTooltip {
   position: absolute;
-  top: 905px;
+  top: 965px;
   right: 340px;
   background-color: midnightblue;
   width: 195px;
@@ -167,8 +167,8 @@
 
 .TwitterTooltip {
   position: absolute;
-  top: 940px;
-  right: 70px;
+  top: 1010px;
+  right: 60px;
   background-color: midnightblue;
   width: 250px;
   height: 30px;
