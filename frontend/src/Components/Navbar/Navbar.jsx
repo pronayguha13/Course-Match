@@ -12,9 +12,7 @@ import { MenuDrawerContext } from "../../Context/MenuDrawer";
 
 const Navbar = () => {
   const history = useHistory();
-  const { isMenuDrawerOpen, setIsMenuDrawerOpen } = useContext(
-    MenuDrawerContext
-  );
+  const { isMenuDrawerOpen, menuDrawerHandler } = useContext(MenuDrawerContext);
   const { showSearch, setShowSearch } = useContext(SearchBarContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
   const { displayMode, setDisplayMode, theme } = useContext(DisplayContext);
@@ -52,7 +50,7 @@ const Navbar = () => {
       <span
         className={styles.MenuDrawer}
         onClick={() => {
-          setIsMenuDrawerOpen(!isMenuDrawerOpen);
+          menuDrawerHandler();
         }}
       >
         {!isMenuDrawerOpen ? (

@@ -1,9 +1,85 @@
-.MenuDrawerContainer {
+.MenuDrawerContainerOpen {
   position: absolute;
-  width: 400px;
+  width: 100vw;
   height: 100vh;
-  background-color: #ccc;
-  top: 90px;
+  /* background-color: #008395; */
+  background-color: #111111;
+  top: 0;
   right: 0;
   z-index: 500;
+  transform: translateY(0);
+  transition: transform ease-in 0.25s;
+}
+
+.MenuDrawerContainerClose {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #111111;
+  top: 0;
+  right: 0;
+  z-index: 500;
+  transform: translateY(-100vh);
+  transition: transform ease-in 0.25s;
+}
+
+.MenuDrawerCloseButton {
+  display: flex;
+  width: 100vw;
+  height: 3rem;
+  background-color: #ef2e5b;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.MenuDrawerCloseButton img {
+  vertical-align: bottom;
+}
+
+.MenuDrawerCloseButton:hover {
+  box-shadow: -14px -13px 26px 0px rgba(0, 0, 0, 0.75) inset;
+}
+
+.MenuItems {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  height: 50vh;
+}
+
+.MenuItem {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.MenuItems span a {
+  text-decoration: none;
+  font-size: 2rem;
+}
+
+.MenuItem a p {
+  display: inline;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.MenuItem a img {
+  margin-right: 20px;
+}
+
+.MenuItem:hover {
+  background-color: #ef2e5b;
+  transition: background-color ease-in 0.25s;
+}
+.MenuItem:hover a img {
+  border: 2px solid #f2f2f2;
+  border-radius: 50%;
+  width: 34px;
+  transition: border ease-in 0.25s;
+}
+
+.MenuItem:hover a p {
+  color: #f2f2f2;
 }
