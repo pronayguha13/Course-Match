@@ -89,10 +89,12 @@ const Auth = () => {
 
       <div style={{ opacity: loading || error || isAuthSuccess ? 0.2 : 1 }}>
         <LoginForm loginFormSubmitHandler={loginFormSubmitHandler} />
-        <p styles={{ marginTop: "20px" }}>
-          {" "}
-          if you dont have an account <Link to="/register">Sign Up</Link>
-        </p>
+        <Link to="/register">
+          <button className={`${styles.SignUpBtn} btn btn-success`}>
+            {" "}
+            Create an account
+          </button>
+        </Link>
       </div>
     </div>
   );
