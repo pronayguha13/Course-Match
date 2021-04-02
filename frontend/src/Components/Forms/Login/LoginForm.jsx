@@ -89,8 +89,8 @@ const LoginForm = ({ loginFormSubmitHandler }) => {
               <img
                 src={
                   isHidden
-                    ? "/assets/images/icons/eye.png"
-                    : "/assets/images/icons/closed-eye.png"
+                    ? "/assets/images/icons/LoginForm/eye.svg"
+                    : "/assets/images/icons/LoginForm/visibility_off_black_24dp.svg"
                 }
                 alt="show-password"
                 className={styles.showHidePassword}
