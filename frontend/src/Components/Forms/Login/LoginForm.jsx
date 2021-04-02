@@ -56,13 +56,14 @@ const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
               }
               style={rollError ? errorPlaceHolderStyle : null}
             >
-              <p> Enter Roll Number</p>
+              <p> Roll Number</p>
             </span>
             <input
               type="text"
               className={styles.RollNumberInput}
               name="roll_number"
               value={rollNumber}
+              placeholder={rollFocus ? "Enter Roll Number" : ""}
               onChange={(e) => _onChangeHandler(e)}
               onFocus={() => {
                 setRollFocus(true);
@@ -83,7 +84,7 @@ const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
               }
               style={passwordError ? errorPlaceHolderStyle : null}
             >
-              <p> Enter Password</p>
+              <p> Password</p>
             </span>
             <input
               type={isHidden ? "password" : "text"}
@@ -91,6 +92,7 @@ const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
               id="inputPassword3"
               value={password}
               name="password"
+              placeholder={passwordFocus ? "Enter Password" : ""}
               onChange={(e) => _onChangeHandler(e)}
               onFocus={() => setPasswordFocus(true)}
               onBlur={() => setPasswordFocus(false)}
