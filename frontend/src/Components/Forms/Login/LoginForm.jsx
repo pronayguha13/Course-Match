@@ -2,22 +2,36 @@ import React, { useState, useEffect } from "react";
 import { changePasswordView } from "../../../helperMethods";
 import styles from "./LoginForm.module.css";
 
-const LoginForm = ({ loginFormSubmitHandler }) => {
+const LoginForm = ({
+  rollError,
+  passwordError,
+  setRollError,
+  setPasswordError,
+  loginFormSubmitHandler,
+}) => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [rollError, setRollError] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
   const [rollFocus, setRollFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+
+  const errorPlaceHolderStyle = {
+    color: "red",
+  };
+  const errorInputStyle = {
+    borderBottom: "2px solid red",
+    color: "red",
+  };
+
   const _onChangeHandler = (e) => {
     const { name, value } = e.target;
     if (name === "roll_number") {
       const enteredRoll = value.trimLeft();
-      if (!isNaN(enteredRoll) && enteredRoll.length) {
-        setRollError(false);
-        setRollNumber(parseInt(enteredRoll));
+      if (!isNaN(enteredRoll)) {
+        enteredRoll.length
+          ? setRollNumber(parseInt(enteredRoll))
+          : setRollNumber("");
       } else {
-        setRollError(true);
         setRollNumber("");
       }
     } else {
@@ -46,6 +60,7 @@ const LoginForm = ({ loginFormSubmitHandler }) => {
                   ? styles.smallRollNumberPlaceholderText
                   : styles.rollNumberPlaceholderText
               }
+              style={rollError ? errorPlaceHolderStyle : null}
             >
               <p> Enter Roll Number</p>
             </span>
@@ -62,6 +77,7 @@ const LoginForm = ({ loginFormSubmitHandler }) => {
                 setRollFocus(false);
               }}
               required
+              style={rollError ? errorInputStyle : null}
             />
           </div>
           <div className={styles.inputDiv}>
@@ -71,6 +87,7 @@ const LoginForm = ({ loginFormSubmitHandler }) => {
                   ? styles.smallPasswordPlaceholderText
                   : styles.passwordPlaceholderText
               }
+              style={passwordError ? errorPlaceHolderStyle : null}
             >
               <p> Enter Password</p>
             </span>
@@ -84,6 +101,7 @@ const LoginForm = ({ loginFormSubmitHandler }) => {
               onFocus={() => setPasswordFocus(true)}
               onBlur={() => setPasswordFocus(false)}
               required
+              style={passwordError ? errorInputStyle : null}
             />
             {password.length ? (
               <img

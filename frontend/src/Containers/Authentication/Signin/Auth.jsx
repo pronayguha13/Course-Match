@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import styles from "./auth.module.css";
-import { formValidationHandler } from "../../../helperMethods";
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
+import { formValidationHandler } from "../../../helperMethods";
 import { LoginContext } from "../../../Context/LoginContext";
 import { DisplayContext } from "../../../Context/DisplayContext";
 import Loading from "../../../Components/Layout/Loading.jsx";
 import ErrorPage from "../../../Components/Layout/ErrorPage";
 import SuccessPage from "../../../Components/Layout/SuccessPage";
 import LoginForm from "../../../Components/Forms/Login/LoginForm";
+import styles from "./auth.module.css";
 let pause;
 
 const Auth = () => {
   const [isAuthSuccess, setIsAuthSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [rollError, setRollError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const history = useHistory();
@@ -33,10 +35,6 @@ const Auth = () => {
       }, 2000);
     } else if (error) {
       setLoading(false);
-      pause = setTimeout(() => {
-        // clearField();
-        setError(false);
-      }, 1000);
     }
     return () => {
       clearTimeout(pause);
@@ -51,13 +49,14 @@ const Auth = () => {
     setError,
   ]);
 
-  const loginFormSubmitHandler = (formData) => {
-    setFormData(formData);
+  const loginFormSubmitHandler = (submittedFormData) => {
+    setFormData(submittedFormData);
     setLoading(true);
-    let authError = formValidationHandler(formData);
+    let authError = formValidationHandler(submittedFormData);
 
     if (authError !== false) {
       setError(true);
+      authError === "rollNumber" ? setRollError(true) : setPasswordError(true);
       setShowModal(true);
     } else {
       setShowModal(true);
@@ -84,11 +83,18 @@ const Auth = () => {
         <ErrorPage
           opError={error}
           error={{ info: "Enter Valid Credentials" }}
+          setError={setError}
         />
       ) : null}
 
       <div style={{ opacity: loading || error || isAuthSuccess ? 0.2 : 1 }}>
-        <LoginForm loginFormSubmitHandler={loginFormSubmitHandler} />
+        <LoginForm
+          loginFormSubmitHandler={loginFormSubmitHandler}
+          rollError={rollError}
+          setRollError={setRollError}
+          passwordError={passwordError}
+          setPasswordError={setPasswordError}
+        />
         <Link to="/register">
           <button className={`${styles.SignUpBtn} btn btn-success`}>
             {" "}

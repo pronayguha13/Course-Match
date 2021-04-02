@@ -18,11 +18,11 @@ export const searchAreaDisplayHandler = (showSearch, setShowSearch) => {
 
 export const formValidationHandler = (formData) => {
   const rollNumberRegEx = /^1[0-9]{1}9[0-9]{8}/;
-  const { password, roll_number } = formData;
+  const { rollNumber, password } = formData;
   return password.length >= 8 && password.length <= 16
-    ? String(roll_number).match(rollNumberRegEx)
+    ? String(rollNumber).match(rollNumberRegEx)
       ? false
-      : "roll Number"
+      : "rollNumber"
     : "password";
 };
 
