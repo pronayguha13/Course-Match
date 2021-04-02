@@ -1,17 +1,13 @@
 import React, { useEffect } from "react";
-import style from "./SuccessPage.module.css";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const SuccessPage = ({ regSuccess }) => {
   const notify = () =>
-    toast.error("🦄 Success!Redirecting...", {
-      onClose: () => window.history.pushState("/"),
+    toast.success("🦄 Success!Redirecting...", {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
-      closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
@@ -22,16 +18,12 @@ const SuccessPage = ({ regSuccess }) => {
   }, []);
 
   return (
-    <div
-      className={style.infopage}
-      style={{ display: regSuccess ? "block" : "none" }}
-    >
+    <div style={{ display: regSuccess ? "block" : "none" }}>
       <ToastContainer
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
-        closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable

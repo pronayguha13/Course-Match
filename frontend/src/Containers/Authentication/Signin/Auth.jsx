@@ -10,6 +10,7 @@ import ErrorPage from "../../../Components/Layout/ErrorPage";
 import SuccessPage from "../../../Components/Layout/SuccessPage";
 import LoginForm from "../../../Components/Forms/Login/LoginForm";
 import styles from "./auth.module.css";
+let pause; //for timeout
 
 const Auth = () => {
   const [isAuthSuccess, setIsAuthSuccess] = useState(false);
@@ -18,35 +19,29 @@ const Auth = () => {
   const [rollError, setRollError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({});
+
   const history = useHistory();
-  const { setIsLoggedIn } = useContext(LoginContext);
   const { themeSwitcher } = useContext(DisplayContext);
+  const { setIsLoggedIn } = useContext(LoginContext);
 
   useEffect(() => {
     themeSwitcher();
+    setLoading(false);
     if (isAuthSuccess) {
-      setLoading(false);
-      setIsAuthSuccess(false);
-      setIsLoggedIn(true);
-    } else if (error) {
-      setLoading(false);
+      pause = setTimeout(() => {
+        setIsAuthSuccess(false);
+        setIsLoggedIn(true);
+        history.push("/");
+      }, 3001);
     }
-  }, [
-    themeSwitcher,
-    history,
-    isAuthSuccess,
-    setIsLoggedIn,
-    error,
-    setLoading,
-    setError,
-  ]);
+    return () => {
+      clearTimeout(pause);
+    };
+  }, [themeSwitcher, isAuthSuccess, error, setLoading]);
 
   const loginFormSubmitHandler = (submittedFormData) => {
-    setFormData(submittedFormData);
     setLoading(true);
     let authError = formValidationHandler(submittedFormData);
-
     if (authError !== false) {
       setError(true);
       authError === "rollNumber" ? setRollError(true) : setPasswordError(true);
@@ -54,7 +49,7 @@ const Auth = () => {
     } else {
       setShowModal(true);
       axios
-        .post(`${BASE_URL}/user/auth`, formData)
+        .post(`${BASE_URL}/user/auth`, submittedFormData)
         .then((res) => {
           window.localStorage.setItem("xAuthToken", res.data.token);
           window.localStorage.setItem("user", res.data.user);
@@ -68,9 +63,9 @@ const Auth = () => {
 
   return (
     <div className={styles.SignIn}>
-      <Loading loading={loading} />
+      <Loading loading={loading} /> {/* for loader*/}
       {isAuthSuccess && showModal ? (
-        <SuccessPage regSuccess={isAuthSuccess} history={history} />
+        <SuccessPage regSuccess={isAuthSuccess} />
       ) : null}
       {error && showModal ? (
         <ErrorPage
@@ -79,14 +74,11 @@ const Auth = () => {
           setError={setError}
         />
       ) : null}
-
       <div style={{ opacity: loading || error || isAuthSuccess ? 0.2 : 1 }}>
         <LoginForm
           loginFormSubmitHandler={loginFormSubmitHandler}
           rollError={rollError}
-          setRollError={setRollError}
           passwordError={passwordError}
-          setPasswordError={setPasswordError}
         />
         <Link to="/register">
           <button className={`${styles.SignUpBtn} btn btn-success`}>

@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import { changePasswordView } from "../../../helperMethods";
 import styles from "./LoginForm.module.css";
 
-const LoginForm = ({
-  rollError,
-  passwordError,
-  setRollError,
-  setPasswordError,
-  loginFormSubmitHandler,
-}) => {
+const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isHidden, setIsHidden] = useState(true);

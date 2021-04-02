@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import style from "./SuccessPage.module.css";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,10 +20,7 @@ const ErrorPage = ({ opError, error, setError }) => {
   }, []);
 
   return (
-    <div
-      className={style.infopage}
-      style={{ display: opError ? "block" : "none" }}
-    >
+    <div style={{ display: opError ? "block" : "none" }}>
       <ToastContainer
         position="top-center"
         autoClose={5000}
