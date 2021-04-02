@@ -10,7 +10,6 @@ import ErrorPage from "../../../Components/Layout/ErrorPage";
 import SuccessPage from "../../../Components/Layout/SuccessPage";
 import LoginForm from "../../../Components/Forms/Login/LoginForm";
 import styles from "./auth.module.css";
-let pause;
 
 const Auth = () => {
   const [isAuthSuccess, setIsAuthSuccess] = useState(false);
@@ -28,17 +27,11 @@ const Auth = () => {
     themeSwitcher();
     if (isAuthSuccess) {
       setLoading(false);
-      pause = setTimeout(() => {
-        setIsAuthSuccess(false);
-        setIsLoggedIn(true);
-        history.push("/");
-      }, 2000);
+      setIsAuthSuccess(false);
+      setIsLoggedIn(true);
     } else if (error) {
       setLoading(false);
     }
-    return () => {
-      clearTimeout(pause);
-    };
   }, [
     themeSwitcher,
     history,
@@ -77,7 +70,7 @@ const Auth = () => {
     <div className={styles.SignIn}>
       <Loading loading={loading} />
       {isAuthSuccess && showModal ? (
-        <SuccessPage regSuccess={isAuthSuccess} />
+        <SuccessPage regSuccess={isAuthSuccess} history={history} />
       ) : null}
       {error && showModal ? (
         <ErrorPage
