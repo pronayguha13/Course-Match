@@ -27,14 +27,14 @@
 
 .rollNumberPlaceholderText {
   position: absolute;
-  left: 680px;
-  top: 295px;
+  left: 676px;
+  top: 290px;
 }
 
 .smallRollNumberPlaceholderText {
   font-weight: 500;
   position: absolute;
-  left: 680px;
+  left: 676px;
   top: 260px;
   transition: top ease-in 0.25s;
 }
@@ -51,13 +51,13 @@
 }
 .passwordPlaceholderText {
   position: absolute;
-  left: 680px;
-  top: 430px;
+  left: 676px;
+  top: 425px;
 }
 
 .smallPasswordPlaceholderText {
   position: absolute;
-  left: 680px;
+  left: 676px;
   top: 395px;
   transition: top ease-in 0.25s;
   font-weight: 500;
