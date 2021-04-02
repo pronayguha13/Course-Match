@@ -1,0 +1,99 @@
+.LoginFormContainer {
+  width: 30vw;
+  height: 50vh;
+  padding: 10px;
+  margin: 5rem 0 2rem 0;
+  border: 2px solid #f0ffff;
+  background-color: #fff;
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  justify-content: space-evenly;
+}
+
+.inputDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.rollNumberPlaceholderText {
+  position: absolute;
+  left: 680px;
+  top: 295px;
+}
+
+.smallRollNumberPlaceholderText {
+  font-weight: 500;
+  position: absolute;
+  left: 680px;
+  top: 260px;
+  transition: top ease-in 0.25s;
+}
+
+.RollNumberInput {
+  border: none;
+  border-bottom: 2px solid #000;
+}
+
+.RollNumberInput:focus {
+  outline: none;
+  border-bottom: 1px solid #000;
+  transition: border-bottom ease-in 0.25s;
+}
+.passwordPlaceholderText {
+  position: absolute;
+  left: 680px;
+  top: 430px;
+}
+
+.smallPasswordPlaceholderText {
+  position: absolute;
+  left: 680px;
+  top: 395px;
+  transition: top ease-in 0.25s;
+  font-weight: 500;
+}
+
+.PasswordInput {
+  border: none;
+  border-bottom: 2px solid #000;
+}
+.PasswordInput:focus {
+  outline: none;
+  border-bottom: 1px solid #000;
+  transition: border-bottom ease-in 0.25s;
+}
+
+.showHidePassword {
+  position: absolute;
+  top: 425px;
+  left: 1170px;
+  cursor: pointer;
+  height: 1.9rem;
+  z-index: 200;
+}
+
+.SignInButtonContainer {
+  margin-bottom: 20px;
+}
+
+.SignInButtonContainer button {
+  width: 100%;
+  height: 50px;
+  font-size: 1.5rem;
+}
+
+.SignInButtonContainer button:hover {
+  background-color: #0a4686;
+  border: 2px solid #5491d1;
+  transition: background-color ease-in-out 0.25s;
+}

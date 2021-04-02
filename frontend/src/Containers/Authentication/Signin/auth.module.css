@@ -1,43 +1,9 @@
 .SignIn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   height: 95vh;
   width: 100%;
-}
-
-.showHidePassword {
-  position: absolute;
-  top: 163px;
-  left: 95%;
-  cursor: pointer;
-  height: 1.9rem;
-}
-
-.formGroupRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 10px 0;
-}
-
-.inputDiv {
-  flex-grow: 2;
-}
-
-.SignInButtonContainer {
-  margin-top: 50px;
-}
-
-@media only screen and (max-width: 575px) {
-  .formGroupRow {
-    display: block;
-  }
-  .inputDiv {
-    width: 100%;
-  }
-
-  .showHidePassword {
-    left: 90%;
-    top: 217px;
-    height: auto;
-  }
+  background-color: #f2f2f2;
 }
