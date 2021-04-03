@@ -26,6 +26,11 @@ export const formValidationHandler = (formData) => {
     : "password";
 };
 
+//handler for similar password in PersonalDetailsForm
+export const passwordVerificationHandler = (typedPassword, retypedPassword) => {
+  return typedPassword === retypedPassword ? true : false;
+};
+
 export const RegistrationFormSubmitHandler = (
   formData,
   regStateHandler,

@@ -9,10 +9,10 @@ import Loading from "../../../Components/Layout/Loading.jsx";
 import ErrorPage from "../../../Components/Layout/ErrorPage";
 import SuccessPage from "../../../Components/Layout/SuccessPage";
 import LoginForm from "../../../Components/Forms/Login/LoginForm";
-import styles from "./auth.module.css";
+import styles from "./LoginPage.module.css";
 let pause; //for timeout
 
-const Auth = () => {
+const LoginPage = () => {
   const [isAuthSuccess, setIsAuthSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -91,4 +91,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default LoginPage;

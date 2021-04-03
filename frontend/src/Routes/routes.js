@@ -6,9 +6,9 @@ import {
   Redirect,
 } from "react-router-dom";
 import App from "../Components/App/App";
-import Auth from "../Containers/Authentication/Signin/Auth.jsx";
+import LoginPage from "../Containers/Authentication/Signin/LoginPage.jsx";
 import Navbar from "../Components/Navbar/Navbar.jsx";
-import Registration from "../Containers/Authentication/Registration/Registration.jsx";
+import Registration from "../Containers/Authentication/Registration/RegistrationPage.jsx";
 import { LoginContext } from "../Context/LoginContext";
 import { MenuDrawerContext } from "../Context/MenuDrawer";
 import axios from "axios";
@@ -46,7 +46,7 @@ const BrowserRoutes = () => {
       <MenuDrawer isOpen={isMenuDrawerOpen} />
       <Switch>
         <PrivateRoute path="/search/:query" component={SearchResult} />
-        <Route path="/sign_in" component={Auth} />
+        <Route path="/sign_in" component={LoginPage} />
         <Route path="/register" component={Registration} />
         <Route
           path="/courseSelection/:userName"

@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
-import styles from "./Registration.module.css";
-import { DisplayContext } from "../../../Context/DisplayContext";
-import PersonalDetailsForm from "../../../Components/Forms/Registration/PersonalDetailsForm.jsx";
-import CourseDetailsForm from "../../../Components/Forms/Registration/CourseDetailsForm.jsx";
-import Loading from "../../../Components/Layout/Loading.jsx";
-import SuccessPage from "../../../Components/Layout/SuccessPage";
-import ErrorPage from "../../../Components/Layout/ErrorPage";
-import { RegistrationFormSubmitHandler } from "../../../helperMethods";
+import styles from "./RegistrationPage.module.css";
+import { DisplayContext } from "Context/DisplayContext";
+import PersonalDetailsForm from "Components/Forms/Registration/PersonalDetailsForm/PersonalDetailsForm.jsx";
+import CourseDetailsForm from "Components/Forms/Registration/CourseDetailsForm.jsx";
+import Loading from "Components/Layout/Loading.jsx";
+import SuccessPage from "Components/Layout/SuccessPage";
+import ErrorPage from "Components/Layout/ErrorPage";
+import { RegistrationFormSubmitHandler } from "helperMethods";
 
 let pause;
 
-const Registration = () => {
+const RegistrationPage = () => {
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
   const [isRegistrationError, setIsRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -73,30 +73,30 @@ const Registration = () => {
   };
 
   return (
-    <div className={styles.Registration}>
-      <h3>Registration Page</h3>
+    <div className={styles.RegistrationPageContainer}>
       <Loading loading={loading} />
       <SuccessPage regSuccess={isRegistrationSuccess} />
-      {error !== null ? (
-        <ErrorPage opError={isRegistrationError} error={error} />
+      {isRegistrationError ? (
+        <ErrorPage
+          opError={isRegistrationError}
+          error={error}
+          setError={setIsRegistrationError}
+        />
       ) : null}
-      <CourseDetailsForm
-        user={personalData.userName}
-        registrationHandler={registrationHandler}
-        display={Object.keys(personalData).length > 0 ? "block" : "none"}
-        goBackButtonHandler={goBackButtonHandler}
-      />
-      <PersonalDetailsForm
-        error={error}
-        onActiveHandler={onActiveHandler}
-        loading={loading}
-        isRegistrationSuccess={isRegistrationSuccess}
-        isRegistrationError={isRegistrationError}
-        setIsRegistrationError={setIsRegistrationError}
-        setError={setError}
-        setPersonalData={setPersonalData}
-        display={Object.keys(personalData).length > 0 ? "none" : "block"}
-      />
+      {Object.keys(personalData).length > 0 ? (
+        <PersonalDetailsForm
+          error={error}
+          setError={setError}
+          onActiveHandler={onActiveHandler}
+          loading={loading}
+          isRegistrationSuccess={isRegistrationSuccess}
+          isRegistrationError={isRegistrationError}
+          setIsRegistrationError={setIsRegistrationError}
+          setPersonalData={setPersonalData}
+        />
+      ) : (
+        <CourseDetailsForm />
+      )}
       <p>
         {" "}
         If you have an account <Link to="/sign_in">Sign In</Link>
@@ -105,4 +105,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default RegistrationPage;
