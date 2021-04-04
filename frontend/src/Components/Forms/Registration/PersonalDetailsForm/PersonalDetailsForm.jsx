@@ -11,17 +11,27 @@ let pause;
 
 const PersonalDetailsForm = ({
   error,
-  onActiveHandler,
-  loading,
-  isRegistrationSuccess,
-  isRegistrationError,
+  // onActiveHandler,
+  // loading,
+  // isRegistrationSuccess,
+  // isRegistrationError,
   setError,
-  setPersonalData,
+  formSwitchHandler,
+  displayCount,
+  personalData,
 }) => {
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [roll_number, setRollNumber] = useState("");
-  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState(
+    displayCount !== 0 ? personalData.userName : ""
+  );
+  const [email, setEmail] = useState(
+    displayCount !== 0 ? personalData.email : ""
+  );
+  const [rollNumber, setRollNumber] = useState(
+    displayCount !== 0 ? personalData.rollNumber : ""
+  );
+  const [password, setPassword] = useState(
+    displayCount !== 0 ? personalData.password : ""
+  );
   const [verificationPwd, setVerificationPwd] = useState("");
   const [isHidden, setIsHidden] = useState(true);
   const [isValidationError, setIsValidationError] = useState(false);
@@ -67,7 +77,7 @@ const PersonalDetailsForm = ({
 
   const validationHandler = () => {
     if (passwordVerificationHandler(password, verificationPwd)) {
-      let errorField = formValidationHandler({ roll_number, password });
+      let errorField = formValidationHandler({ rollNumber, password });
       if (errorField !== false) {
         let errorInfo;
         if (errorField === "roll Number") {
@@ -87,10 +97,10 @@ const PersonalDetailsForm = ({
         const personalFormData = {
           userName: userName,
           email: email,
-          roll_number: roll_number,
+          rollNumber: rollNumber,
           password: password,
         };
-        setPersonalData(personalFormData);
+        formSwitchHandler(personalFormData);
       }
     } else {
       const errorObject = {
@@ -161,7 +171,7 @@ const PersonalDetailsForm = ({
           <div className={styles.InputDiv}>
             <span
               className={
-                isRollActive || roll_number || roll_number.length
+                isRollActive || rollNumber || rollNumber.length
                   ? styles.SmallRollPlaceholder
                   : styles.RollPlaceHolder
               }
@@ -170,8 +180,8 @@ const PersonalDetailsForm = ({
             </span>
             <input
               type="text"
-              name="roll_number"
-              value={roll_number}
+              name="rollNumber"
+              value={rollNumber}
               placeholder={
                 isRollActive ? "Enter your Unviersity Roll Number" : ""
               }
@@ -245,7 +255,7 @@ const PersonalDetailsForm = ({
             disabled={
               userName.length &&
               email.length &&
-              roll_number.length &&
+              rollNumber.length &&
               password.length &&
               error === null
                 ? false

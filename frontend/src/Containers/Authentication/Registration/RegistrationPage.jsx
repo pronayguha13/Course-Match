@@ -17,11 +17,15 @@ const RegistrationPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [personalData, setPersonalData] = useState({ userName: "Pronay Guha" });
-
+  const [showCourseForm, setShowCourseForm] = useState(false);
+  const [displayCount, setDisplayCount] = useState(0);
   const history = useHistory();
 
   const { themeSwitcher } = useContext(DisplayContext);
-
+  const formSwitchHandler = (personalDetails) => {
+    setPersonalData(personalDetails);
+    setShowCourseForm(true);
+  };
   useEffect(() => {
     themeSwitcher();
     if (isRegistrationSuccess) {
@@ -49,7 +53,9 @@ const RegistrationPage = () => {
     }
   };
   const goBackButtonHandler = () => {
-    setPersonalData({});
+    let prevDisplayCount = displayCount;
+    setDisplayCount(++prevDisplayCount);
+    setShowCourseForm(false);
   };
   const regStateHandler = (regStatus) => {
     if (regStatus) {
@@ -83,7 +89,7 @@ const RegistrationPage = () => {
           setError={setIsRegistrationError}
         />
       ) : null}
-      {Object.keys(personalData).length > 0 ? (
+      {!showCourseForm ? (
         <PersonalDetailsForm
           error={error}
           setError={setError}
@@ -92,10 +98,16 @@ const RegistrationPage = () => {
           isRegistrationSuccess={isRegistrationSuccess}
           isRegistrationError={isRegistrationError}
           setIsRegistrationError={setIsRegistrationError}
-          setPersonalData={setPersonalData}
+          formSwitchHandler={formSwitchHandler}
+          displayCount={displayCount}
+          personalData={personalData}
         />
       ) : (
-        <CourseDetailsForm />
+        <CourseDetailsForm
+          user={personalData.userName}
+          registrationHandler={registrationHandler}
+          goBackButtonHandler={goBackButtonHandler}
+        />
       )}
       <p>
         {" "}

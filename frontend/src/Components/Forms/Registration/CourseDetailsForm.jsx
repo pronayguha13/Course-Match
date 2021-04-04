@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getDepartments } from "../../../helperMethods";
+import { getDepartments } from "helperMethods";
 import styles from "./CourseDetailsForm.module.css";
-import subjectList from "../../../Context/SubjectList";
-import SubjectListTable from "../../Layout/SubjectList/SubjectListTable";
-import Loading from "../../Layout/Loading";
+import subjectList from "Context/SubjectList";
+import SubjectListTable from "Components/Layout/SubjectList/SubjectListTable";
+import Loading from "Components/Layout/Loading";
 import DepartmentCreateForm from "./DepartmentCreateForm";
 
 const CourseDetailsForm = ({
   user,
   registrationHandler,
-  display,
   goBackButtonHandler,
 }) => {
   const [stream, setStream] = useState("");
@@ -66,7 +65,7 @@ const CourseDetailsForm = ({
   };
 
   return (
-    <div className={styles.CourseDetailsForm} style={{ display: display }}>
+    <div className={styles.CourseDetailsForm}>
       {departments.length ? (
         <>
           {showDeptCreateForm ? <DepartmentCreateForm /> : null}
