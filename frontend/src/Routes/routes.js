@@ -55,7 +55,9 @@ const BrowserRoutes = () => {
         <Route path="/index" exact component={LandingPage} />
         <PrivateHomeRoute path="/" exact component={App} />
       </Switch>
-      <Footer />
+      <footer>
+        <Footer />
+      </footer>
     </Router>
   );
 };

@@ -72,10 +72,9 @@ const CourseDetailsForm = ({
           <div
             style={{
               display: showDeptCreateForm ? "none" : "block",
-              zIndex: 10,
             }}
           >
-            <h4>Hello! {user}</h4>
+            <h4>Hello👋 {user}</h4>
             <button
               onClick={() => goBackButtonHandler()}
               className="btn btn-lg btn-primary"
@@ -85,7 +84,11 @@ const CourseDetailsForm = ({
             <h5>Department and Semester selction</h5>
             <div className={styles.SemDeptSelection}>
               <div className={`${styles.Dropdown} btn-group`}>
-                <button type="button" className="btn btn-danger">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  style={{ display: "block" }}
+                >
                   Select Department
                 </button>
                 {stream.length ? (
@@ -153,7 +156,7 @@ const CourseDetailsForm = ({
                 </div>
               </div>
             </div>
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%", marginBottom: "10px" }}>
               {subjects !== undefined ? (
                 <div>
                   <SubjectListTable

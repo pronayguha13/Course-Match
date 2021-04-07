@@ -75,6 +75,10 @@ const RegistrationPage = () => {
       ...personalData,
       ...courseDetails,
     };
+    console.log(
+      "🚀 ~ file: RegistrationPage.jsx ~ line 75 ~ registrationHandler ~ newUserData",
+      newUserData
+    );
     RegistrationFormSubmitHandler(newUserData, regStateHandler, setLoading);
   };
 
@@ -109,10 +113,12 @@ const RegistrationPage = () => {
           goBackButtonHandler={goBackButtonHandler}
         />
       )}
-      <p>
-        {" "}
-        If you have an account <Link to="/sign_in">Sign In</Link>
-      </p>
+      <span className={styles.SignInButton}>
+        <p> If you have an account</p>
+        <Link to="/sign_in">
+          <button className="btn btn-lg btn-success">Sign In</button>
+        </Link>
+      </span>
     </div>
   );
 };

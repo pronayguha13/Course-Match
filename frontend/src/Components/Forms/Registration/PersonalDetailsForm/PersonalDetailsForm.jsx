@@ -11,10 +11,6 @@ let pause;
 
 const PersonalDetailsForm = ({
   error,
-  // onActiveHandler,
-  // loading,
-  // isRegistrationSuccess,
-  // isRegistrationError,
   setError,
   formSwitchHandler,
   displayCount,
@@ -126,8 +122,8 @@ const PersonalDetailsForm = ({
             <span
               className={
                 isNameActive || userName || userName.length
-                  ? styles.SmallNamePlaceholder
-                  : styles.NamePlaceHolder
+                  ? styles.SmallPlaceholder
+                  : styles.PlaceHolder
               }
             >
               <p>Full Name</p>
@@ -148,8 +144,8 @@ const PersonalDetailsForm = ({
             <span
               className={
                 isEmailActive || email || email.length
-                  ? styles.SmallEmailPlaceholder
-                  : styles.EmailPlaceHolder
+                  ? styles.SmallPlaceholder
+                  : styles.PlaceHolder
               }
             >
               <p>Email</p>
@@ -172,8 +168,8 @@ const PersonalDetailsForm = ({
             <span
               className={
                 isRollActive || rollNumber || rollNumber.length
-                  ? styles.SmallRollPlaceholder
-                  : styles.RollPlaceHolder
+                  ? styles.SmallPlaceholder
+                  : styles.PlaceHolder
               }
             >
               <p>University Roll Number</p>
@@ -198,8 +194,8 @@ const PersonalDetailsForm = ({
             <span
               className={
                 isPwdActive || password || password.length
-                  ? styles.SmallPasswordPlaceholder
-                  : styles.PwdPlaceHolder
+                  ? styles.SmallPlaceholder
+                  : styles.PlaceHolder
               }
             >
               <p>Password</p>
@@ -215,24 +211,25 @@ const PersonalDetailsForm = ({
               required
             />
             {password.length ? (
-              <img
-                src={
-                  isHidden
-                    ? "assets/images/icons/LoginForm/eye.svg"
-                    : "assets/images/icons/LoginForm/visibility_off_black_24dp.svg"
-                }
-                alt="show-password"
-                className={styles.passwordVisibilityController}
-                onClick={() => changePasswordView(isHidden, setIsHidden)}
-              />
+              <span className={styles.passwordVisibilityController}>
+                <img
+                  src={
+                    isHidden
+                      ? "assets/images/icons/LoginForm/eye.svg"
+                      : "assets/images/icons/LoginForm/visibility_off_black_24dp.svg"
+                  }
+                  alt="show-password"
+                  onClick={() => changePasswordView(isHidden, setIsHidden)}
+                />
+              </span>
             ) : null}
           </div>
           <div className={styles.InputDiv}>
             <span
               className={
                 isVerifyPwdActive || verificationPwd || verificationPwd.length
-                  ? styles.SmallVerifyPasswordPlaceholder
-                  : styles.VerifyPwdPlaceHolder
+                  ? styles.SmallPlaceholder
+                  : styles.PlaceHolder
               }
             >
               <p>Verify Password</p>

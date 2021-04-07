@@ -6,13 +6,10 @@
   flex-direction: row;
   background-color: #333333;
   color: #f2f2f2;
-  height: 15rem;
   padding: 30px 50px;
 }
 
 .companyInfo {
-  display: flex;
-  flex-direction: column;
   padding-left: 30px;
   padding-right: 10rem;
   text-align: start;
@@ -37,7 +34,6 @@
   align-items: center;
   padding-left: 5rem;
   padding-right: 10rem;
-  /* border-right: 2px solid #f2f2f2; */
 }
 
 .contactInfo img {
@@ -53,24 +49,19 @@
 }
 
 .SocialMediaInfo {
-  display: flex;
-  flex-direction: column;
   padding-left: 5rem;
   padding-right: 5rem;
-  width: 1350px;
-  /* justify-content: space-evenly; */
+}
+
+.SocialMediaInfo > div {
+  display: flex;
+  justify-content: center;
 }
 
 .SocialMediaConnect {
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-evenly !important;
   margin-bottom: 5rem;
-}
-
-.SocialMediaConnect > * {
-  display: flex;
-  flex-direction: row;
 }
 
 .SocialMediaConnect > * img {
@@ -80,120 +71,19 @@
 
 .SocialMediaConnect > * span {
   font-family: "Oswald", sans-serif;
-}
-
-.SocialMediaConnect > *:hover {
-  border: 2px solid #738b95;
-  border-radius: 50%;
-  box-shadow: -7px -1px 15px 0px rgba(0, 0, 0, 0.75);
+  /* height: 50px; */
 }
 
 .ConnectHeading {
-  align-self: center;
-  width: 200px;
-  height: 2rem;
-  padding: top 5px;
+  width: 38%;
+  padding: 8px 16px;
   font-family: "Oswald", sans-serif;
   border: 2px solid #f2f2f2;
 }
 
-.MailToolTip {
-  position: absolute;
-  top: 1010px;
-  left: 510px;
-  background-color: midnightblue;
-  width: 195px;
-  height: 30px;
-  border: 2px solid midnightblue;
-  border-radius: 10px;
-  visibility: hidden;
-}
-
-.MailLink:hover .MailToolTip {
-  visibility: visible;
-}
-
-.LinkedinLink:hover {
-  padding: 6px;
-  padding-bottom: 10px;
-}
-
-.LinkedinTooltip {
-  position: absolute;
-  top: 955px;
-  right: 895px;
-  background-color: midnightblue;
-  width: 270px;
-  height: 30px;
-  border: 2px solid midnightblue;
-  border-radius: 10px;
-  visibility: hidden;
-}
-
-.LinkedinLink:hover > .LinkedinTooltip {
-  visibility: visible;
-}
-.MediumTooltip {
-  position: absolute;
-  top: 1070px;
-  right: 645px;
-  background-color: midnightblue;
-  width: 195px;
-  height: 30px;
-  border: 2px solid midnightblue;
-  border-radius: 10px;
-  visibility: hidden;
-}
-
-.MediumLink:hover > .MediumTooltip {
-  visibility: visible;
-}
-
-.GithubTooltip {
-  position: absolute;
-  top: 965px;
-  right: 340px;
-  background-color: midnightblue;
-  width: 195px;
-  height: 30px;
-  border: 2px solid midnightblue;
-  border-radius: 10px;
-  visibility: hidden;
-}
-
-.GithubLink:hover .GithubTooltip {
-  visibility: visible;
-}
-
-.TwitterTooltip {
-  position: absolute;
-  top: 1010px;
-  right: 60px;
-  background-color: midnightblue;
-  width: 250px;
-  height: 30px;
-  border: 2px solid midnightblue;
-  border-radius: 10px;
-  visibility: hidden;
-}
-
-.TwitterLink:hover {
-  border: 2px solid #f2f2f2;
-  border-radius: 50%;
-}
-
-.TwitterLink:hover .TwitterTooltip {
-  visibility: visible;
-}
-
 .CreateMessage {
-  float: left;
+  float: none;
   font-family: "Train One", cursive;
-  margin-left: 26rem;
+  /* margin-left: 26rem; */
   font-size: 20px;
-}
-
-.LicenceMessage {
-  float: right;
-  border-bottom: 2px solid #f2f2f2;
 }
