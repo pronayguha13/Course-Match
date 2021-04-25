@@ -1,6 +1,6 @@
 .PersonalDetailsFormContainer {
   height: calc(90vh - 316px - 90px);
-  width: 50%;
+  width: 25%;
   margin: 5rem 0 3rem 0;
   background-color: #fff;
   border-radius: 10px;
@@ -44,11 +44,12 @@
 }
 .SmallPlaceholder {
   position: absolute;
-  top: -30px;
+  top: -20px;
   transition: top ease-in 0.25s;
   font-weight: 500;
 }
 
 .passwordVisibilityController {
   position: absolute;
+  right: 20%;
 }

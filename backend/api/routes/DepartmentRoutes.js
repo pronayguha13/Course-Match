@@ -4,25 +4,14 @@ const router = express.Router();
 //import department model
 const department = require("../models/DepartmentModel");
 
-router.get("/get", (req, res) => {
-  department
-    .find()
-    .then((dept) => {
-      res.status(200).json({ dept: dept });
-    })
-    .catch((err) => {
-      console.log("err-->", err);
-      res.status(400).json({ dept: dept });
-    });
-});
-
 //@desc:route for creating new department
 //@method:POST
 router.post("/", (req, res, next) => {
   const { dept_code, name } = req.body;
+
   department.findOne({ dept_code: dept_code }).then((dept) => {
     if (dept) {
-      return res.status(409).json("Department exists");
+      return res.status(409).json({ msg: "Department exists" });
     }
     const stream = new department({
       dept_code: dept_code,
@@ -37,9 +26,21 @@ router.post("/", (req, res, next) => {
       })
       .catch((err) => {
         console.log(err);
-        return res.status(500).json("Error");
+        return res.status(500).json({ errorReason: err });
       });
   });
+});
+
+router.get("/get", (req, res) => {
+  department
+    .find()
+    .then((dept) => {
+      res.status(200).json({ dept: dept });
+    })
+    .catch((err) => {
+      console.log("err-->", err);
+      res.status(400).json({ dept: dept });
+    });
 });
 
 module.exports = router;

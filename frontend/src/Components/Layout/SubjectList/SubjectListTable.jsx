@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./style.module.css";
 
-const SubjectListTable = ({ subjects, registrationButtonClickHandler }) => {
+const SubjectListTable = ({ subjects }) => {
   return subjects.length ? (
     <div className={styles.SubjectListTableContainer}>
       <h5>Subject List</h5>
@@ -27,12 +27,6 @@ const SubjectListTable = ({ subjects, registrationButtonClickHandler }) => {
           })}
         </tbody>
       </table>
-      <button
-        className="btn btn-lg btn-primary"
-        onClick={(e) => registrationButtonClickHandler(e)}
-      >
-        Sign up
-      </button>
     </div>
   ) : (
     <h4 className={styles.NoSubjectHeader}>No Subject</h4>

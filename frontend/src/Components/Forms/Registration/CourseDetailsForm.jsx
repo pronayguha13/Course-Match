@@ -4,8 +4,9 @@ import styles from "./CourseDetailsForm.module.css";
 import subjectList from "Context/SubjectList";
 import SubjectListTable from "Components/Layout/SubjectList/SubjectListTable";
 import Loading from "Components/Layout/Loading";
-import DepartmentCreateForm from "./DepartmentCreateForm";
+import DepartmentCreateForm from "./DepartmentCreateForm/index";
 
+// let pause;
 const CourseDetailsForm = ({
   user,
   registrationHandler,
@@ -53,125 +54,143 @@ const CourseDetailsForm = ({
   };
 
   const createSemesterForm = () => {
+    console.log("method invoked");
     setShowSemesterCreateForm(true);
   };
 
   const getStream = (e) => {
-    setStream(e.target.innerHTML);
+    const valueSelected = e.target.value;
+    valueSelected === "newStreamCreate"
+      ? createDept()
+      : setStream(e.target.value);
+  };
+
+  const streamCreationRefreshHandler = () => {
+    getDepartments(setDepartments);
+    setShowDeptCreateForm(false);
   };
 
   const getSemester = (e) => {
-    setSemester(e.target.innerHTML);
+    setSemester(e.target.value);
   };
 
   return (
-    <div className={styles.CourseDetailsForm}>
+    <div className={styles.CourseDetailsFormContainer}>
       {departments.length ? (
-        <>
-          {showDeptCreateForm ? <DepartmentCreateForm /> : null}
+        showDeptCreateForm ? (
+          <DepartmentCreateForm
+            isVisible={showDeptCreateForm}
+            setVisibility={setShowDeptCreateForm}
+            streamCreationRefreshHandler={streamCreationRefreshHandler}
+          />
+        ) : (
           <div
-            style={{
-              display: showDeptCreateForm ? "none" : "block",
-            }}
+            className={
+              subjects !== undefined && subjects.length
+                ? styles.expandedCourseDetailsForm
+                : styles.CourseDetailsForm
+            }
           >
-            <h4>Hello👋 {user}</h4>
-            <button
-              onClick={() => goBackButtonHandler()}
-              className="btn btn-lg btn-primary"
-            >
-              Go Back
-            </button>
-            <h5>Department and Semester selction</h5>
-            <div className={styles.SemDeptSelection}>
-              <div className={`${styles.Dropdown} btn-group`}>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  style={{ display: "block" }}
-                >
-                  Select Department
-                </button>
-                {stream.length ? (
-                  <button type="button" className="btn btn-danger">
-                    {stream}
-                  </button>
-                ) : null}
-                <button
-                  type="button"
-                  className="btn btn-danger dropdown-toggle dropdown-toggle-split"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <span className="sr-only">Toggle Dropdown</span>
-                </button>
-                <div className="dropdown-menu">
-                  {departments &&
-                    departments.map((dept, id) => (
-                      <button
-                        className="dropdown-item"
-                        key={id}
-                        onClick={(e) => getStream(e)}
-                      >
-                        {dept}
-                      </button>
-                    ))}
-                  <button
-                    className="dropdown-item"
-                    style={{ backgroundColor: "#FF3366", color: "#fff" }}
-                    onClick={() => createSemesterForm()}
-                  >
-                    Click to add new stream
-                  </button>
-                </div>
-              </div>
-              <div className={`${styles.Dropdown} btn-group`}>
-                <button type="button" className="btn btn-danger">
-                  Select Semester
-                </button>
-                {semester.length ? (
-                  <button type="button" className="btn btn-danger">
-                    {semester}
-                  </button>
-                ) : null}
-                <button
-                  type="button"
-                  className="btn btn-danger dropdown-toggle dropdown-toggle-split"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <span className="sr-only">Toggle Dropdown</span>
-                </button>
-                <div className="dropdown-menu">
-                  {semesters.map((sem, id) => (
-                    <button
-                      className="dropdown-item"
-                      key={id}
-                      onClick={(e) => getSemester(e)}
-                    >
-                      {sem}
-                    </button>
-                  ))}
-                </div>
-              </div>
+            <div className={styles.headerSection}>
+              <h4 className={styles.formHeader}>
+                Hello👋<span className={styles.userName}>{user}</span>
+              </h4>
+              <h5 className={styles.formMessage}>
+                Department and Semester selction
+              </h5>
             </div>
-            <div style={{ width: "100%", marginBottom: "10px" }}>
-              {subjects !== undefined ? (
-                <div>
-                  <SubjectListTable
-                    subjects={subjects}
-                    registrationButtonClickHandler={
-                      registrationButtonClickHandler
-                    }
-                  />
+            <div
+              className={
+                subjects !== undefined && subjects.length
+                  ? styles.expandedBodySection
+                  : styles.bodySection
+              }
+            >
+              <div
+                className={`${styles.formSection} ${
+                  subjects && subjects.length ? styles.shrinkedFormSection : ""
+                } `}
+                style={
+                  subjects && subjects.length
+                    ? {
+                        padding: "0 8px",
+                        border: "2px solid #000",
+                        borderRadius: "16px",
+                      }
+                    : null
+                }
+              >
+                <div className={styles.inputSection}>
+                  <select
+                    name="department"
+                    className={styles.streamInput}
+                    defaultValue={"Select Department"}
+                    required
+                    onChange={(e) => getStream(e)}
+                  >
+                    <option value="Select Department" disabled>
+                      Select Department...
+                    </option>
+                    {departments &&
+                      departments.map((dept, id) => (
+                        <option className="dropdown-item" key={id} value={dept}>
+                          {dept}
+                        </option>
+                      ))}
+                    <option
+                      className="dropdown-item"
+                      style={{ backgroundColor: "#FF3366", color: "#fff" }}
+                      value="newStreamCreate"
+                    >
+                      Click to add new stream
+                    </option>
+                  </select>
+                  <select
+                    name="semester"
+                    className={styles.semesterInput}
+                    defaultValue={"Select Semester"}
+                    required
+                    onChange={(e) => getSemester(e)}
+                    disabled={stream && stream.length ? false : true}
+                  >
+                    <option value="Select Semester" disabled>
+                      Select Semester...
+                    </option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                  </select>
                 </div>
-              ) : (
-                <p>Select your Semester and Department</p>
-              )}
+                <div className={styles.handlerBtnSection}>
+                  <button
+                    className="btn btn-lg btn-success"
+                    onClick={(e) => registrationButtonClickHandler(e)}
+                  >
+                    Sign up
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-lg"
+                    style={{ order: "-1" }}
+                    onClick={() => goBackButtonHandler()}
+                  >
+                    Go Back
+                  </button>
+                </div>
+              </div>
+              {subjects !== undefined ? (
+                <div className={styles.subjectListSection}>
+                  <SubjectListTable subjects={subjects} />
+                </div>
+              ) : null}
             </div>
           </div>
-        </>
+        )
       ) : (
         <Loading loading={true} />
       )}

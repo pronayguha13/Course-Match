@@ -22,10 +22,12 @@ const RegistrationPage = () => {
   const history = useHistory();
 
   const { themeSwitcher } = useContext(DisplayContext);
+
   const formSwitchHandler = (personalDetails) => {
     setPersonalData(personalDetails);
     setShowCourseForm(true);
   };
+
   useEffect(() => {
     themeSwitcher();
     if (isRegistrationSuccess) {
@@ -52,11 +54,13 @@ const RegistrationPage = () => {
       handlerMethod(true);
     }
   };
+
   const goBackButtonHandler = () => {
     let prevDisplayCount = displayCount;
     setDisplayCount(++prevDisplayCount);
     setShowCourseForm(false);
   };
+
   const regStateHandler = (regStatus) => {
     if (regStatus) {
       setIsRegistrationSuccess(true);

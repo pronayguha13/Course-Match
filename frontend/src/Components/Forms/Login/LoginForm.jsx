@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { changePasswordView } from "../../../helperMethods";
 import styles from "./LoginForm.module.css";
 

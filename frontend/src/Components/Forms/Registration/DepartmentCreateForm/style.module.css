@@ -1,0 +1,70 @@
+.Modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 20px;
+  width: 25%;
+  padding: 32px 0;
+  margin: auto;
+}
+
+.Header {
+  padding-bottom: 32px;
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.FormArea {
+  display: flex;
+  flex-direction: column;
+  width: 84%;
+}
+
+.formInput {
+  position: relative;
+  padding-bottom: 16px;
+  margin: 16px 0;
+  /* width: 70%; */
+  display: flex;
+  flex-direction: column;
+}
+
+.formInput input {
+  border: none;
+  border-bottom: 2px solid #000;
+  outline: none;
+}
+
+.placeHolder {
+  position: absolute;
+  top: 0px;
+}
+
+.smallPlaceHolder {
+  position: absolute;
+  top: -30px;
+  font-weight: 500;
+  transition: top ease-in 0.25s;
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 32px;
+}
+
+.btnContainer button {
+  width: 100%;
+  margin-bottom: 16px;
+  font-weight: 400;
+  font-size: 1.2rem !important;
+}
+
+.btnContainer button:hover {
+  font-weight: 600;
+  transition: all ease-in 0.25s;
+}

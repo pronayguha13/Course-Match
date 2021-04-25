@@ -90,14 +90,27 @@ export const getDepartments = (setDepartments) => {
       res.data.dept.map((d) => {
         departments.push(d.dept_code);
       });
-      console.log(
-        "🚀 ~ file: helperMethods.js ~ line 87 ~ res.data.dept.map ~ departments",
-        departments
-      );
-
       setDepartments(departments);
     })
     .catch((err) => {
       setDepartments([]);
+    });
+};
+
+export const createDeptHandler = (
+  deptData,
+  setIsDeptCreateSuccess,
+  setError,
+  setToastVisible
+) => {
+  axios
+    .post(`${BASE_URL}/department`, deptData)
+    .then((res) => {
+      setIsDeptCreateSuccess(true);
+      setToastVisible(true);
+    })
+    .catch((err) => {
+      setError({ info: err.response.data });
+      setToastVisible(true);
     });
 };
