@@ -110,15 +110,6 @@ const CourseDetailsForm = ({
                 className={`${styles.formSection} ${
                   subjects && subjects.length ? styles.shrinkedFormSection : ""
                 } `}
-                style={
-                  subjects && subjects.length
-                    ? {
-                        padding: "0 8px",
-                        border: "2px solid #000",
-                        borderRadius: "16px",
-                      }
-                    : null
-                }
               >
                 <div className={styles.inputSection}>
                   <select
