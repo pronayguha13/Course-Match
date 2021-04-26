@@ -79,10 +79,6 @@ const RegistrationPage = () => {
       ...personalData,
       ...courseDetails,
     };
-    console.log(
-      "🚀 ~ file: RegistrationPage.jsx ~ line 75 ~ registrationHandler ~ newUserData",
-      newUserData
-    );
     RegistrationFormSubmitHandler(newUserData, regStateHandler, setLoading);
   };
 

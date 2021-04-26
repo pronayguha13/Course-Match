@@ -36,6 +36,7 @@ export const RegistrationFormSubmitHandler = (
   regStateHandler,
   setLoading
 ) => {
+  console.log("🚀 ~ file: helperMethods.js ~ line 39 ~ formData", formData);
   setLoading(true);
   axios
     .post(`${BASE_URL}/user`, formData)
@@ -54,8 +55,8 @@ export const RegistrationFormSubmitHandler = (
           err.response.data.ERR_INFO
         );
       }
-      regStateHandler(false);
-      setLoading(false);
+      // regStateHandler(false);
+      // setLoading(false);
     });
 };
 

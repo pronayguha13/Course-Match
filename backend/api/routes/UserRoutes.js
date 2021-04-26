@@ -2,6 +2,8 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const semesterModel = require("../models/SemesterModel");
+const department = require("../models/DepartmentModel");
 
 router.get("/", (req, res, next) => {
   res.json({
@@ -12,54 +14,77 @@ router.get("/", (req, res, next) => {
 //desc:route for handling the regitration
 //method:POST
 router.post("/", (req, res, next) => {
-  const { name, email, password, roll_number } = req.body;
-  if (!name || !email || !password) {
+  const { userName, email, password, rollNumber, stream, semester } = req.body;
+  if (!userName || !email || !password) {
     res.status(400).json({
       ERR_STATUS: 400,
       ERR_INFO: "Please enter a valid email and password ",
     });
   }
   //check for existing user
-  User.findOne({ roll_number }).then((user) => {
+  User.findOne({ roll_number: rollNumber }).then((user) => {
     if (user)
       return res.status(400).json({
-        user: roll_number,
+        user: rollNumber,
         ERR_STATUS: 400,
         ERR_INFO: "User Already exist",
       });
-
-    const newUser = new User({
-      name,
-      email,
-      password,
-      roll_number,
-    });
-    //create salt and hash
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-        newUser.save().then((user) => {
-          jwt.sign(
-            {
-              id: user.id,
-            },
-            process.env.jwtSecret,
-            { expiresIn: 3600 },
-            (err, token) => {
-              if (err) throw err;
-              res.json({
-                token,
-                user: {
-                  id: user.id,
-                  name: user.name,
-                },
+    department
+      .findOne({ dept_code: stream })
+      .then((dept) => {
+        semesterModel
+          .findOne({ sem: semester })
+          .then((sem) => {
+            const newUser = new User({
+              name: userName,
+              password: password,
+              email: email,
+              roll_number: rollNumber,
+              stream: dept._id,
+              semester: sem._id,
+            });
+            //create salt and hash
+            bcrypt.genSalt(10, (err, salt) => {
+              bcrypt.hash(newUser.password, salt, (err, hash) => {
+                if (err) throw err;
+                newUser.password = hash;
+                newUser.save().then((user) => {
+                  jwt.sign(
+                    {
+                      id: user.id,
+                    },
+                    process.env.jwtSecret,
+                    { expiresIn: 3600 },
+                    (err, token) => {
+                      if (err) throw err;
+                      res.json({
+                        token,
+                        user: {
+                          id: user.id,
+                          name: user.name,
+                        },
+                      });
+                    }
+                  );
+                });
               });
-            }
-          );
+            });
+          })
+          .catch((err) => {
+            return res.status(500).json({
+              user: roll_number,
+              ERR_STATUS: 500,
+              ERR_INFO: "SERVER ERROR",
+            });
+          });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          user: roll_number,
+          ERR_STATUS: 500,
+          ERR_INFO: "SERVER ERROR",
         });
       });
-    });
   });
 });
 
