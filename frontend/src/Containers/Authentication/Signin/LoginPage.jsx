@@ -49,7 +49,7 @@ const LoginPage = () => {
     } else {
       setShowModal(true);
       axios
-        .post(`${BASE_URL}/user/auth`, submittedFormData)
+        .post(`${BASE_URL}/user/signIn`, submittedFormData)
         .then((res) => {
           window.localStorage.setItem("xAuthToken", res.data.token);
           window.localStorage.setItem("user", res.data.user);

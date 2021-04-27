@@ -55,6 +55,7 @@ const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
                   : styles.rollNumberPlaceholderText
               }
               style={rollError ? errorPlaceHolderStyle : null}
+              onClick={() => setRollFocus(true)}
             >
               <p> Roll Number</p>
             </span>
@@ -83,6 +84,7 @@ const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
                   : styles.passwordPlaceholderText
               }
               style={passwordError ? errorPlaceHolderStyle : null}
+              onClick={() => setPasswordFocus(true)}
             >
               <p> Password</p>
             </span>

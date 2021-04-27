@@ -90,15 +90,15 @@ router.post("/", (req, res, next) => {
 
 // route for handling the login
 // method:POST
-router.post("/auth", (req, res, next) => {
-  const { roll_number, password } = req.body;
-  if (!roll_number || !password) {
+router.post("/signIn", (req, res, next) => {
+  const { rollNumber, password } = req.body;
+  if (!rollNumber || !password) {
     res
       .status(400)
       .json({ message: "Please enter valid credentials", loginStatus: false });
   }
   //check for existing user
-  User.findOne({ roll_number }).then((user) => {
+  User.findOne({ roll_number: rollNumber }).then((user) => {
     if (!user)
       return res
         .status(400)
