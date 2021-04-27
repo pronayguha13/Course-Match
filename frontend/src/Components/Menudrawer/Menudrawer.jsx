@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import styles from "./Menudrawer.module.css";
 import { MenuDrawerContext } from "../../Context/MenuDrawer";
+import { LoginContext } from "Context/LoginContext";
 const Menudrawer = ({ isOpen }) => {
   const history = useHistory();
   useEffect(() => {
@@ -13,7 +14,12 @@ const Menudrawer = ({ isOpen }) => {
   const { isMenuDrawerOpen, setIsMenuDrawerOpen } = useContext(
     MenuDrawerContext
   );
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
 
+  const _logout = () => {
+    window.localStorage.clear();
+    setIsLoggedIn(false);
+  };
   return (
     <div
       className={
@@ -39,10 +45,26 @@ const Menudrawer = ({ isOpen }) => {
           </Link>
         </span>
         <span className={styles.MenuItem}>
-          <Link to="/sign_in">
-            <img src="/assets/images/icons/MenuDrawer/login_white_36dp.svg"></img>
-            <p>Log in</p>
-          </Link>
+          {!isLoggedIn ? (
+            <Link to="/sign_in">
+              <img src="/assets/images/icons/MenuDrawer/login_white_36dp.svg"></img>
+              <p>Log in</p>
+            </Link>
+          ) : (
+            <Link
+              to="#"
+              className={styles.logOutBtnContainer}
+              onClick={() => {
+                _logout();
+              }}
+            >
+              <img
+                src="/assets/images/icons/MenuDrawer/logout_white_36dp.svg"
+                alt="sign out"
+              />
+              <p>Log Out</p>
+            </Link>
+          )}
         </span>
         <span className={styles.MenuItem}>
           <Link to="/register">
