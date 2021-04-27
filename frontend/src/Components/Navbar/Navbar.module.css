@@ -2,25 +2,32 @@
   text-align: start;
   width: 100%;
   line-height: 2rem;
-  background-color: #fff;
+  background-color: #ffff;
+  display: flex;
+  padding: 8px 32px;
 }
 
-.IconWrapper {
-  display: inline-block;
-  margin: 15px 0px 15px 45px;
+.CompanyLogoWrapper {
+  flex: 2 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.IconWrapper img {
+.companyLogo {
   height: 60px;
 }
-
-.MenuDrawer {
-  justify-items: center;
-  padding: 24px 30px;
-  float: right;
+.navigatorButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
-
-.MenuDrawer img {
+.navigatorButton img {
+  height: 40px;
+  width: 40px;
+}
+.MenuDrawer {
   height: 40px;
 }
 .Navbar p {

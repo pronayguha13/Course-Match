@@ -23,19 +23,18 @@
 .inputDiv {
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 .rollNumberPlaceholderText {
   position: absolute;
-  left: 676px;
-  top: 31vh;
+  top: 0;
 }
 
 .smallRollNumberPlaceholderText {
   font-weight: 500;
   position: absolute;
-  left: 676px;
-  top: 28vh;
+  top: -28px;
   transition: top ease-in 0.25s;
 }
 
@@ -52,14 +51,12 @@
 }
 .passwordPlaceholderText {
   position: absolute;
-  left: 676px;
-  top: 45vh;
+  top: 0;
 }
 
 .smallPasswordPlaceholderText {
   position: absolute;
-  left: 676px;
-  top: 42vh;
+  top: -28px;
   transition: top ease-in 0.25s;
   font-weight: 500;
 }

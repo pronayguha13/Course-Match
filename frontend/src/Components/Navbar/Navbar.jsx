@@ -32,40 +32,39 @@ const Navbar = () => {
 
   return (
     <div className={styles.Navbar}>
-      <span className={styles.IconWrapper}>
+      <span className={styles.CompanyLogoWrapper}>
         <Link to="/">
-          <img src="/coursematch.png" alt="logo" />
+          <img
+            src="/coursematch.png"
+            alt="logo"
+            className={styles.companyLogo}
+          />
         </Link>
       </span>
-      {isLoggedIn ? (
-        <button
-          className="btn btn-secondary btn-lg"
-          aria-disabled="true"
-          onClick={() => (isLoggedIn ? _logout() : _login())}
+      <div className={styles.navigatorButton}>
+        {isLoggedIn
+          ? searchAreaDisplayHandler(showSearch, setShowSearch)
+          : null}
+        {isLoggedIn ? (
+          <img
+            title="Sign out"
+            src="/assets/images/icons/logout_black_36dp.svg"
+            alt="sign-out"
+            onClick={() => _logout()}
+          />
+        ) : null}
+        <span
+          onClick={() => {
+            menuDrawerHandler();
+          }}
         >
-          Log out
-        </button>
-      ) : null}
-      {isLoggedIn ? searchAreaDisplayHandler(showSearch, setShowSearch) : null}
-      <span
-        className={styles.MenuDrawer}
-        onClick={() => {
-          menuDrawerHandler();
-        }}
-      >
-        {!isMenuDrawerOpen ? (
           <img
             src="/assets/images/icons/menu_black_24dp.svg"
             alt="hamburger-menu-open"
+            className={styles.MenuDrawer}
           />
-        ) : (
-          <img
-            src="/assets/images/icons/menu_open_black_24dp.svg"
-            alt="hamburger-menu-close"
-          />
-        )}
-      </span>
-      {/* {displayMode === "light" ? (
+        </span>
+        {/* {displayMode === "light" ? (
         <img
           src="/assets/images/icons/menu_black_24dp.svg"
           alt="dark"
@@ -78,6 +77,7 @@ const Navbar = () => {
           onClick={() => displayModeHandler(displayMode, setDisplayMode)}
         />
       )} */}
+      </div>
     </div>
   );
 };

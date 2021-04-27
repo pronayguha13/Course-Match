@@ -34,10 +34,9 @@ const SearchArea = (props) => {
             setState("");
           }}
           style={{
-            height: 29,
-            borderRadius: 0,
-            marginBottom: "4px",
-            textAlign: "center",
+            height: "29px",
+            border: "none",
+            borderRadius: "60px",
           }}
         >
           Search
@@ -49,9 +48,7 @@ const SearchArea = (props) => {
           onClick={() => setShowSearch(true)}
           style={{
             height: 29,
-            borderRadius: 0,
-            marginBottom: "4px",
-            textAlign: "center",
+            borderRadius: "600px",
           }}
         >
           X
