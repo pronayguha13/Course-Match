@@ -33,7 +33,7 @@ const Navbar = () => {
   return (
     <div className={styles.Navbar}>
       <span className={styles.CompanyLogoWrapper}>
-        <Link to="/">
+        <Link to="/" style={{ width: "60px" }}>
           <img
             src="/coursematch.png"
             alt="logo"

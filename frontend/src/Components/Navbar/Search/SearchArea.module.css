@@ -13,3 +13,13 @@
 .searchArea input::placeholder {
   font-weight: 600;
 }
+
+.searchBtn {
+  height: 29px !important;
+  border: none;
+  border-radius: 60px;
+}
+.closeBtn {
+  height: 29px !important;
+  border-radius: 60px;
+}

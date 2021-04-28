@@ -28,15 +28,10 @@ const SearchArea = (props) => {
       {state && state.length ? (
         <button
           type="button"
-          className="btn btn-primary btn-sm"
+          className={`btn btn-primary btn-sm ${styles.searchBtn}`}
           onClick={() => {
             searchHandler(state.trim());
             setState("");
-          }}
-          style={{
-            height: "29px",
-            border: "none",
-            borderRadius: "60px",
           }}
         >
           Search
@@ -44,12 +39,8 @@ const SearchArea = (props) => {
       ) : (
         <button
           type="button"
-          className="btn btn-danger btn-sm"
+          className={`btn btn-danger btn-sm ${styles.closeBtn}`}
           onClick={() => setShowSearch(true)}
-          style={{
-            height: 29,
-            borderRadius: "600px",
-          }}
         >
           X
         </button>
