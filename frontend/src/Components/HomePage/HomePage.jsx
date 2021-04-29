@@ -5,16 +5,9 @@ import { getUserCount } from "../../helperMethods";
 const HomePage = () => {
   const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    getUserCount(setCount);
-  }, []);
-
   return (
     <div className={style.HomePageContainer}>
-      <div className={style.HeaderSection}>
-        <h1> Total User: {count}</h1>
-      </div>
-      <div className={style.MainSectionContainer}>
+      <div className={style.bodySection}>
         <div className={style.UtilitySection}>
           {" "}
           <h2>Available Options</h2>
