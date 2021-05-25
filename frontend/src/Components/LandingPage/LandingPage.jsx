@@ -9,7 +9,7 @@ const LandingPage = () => {
     <div className={styles.Container}>
       <span className={styles.HomePageImageContainer}>
         <img
-          src="/assets/images/students.svg"
+          src="/assets/images/icons/undraw_education_f8ru.svg"
           alt="landing page image"
           className={styles.HomePageImage}
         />

@@ -115,3 +115,16 @@ export const createDeptHandler = (
       setToastVisible(true);
     });
 };
+
+//desc:methgod to fetch all the details of the user from backend
+
+export const fetchUserDetails = (authToken, userDataSetter) => {
+  axios
+    .get(`${BASE_URL}/user/${authToken}`)
+    .then((res) => {
+      userDataSetter(res.data.user);
+    })
+    .catch((err) => {
+      userDataSetter({});
+    });
+};

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import style from "./HomePage.module.css";
-import { getUserCount } from "../../helperMethods";
+import { fetchUserDetails } from "../../helperMethods";
 
 const HomePage = () => {
-  const [count, setCount] = useState(0);
-
+  const [userData, setUserData] = useState({});
+  useEffect(() => {
+    const authToken = window.localStorage.getItem("xAuthToken");
+    fetchUserDetails(authToken, setUserData);
+  }, []);
   return (
     <div className={style.HomePageContainer}>
       <div className={style.bodySection}>
@@ -23,7 +26,7 @@ const HomePage = () => {
           <div className={style.AccountDetails}>
             <img src="/assets/images/icons/dark.png" alt="avatar" />
             <div className={style.UserPersonalDetails}>
-              <p>Name:Demo Account</p>
+              <p>Name: {userData.name}</p>
             </div>
           </div>
         </div>

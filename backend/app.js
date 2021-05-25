@@ -18,7 +18,19 @@ mongoose.connect(
 
 //Morgan Setup
 const morgan = require("morgan");
-app.use(morgan("dev"));
+const chalk = require("chalk");
+// app.use(morgan("dev"));
+app.use(
+  morgan(function (tokens, req, res) {
+    return (
+      chalk.whiteBright(tokens.method(req, res)) +
+      " " +
+      chalk.green(tokens.url(req, res)) +
+      " " +
+      chalk.red(tokens["response-time"](req, res))
+    );
+  })
+);
 
 ///body parser
 app.use(express.json());

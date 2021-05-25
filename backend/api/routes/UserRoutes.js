@@ -11,6 +11,19 @@ router.get("/", (req, res, next) => {
   });
 });
 
+router.get("/:xAuthToken", async (req, res) => {
+  const token = req.params.xAuthToken;
+  try {
+    //verify token
+    const decoded = jwt.verify(token, process.env.jwtSecret);
+    const user = await User.findById(decoded.id);
+    if (!user) return res.status(400).json({ user: {} });
+    return res.status(200).json({ user: user });
+  } catch (err) {
+    res.status(400).json({ user: {} });
+  }
+});
+
 //desc:route for handling the regitration
 //method:POST
 router.post("/", (req, res, next) => {
@@ -115,7 +128,7 @@ router.post("/signIn", (req, res, next) => {
           id: user.id,
         },
         process.env.jwtSecret,
-        { expiresIn: 3600 },
+        { expiresIn: "2days" },
         (err, token) => {
           if (err) throw err;
           res.status(200).json({

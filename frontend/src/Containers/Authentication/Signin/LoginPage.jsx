@@ -52,7 +52,11 @@ const LoginPage = () => {
         .post(`${BASE_URL}/user/signIn`, submittedFormData)
         .then((res) => {
           window.localStorage.setItem("xAuthToken", res.data.token);
-          window.localStorage.setItem("user", res.data.user);
+          window.localStorage.setItem("user", res.data.user.id); //setting user id as user
+          console.log(
+            "🚀 ~ file: LoginPage.jsx ~ line 56 ~ .then ~ res.data.user",
+            res.data.user
+          );
           setIsAuthSuccess(true);
         })
         .catch((err) => {
