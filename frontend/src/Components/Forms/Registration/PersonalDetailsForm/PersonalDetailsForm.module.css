@@ -1,26 +1,26 @@
 .PersonalDetailsFormContainer {
-  height: calc(90vh - 316px - 90px);
-  width: 25%;
-  margin: 5rem 0 3rem 0;
+  width: 50%;
+  margin: 0 0 3rem 0;
   background-color: #fff;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  justify-content: space-around;
 }
 
 .PersonalDetailsForm {
-  padding-bottom: 2rem;
-  padding-top: 2rem;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  flex-grow: 1;
 }
 
 .InputSection {
-  /* width: 100%; */
-  flex-grow: 2;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
-  justify-content: space-around;
   padding: 30px 0;
+  justify-content: space-evenly;
 }
 
 .InputSection > * {
@@ -52,4 +52,11 @@
 .passwordVisibilityController {
   position: absolute;
   right: 20%;
+}
+
+@media only screen and (max-width: 450px) {
+  .PersonalDetailsFormContainer {
+    width: 95%;
+    height: 60vh;
+  }
 }
