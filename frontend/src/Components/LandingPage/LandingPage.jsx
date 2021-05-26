@@ -14,12 +14,16 @@ const LandingPage = () => {
           className={styles.HomePageImage}
         />
       </span>
-      <div className={styles.TextBanner}>
-        <span>
-          Lay but don't fell back...
-          <br />
-          Get along with your peers😎
-        </span>
+      <div className={styles.bannerSection}>
+        <div className={`${styles.TextBanner} ${styles.bannerOne}`}>
+          <span>Lay but don't fell back...</span>
+        </div>
+        <div className={`${styles.TextBanner} ${styles.bannerTwo}`}>
+          <span>Get along with your peers😎</span>
+        </div>
+        <div className={`${styles.TextBanner} ${styles.bannerThree}`}>
+          <span>Check what course your friends are taking...</span>
+        </div>
       </div>
     </div>
   );
