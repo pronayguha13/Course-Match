@@ -1,12 +1,13 @@
 .PersonalDetailsFormContainer {
   width: 50%;
-  margin: 0 0 3rem 0;
+  margin-bottom: 3rem;
   background-color: #fff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   height: 50vh;
   justify-content: space-around;
+  padding-bottom: 12px;
 }
 
 .PersonalDetailsForm {
