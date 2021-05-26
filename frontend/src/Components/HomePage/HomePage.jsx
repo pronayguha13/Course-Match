@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import style from "./HomePage.module.css";
 import { fetchUserDetails } from "../../helperMethods";
 
@@ -25,9 +26,10 @@ const HomePage = () => {
           <h2>User Details</h2>
           <div className={style.AccountDetails}>
             <img src="/assets/images/icons/dark.png" alt="avatar" />
-            <div className={style.UserPersonalDetails}>
+            <div className={style.UserPersonalDetails}></div>
+            <Link to={`/user/${userData.name}`}>
               <p>Name: {userData.name}</p>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

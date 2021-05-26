@@ -5,20 +5,21 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "Context/AXIOS_BASE_URL";
+import { LoginContext } from "Context/LoginContext";
+import { MenuDrawerContext } from "Context/MenuDrawer";
+
 import App from "Components/App/App";
 import LoginPage from "Containers/Authentication/Signin/LoginPage.jsx";
 import Navbar from "Components/Navbar/Navbar.jsx";
 import Registration from "Containers/Authentication/Registration/RegistrationPage.jsx";
-import { LoginContext } from "Context/LoginContext";
-import { MenuDrawerContext } from "Context/MenuDrawer";
-import axios from "axios";
-import { BASE_URL } from "Context/AXIOS_BASE_URL";
 import SearchResult from "Components/Layout/SearchResult/SearchResult";
 import CourseDetailsForm from "Components/Forms/Registration/CourseDetailsForm";
 import LandingPage from "Components/LandingPage/LandingPage";
 import Footer from "Components/Footer/Footer.jsx";
 import MenuDrawer from "Components/Menudrawer/Menudrawer.jsx";
-import UserProfile from "Components/UserProfile";
+import UserProfile from "Components/UserProfile/index";
 
 const BrowserRoutes = () => {
   const { setIsLoggedIn } = useContext(LoginContext);
