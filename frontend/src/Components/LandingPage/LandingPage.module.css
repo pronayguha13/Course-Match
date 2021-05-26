@@ -16,23 +16,22 @@
 }
 
 .Container .HomePageImage {
-  height: 54rem;
+  height: 38rem;
   width: 90%;
   text-align: left;
-  margin-left: 10rem;
+  margin-left: 2rem;
+  margin-top: 4rem;
 }
 .bannerSection {
   display: flex;
   flex-direction: column;
   position: relative;
-  right: 10%;
+  right: 4%;
 }
 
 .TextBanner {
   color: #fff;
   font-family: "Inconsolata", monospace;
-  /* background-color: azure; */
-  /* background-color: #11001154; */
   background-color: #a693a66e;
   width: 330px;
   height: 228px;
