@@ -6,6 +6,11 @@
   "repository": "https://github.com/pronayguha13/Course-Match.git",
   "author": "pronayguha <pronay.guha@aot.edu.in>",
   "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
     "dev": "concurrently \"cd backend && yarn run dev\" \"cd frontend && yarn start\" "
   },

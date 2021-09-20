@@ -1,5 +1,5 @@
 {
-  "name": "course-match-backend",
+  "name": "backend",
   "version": "1.0.0",
   "description": "Backend for Course-Match App",
   "main": "server.js",
