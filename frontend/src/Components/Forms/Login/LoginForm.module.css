@@ -1,8 +1,9 @@
 .LoginFormContainer {
+  box-shadow: 4px 4px 12px #ccc;
   width: 30vw;
   height: 50vh;
   padding: 10px;
-  margin: 5rem 0 2rem 0;
+  margin: 1rem 0;
   border: 2px solid #f0ffff;
   background-color: #fff;
 }
@@ -95,4 +96,8 @@
   background-color: #0a4686;
   border: 2px solid #5491d1;
   transition: background-color ease-in-out 0.25s;
+}
+
+.newUserText {
+  color: #0a4686;
 }

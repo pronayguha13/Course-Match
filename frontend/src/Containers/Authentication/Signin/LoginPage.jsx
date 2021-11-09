@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../../Context/AXIOS_BASE_URL";
 import { formValidationHandler } from "../../../helperMethods";
@@ -12,7 +12,7 @@ import LoginForm from "../../../Components/Forms/Login/LoginForm";
 import styles from "./LoginPage.module.css";
 let pause; //for timeout
 
-const LoginPage = () => {
+const LoginPage = ({ _showRegistrationForm }) => {
   const [isAuthSuccess, setIsAuthSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -37,6 +37,7 @@ const LoginPage = () => {
     return () => {
       clearTimeout(pause);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [themeSwitcher, isAuthSuccess, error, setLoading]);
 
   const loginFormSubmitHandler = (submittedFormData) => {
@@ -83,13 +84,14 @@ const LoginPage = () => {
           loginFormSubmitHandler={loginFormSubmitHandler}
           rollError={rollError}
           passwordError={passwordError}
+          _showRegistrationForm={_showRegistrationForm}
         />
-        <Link to="/register">
-          <button className={`${styles.SignUpBtn} btn btn-success`}>
-            {" "}
-            Create an account
-          </button>
-        </Link>
+        <button
+          className={`${styles.SignUpBtn} btn btn-success`}
+          onClick={() => _showRegistrationForm(true)}
+        >
+          Create an account
+        </button>
       </div>
     </div>
   );

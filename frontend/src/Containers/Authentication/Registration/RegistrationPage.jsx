@@ -11,7 +11,7 @@ import { RegistrationFormSubmitHandler } from "helperMethods";
 
 let pause;
 
-const RegistrationPage = () => {
+const RegistrationPage = ({ _showRegistrationForm }) => {
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
   const [isRegistrationError, setIsRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -114,10 +114,9 @@ const RegistrationPage = () => {
         />
       )}
       <span className={styles.SignInButton}>
-        <p> If you have an account</p>
-        <Link to="/sign_in">
-          <button className="btn btn-lg btn-success">Sign In</button>
-        </Link>
+        <button className="btn btn-lg btn-success">
+          Sign In to your account
+        </button>
       </span>
     </div>
   );

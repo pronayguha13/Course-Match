@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { changePasswordView } from "../../../helperMethods";
 import styles from "./LoginForm.module.css";
 

@@ -1,30 +1,20 @@
 import React, { useState } from "react";
-import Footer from "../Footer/Footer";
+
+import RegistrationPage from "Containers/Authentication/Registration/RegistrationPage";
+import LoginPage from "Containers/Authentication/Signin/LoginPage";
+
 import styles from "./LandingPage.module.css";
 
 const LandingPage = () => {
-  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [showRegistrationForm, _showRegistrationForm] = useState(false);
 
   return (
     <div className={styles.Container}>
-      <span className={styles.HomePageImageContainer}>
-        <img
-          src="/assets/images/icons/undraw_education_f8ru.svg"
-          alt="landing page image"
-          className={styles.HomePageImage}
-        />
-      </span>
-      <div className={styles.bannerSection}>
-        <div className={`${styles.TextBanner} ${styles.bannerOne}`}>
-          <span>Lay but don't fell back...</span>
-        </div>
-        <div className={`${styles.TextBanner} ${styles.bannerTwo}`}>
-          <span>Get along with your peers😎</span>
-        </div>
-        <div className={`${styles.TextBanner} ${styles.bannerThree}`}>
-          <span>Check what course your friends are taking...</span>
-        </div>
-      </div>
+      {!showRegistrationForm ? (
+        <LoginPage _showRegistrationForm={_showRegistrationForm} />
+      ) : (
+        <RegistrationPage _showRegistrationForm={_showRegistrationForm} />
+      )}
     </div>
   );
 };
