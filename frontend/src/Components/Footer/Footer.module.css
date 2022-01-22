@@ -13,10 +13,7 @@
   padding-left: 30px;
   padding-right: 10rem;
   text-align: start;
-  border: 2px solid #f2f2f2;
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
+  border-right: 2px solid #f2f2f2;
 }
 
 .CompanyName {
@@ -28,40 +25,26 @@
   font-family: "Oswald", sans-serif;
 }
 
-.contactInfo {
+.SocialMediaContainer {
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-left: 5rem;
-  padding-right: 10rem;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-.contactInfo img {
-  padding: 5px;
-  border: 2px solid #7a9e9f;
-  border-radius: 50%;
-  margin-right: 4rem;
-}
-
-.contactInfo img:hover {
-  background-color: #acafa4;
-  box-shadow: -7px -1px 15px 0px rgba(0, 0, 0, 0.75);
-}
-
-.SocialMediaInfo {
-  padding-left: 5rem;
-  padding-right: 5rem;
-}
-
-.SocialMediaInfo > div {
-  display: flex;
-  justify-content: center;
+.ConnectHeading {
+  width: 38%;
+  margin: 0 auto;
+  padding: 8px 16px;
+  font-family: "Oswald", sans-serif;
+  border: 2px solid #f2f2f2;
 }
 
 .SocialMediaConnect {
   display: flex;
   justify-content: space-evenly !important;
-  margin-bottom: 5rem;
+  align-items: center;
+  padding: 0 5rem;
 }
 
 .SocialMediaConnect > * img {
@@ -71,19 +54,41 @@
 
 .SocialMediaConnect > * span {
   font-family: "Oswald", sans-serif;
-  /* height: 50px; */
-}
-
-.ConnectHeading {
-  width: 38%;
-  padding: 8px 16px;
-  font-family: "Oswald", sans-serif;
-  border: 2px solid #f2f2f2;
 }
 
 .CreateMessage {
   float: none;
   font-family: "Train One", cursive;
-  /* margin-left: 26rem; */
   font-size: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .Footer {
+    max-width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .companyInfo {
+    border-right: none;
+    padding: 0;
+    text-align: center;
+  }
+  address {
+    display: none;
+  }
+
+  .ConnectHeading {
+    margin-bottom: 1.25rem;
+    width: 50%;
+  }
+
+  .SocialMediaConnect {
+    padding: 0;
+    margin: 1.25rem 0;
+  }
+
+  .CreateMessage {
+    margin-top: 1.25rem;
+  }
 }

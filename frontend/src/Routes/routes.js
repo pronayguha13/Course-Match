@@ -9,14 +9,14 @@ import axios from "axios";
 import { BASE_URL } from "Context/AXIOS_BASE_URL";
 import { LoginContext } from "Context/LoginContext";
 import { MenuDrawerContext } from "Context/MenuDrawer";
-
+//Component import
 import App from "Components/App/App";
 import LoginPage from "Containers/Authentication/Signin/LoginPage.jsx";
 import Navbar from "Components/Navbar/Navbar.jsx";
 import Registration from "Containers/Authentication/Registration/RegistrationPage.jsx";
 import SearchResult from "Components/Layout/SearchResult/SearchResult";
 import CourseDetailsForm from "Components/Forms/Registration/CourseDetailsForm";
-import LandingPage from "Components/LandingPage/LandingPage";
+import LandingPage from "Components/LandingPage";
 import Footer from "Components/Footer/Footer.jsx";
 import MenuDrawer from "Components/Menudrawer/Menudrawer.jsx";
 import UserProfile from "Components/UserProfile/index";

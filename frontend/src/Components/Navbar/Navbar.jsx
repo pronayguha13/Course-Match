@@ -1,21 +1,18 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import {
-  searchAreaDisplayHandler,
-  displayModeHandler,
-} from "../../helperMethods";
+import { searchAreaDisplayHandler } from "../../helperMethods";
 import { SearchBarContext } from "../../Context/SearchBarContext";
 import { LoginContext } from "../../Context/LoginContext";
-import { DisplayContext } from "../../Context/DisplayContext";
+// import { DisplayContext } from "../../Context/DisplayContext";
 import { MenuDrawerContext } from "../../Context/MenuDrawer";
 
 const Navbar = () => {
   const history = useHistory();
-  const { isMenuDrawerOpen, menuDrawerHandler } = useContext(MenuDrawerContext);
+  const { menuDrawerHandler } = useContext(MenuDrawerContext);
   const { showSearch, setShowSearch } = useContext(SearchBarContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
-  const { displayMode, setDisplayMode, theme } = useContext(DisplayContext);
+  // const { displayMode, setDisplayMode, theme } = useContext(DisplayContext);
 
   const _logout = () => {
     window.localStorage.clear();

@@ -2,28 +2,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Chango&display=swap");
 
 .Container {
-  /* flex-flow: column; */
-  /* width: 100%; */
-  /* text-align: center; */
+  max-width: 100;
+  flex: 1;
   display: flex;
   position: relative;
-  height: 80%;
   background-color: #f2f2f2;
 }
 
 .HomePageImageContainer {
   background-color: #7b6663;
+  width: 100vw;
+  height: 90vw;
 }
 
-.Container .HomePageImage {
-  height: 38rem;
-  width: 90%;
+.HomePageImageContainer .HomePageImage {
+  height: 100%;
+  width: 90vw;
+  max-width: 100%;
   text-align: left;
   margin-left: 2rem;
   margin-top: 4rem;
 }
+
 .bannerSection {
-  display: flex;
+  display: none;
   flex-direction: column;
   position: relative;
   right: 4%;
@@ -33,28 +35,37 @@
   color: #fff;
   font-family: "Inconsolata", monospace;
   background-color: #a693a66e;
-  width: 330px;
-  height: 228px;
+  width: 300px;
+  height: 14rem;
   font-size: 2rem;
   padding: 2%;
   z-index: 346;
   border-radius: 0px;
 }
+
+.TextBanner span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
 .bannerOne {
   position: absolute;
-  top: 10%;
+  top: 5%;
+  left: -5%;
   box-shadow: 0px -20px 58px -3px #444;
 }
 .bannerTwo {
   position: relative;
-  top: 22%;
-  right: -38%;
+  top: 38%;
+  left: 50%;
   box-shadow: 34px 42px 21px -25px #123, -42px 31px 38px -25px #123;
+  z-index: 450;
 }
 .bannerThree {
   position: absolute;
-  top: 36%;
-  right: -90%;
+  top: 5%;
+  left: 105%;
   box-shadow: 61px 61px 38px -61px #444, -61px 61px 38px -61px #444;
 }
 
@@ -138,6 +149,22 @@
   background-color: #ccc;
 }
 
-/* html:not([data-scroll="640"]) .ContactSection {
-  display: none;
-} */
+@media only screen and (max-width: 1060px) {
+  .bannerThree {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .HomePageImageContainer {
+    width: 50vw;
+    height: 40vw;
+  }
+  .HomePageImageContainer .HomePageImage {
+    width: 50vw;
+  }
+  .bannerSection {
+    display: flex;
+    right: 14%;
+  }
+}
