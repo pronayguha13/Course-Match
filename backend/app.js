@@ -5,13 +5,14 @@ require("dotenv").config();
 
 //mongoose setup
 mongoose.connect(
-  `mongodb+srv://courseMatchBackend:${process.env.MONGODB_PWD}@course-match.ywvgn.mongodb.net/Course-Match?retryWrites=true&w=majority`,
+  `mongodb+srv://course-match:${process.env.MONGO_DB_PASSWORD}@cluster0.ldak45j.mongodb.net/?retryWrites=true&w=majority`,
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true,
   },
-  () => {
+  (e) => {
+      console.log("=>(app.js:14) e", e);
+
     console.log("MONGODB CONNECTED");
   }
 );
