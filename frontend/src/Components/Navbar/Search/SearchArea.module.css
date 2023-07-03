@@ -1,14 +1,21 @@
 .searchArea {
-    border: 2px solid #000;
-    border-radius: 20px;
-    padding-left: 9px;
+    border: 2px solid #3c3f41;
+    box-shadow: 0 0 8px 0 #3C3F41A0;
+    border-radius: 4px;
+    margin: 0 16px;
+    flex: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 36px;
 }
 
 .searchArea input {
     height: 29px;
     outline: none;
     border: none;
-    border-radius: 20px 0 0 20px;
+    border-radius: 4px;
+    text-indent: 4px;
 }
 
 .searchArea input::placeholder {
@@ -18,13 +25,6 @@
 .searchBtn {
     height: 29px !important;
     border: none;
-    margin-top: 2px;
-    border-radius: 0 20px 20px 0;
-    margin-right: 2px !important;
-}
-
-.closeBtn {
-    height: 29px !important;
-    border-radius: 60px;
-    margin-top: 2px;
+    border-radius: 4px;
+    margin-right: 0 !important;
 }

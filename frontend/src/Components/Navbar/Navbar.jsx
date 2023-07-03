@@ -1,30 +1,22 @@
-import React, { useEffect, useContext, useState } from "react";
+/*----- Third Party Imports --------*/
+import React, { useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import styles from "./Navbar.module.css";
-import {
-  searchAreaDisplayHandler,
-  displayModeHandler,
-} from "../../helperMethods";
-import { SearchBarContext } from "../../Context/SearchBarContext";
+/*----- Third Party Imports --------*/
+/*----- Context Imports --------*/
 import { LoginContext } from "../../Context/LoginContext";
-import { DisplayContext } from "../../Context/DisplayContext";
 import { MenuDrawerContext } from "../../Context/MenuDrawer";
+/*----- Context Imports --------*/
+/*------Local Component Import --------*/
+import SearchArea from "./Search/SearchArea";
+/*------Local Component Import --------*/
+/*------Stylesheet Import --------*/
+import styles from "./Navbar.module.css";
+/*------Stylesheet Import --------*/
 
 const Navbar = () => {
   const history = useHistory();
-  const { isMenuDrawerOpen, menuDrawerHandler } = useContext(MenuDrawerContext);
-  const { showSearch, setShowSearch } = useContext(SearchBarContext);
-  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
-  const { displayMode, setDisplayMode, theme } = useContext(DisplayContext);
-
-  const _logout = () => {
-    window.localStorage.clear();
-    setIsLoggedIn(false);
-  };
-
-  const _login = () => {
-    history.push("/sign_in");
-  };
+  const { menuDrawerHandler } = useContext(MenuDrawerContext);
+  const { isLoggedIn } = useContext(LoginContext);
 
   useEffect(() => {
     if (isLoggedIn) history.push("/");
@@ -33,7 +25,7 @@ const Navbar = () => {
   return (
     <div className={styles.Navbar}>
       <span className={styles.CompanyLogoWrapper}>
-        <Link to="/" style={{ width: "60px" }}>
+        <Link to="/" style={{ width: "32px" }}>
           <img
             src="/coursematch.png"
             alt="logo"
@@ -42,17 +34,7 @@ const Navbar = () => {
         </Link>
       </span>
       <div className={styles.navigatorButton}>
-        {isLoggedIn
-          ? searchAreaDisplayHandler(showSearch, setShowSearch)
-          : null}
-        {isLoggedIn ? (
-          <img
-            title="Sign out"
-            src="/assets/images/icons/logout_black_36dp.svg"
-            alt="sign-out"
-            onClick={() => _logout()}
-          />
-        ) : null}
+        {isLoggedIn ? <SearchArea /> : null}
         <span
           onClick={() => {
             menuDrawerHandler();
@@ -64,19 +46,6 @@ const Navbar = () => {
             className={styles.MenuDrawer}
           />
         </span>
-        {/* {displayMode === "light" ? (
-        <img
-          src="/assets/images/icons/menu_black_24dp.svg"
-          alt="dark"
-          onClick={() => displayModeHandler(displayMode, setDisplayMode)}
-        />
-      ) : (
-        <img
-          src="/assets/images/icons/menu_black_24dp.svg"
-          alt="Light"
-          onClick={() => displayModeHandler(displayMode, setDisplayMode)}
-        />
-      )} */}
       </div>
     </div>
   );

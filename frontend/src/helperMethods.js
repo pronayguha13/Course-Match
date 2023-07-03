@@ -3,27 +3,14 @@ import axios from "axios";
 import SearchArea from "./Components/Navbar/Search/SearchArea";
 import {BASE_URL} from "./Context/AXIOS_BASE_URL";
 
-export const searchAreaDisplayHandler = (showSearch, setShowSearch) => {
-    return !showSearch ? (
-        <SearchArea/>
-    ) : (
-        <img
-            src="/assets/images/icons/search-glass.png"
-            alt="magnifying-glass"
-            style={{color: "#fff", marginRight: "10px"}}
-            onClick={() => setShowSearch(false)}
-        />
-    );
+export const searchAreaDisplayHandler = (showSearch) => {
+    return showSearch ? (<SearchArea/>) : null
 };
 
 export const formValidationHandler = (formData) => {
     const rollNumberRegEx = /^1[0-9]{1}9[0-9]{8}/;
     const {rollNumber, password} = formData;
-    return password.length >= 8 && password.length <= 16
-        ? String(rollNumber).match(rollNumberRegEx)
-            ? false
-            : "rollNumber"
-        : "password";
+    return password.length >= 8 && password.length <= 16 ? String(rollNumber).match(rollNumberRegEx) ? false : "rollNumber" : "password";
 };
 
 //handler for similar password in PersonalDetailsForm
@@ -31,11 +18,7 @@ export const passwordVerificationHandler = (typedPassword, retypedPassword) => {
     return typedPassword === retypedPassword;
 };
 
-export const RegistrationFormSubmitHandler = (
-    formData,
-    regStateHandler,
-    setLoading
-) => {
+export const RegistrationFormSubmitHandler = (formData, regStateHandler, setLoading) => {
     setLoading(true);
     axios
         .post(`${BASE_URL}/user`, formData)
@@ -48,11 +31,7 @@ export const RegistrationFormSubmitHandler = (
         })
         .catch((err) => {
             if (err.response) {
-                console.log(
-                    "🚀 ~ file: helperMethods.js ~ line 44 ~ err",
-                    err.response.data.ERR_STATUS,
-                    err.response.data.ERR_INFO
-                );
+                console.log("🚀 ~ file: helperMethods.js ~ line 44 ~ err", err.response.data.ERR_STATUS, err.response.data.ERR_INFO);
             }
             // regStateHandler(false);
             // setLoading(false);
@@ -98,12 +77,7 @@ export const getDepartments = (setDepartments) => {
         });
 };
 
-export const createDeptHandler = (
-    deptData,
-    setIsDeptCreateSuccess,
-    setError,
-    setToastVisible
-) => {
+export const createDeptHandler = (deptData, setIsDeptCreateSuccess, setError, setToastVisible) => {
     axios
         .post(`${BASE_URL}/department`, deptData)
         .then((res) => {
