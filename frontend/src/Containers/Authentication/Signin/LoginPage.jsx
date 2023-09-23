@@ -83,6 +83,7 @@ const LoginPage = () => {
             ) : null}
             <div style={{opacity: loading || error || isAuthSuccess ? 0.2 : 1}}>
                 <LoginForm
+                    loading={loading}
                     loginFormSubmitHandler={loginFormSubmitHandler}
                     rollError={rollError}
                     passwordError={passwordError}
