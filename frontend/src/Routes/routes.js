@@ -56,8 +56,7 @@ const BrowserRoutes = () => {
                     path="/courseSelection/:userName"
                     component={CourseDetailsForm}
                 />
-                <Route path="/index" exact component={LandingPage}/>
-                <PrivateHomeRoute path="/" exact component={App}/>
+                <Route path="/" exact component={LandingPage}/>
             </Switch>
             <footer>
                 <Footer/>
