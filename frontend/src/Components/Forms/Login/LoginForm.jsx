@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { changePasswordView } from "../../../helperMethods";
 import styles from "./LoginForm.module.css";
 
-const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
+const LoginForm = ({
+  loading,
+  rollError,
+  passwordError,
+  loginFormSubmitHandler,
+}) => {
   const [rollNumber, setRollNumber] = useState("");
   const [password, setPassword] = useState("");
   const [isHidden, setIsHidden] = useState(true);
@@ -36,6 +41,8 @@ const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
   //formDataHandler() method for sending form data from LoginForm.jsx to Auth.jsx
   const formDataHandler = (e) => {
     e.preventDefault();
+    if (loading) return; //!If the form is loading then don't do anything
+
     const formData = {
       rollNumber: rollNumber,
       password: password,
@@ -116,7 +123,11 @@ const LoginForm = ({ rollError, passwordError, loginFormSubmitHandler }) => {
           </div>
         </div>
         <div className={styles.SignInButtonContainer}>
-          <button type="submit" className="btn btn-primary">
+          <button
+            className="btn btn-primary"
+            disabled={loading}
+            onClick={formDataHandler}
+          >
             Sign in
           </button>
         </div>
