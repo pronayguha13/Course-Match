@@ -26,13 +26,12 @@ const LoginPage = () => {
     const {setIsLoggedIn} = useContext(LoginContext);
 
     useEffect(() => {
-        themeSwitcher();
+        themeSwitcher();//! Why this is here ?
         setLoading(false);
         if (isAuthSuccess) {
             pause = setTimeout(() => {
                 setIsAuthSuccess(false);
                 setIsLoggedIn(true);
-                history.push("/");
             }, 3001);
         }
         return () => {
