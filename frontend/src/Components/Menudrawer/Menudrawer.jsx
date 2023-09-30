@@ -7,18 +7,43 @@ import { LoginContext } from "Context/LoginContext";
 const Menudrawer = ({ isOpen }) => {
   const history = useHistory();
   const location = useLocation();
+  const { setIsMenuDrawerOpen } =
+    useContext(MenuDrawerContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
 
   const [menus, setMenus] = useState([]);
 
   /*--------Method Declaration----------*/
   const computeAvailableRoute = () => {
-    const availableRoutes = ["/", "/sign_in", "/register"];
+    const availableRoutes = ["/", "/index", "/sign_in", "/register"];
 
     const currentLocation = location.pathname;
 
-    const currentlyAvailableRoutes = availableRoutes.filter(
+    //! Remove the Register route if the user is logged in
+    if(isLoggedIn) {
+      availableRoutes.splice(3,1);
+    }
+
+    const filteredRoutes = availableRoutes.filter(
       (route) => route !== currentLocation
     );
+    let currentlyAvailableRoutes = filteredRoutes;
+
+    const homePageIndex = filteredRoutes.indexOf("/");
+    const landingPageIndex = filteredRoutes.indexOf("/index");
+
+    if (homePageIndex === -1 && landingPageIndex !== -1) {
+      currentlyAvailableRoutes.splice(landingPageIndex, 1);
+    }
+    if (landingPageIndex === -1 && homePageIndex !== -1) {
+      currentlyAvailableRoutes.splice(homePageIndex, 1);
+    }
+
+    if (homePageIndex !== -1 && landingPageIndex !== -1) {
+      //! Choose wisely you will never run into this scenario until you are logged out
+      //! In that case strip out the homePageIndex
+      currentlyAvailableRoutes.splice(homePageIndex, 1);
+    }
 
     return currentlyAvailableRoutes;
   };
@@ -27,9 +52,10 @@ const Menudrawer = ({ isOpen }) => {
     let menuItems = menus.map((menu) => {
       switch (menu) {
         case "/":
+        case "/index":
           return (
             <span className={styles.MenuItem}>
-              <Link to="/">
+              <Link to={`${menu}`}>
                 <img src="/assets/images/icons/MenuDrawer/home_white_36dp.svg"></img>
                 <p>Home</p>
               </Link>
@@ -80,9 +106,6 @@ const Menudrawer = ({ isOpen }) => {
       setIsMenuDrawerOpen(false);
     });
   }, [history]);
-  const { isMenuDrawerOpen, setIsMenuDrawerOpen } =
-    useContext(MenuDrawerContext);
-  const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
 
   const _logout = () => {
     window.localStorage.clear();

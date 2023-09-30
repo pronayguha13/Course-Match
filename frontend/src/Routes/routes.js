@@ -48,6 +48,7 @@ const BrowserRoutes = () => {
             <Navbar/>
             <MenuDrawer isOpen={isMenuDrawerOpen}/>
             <Switch>
+                <PrivateHomeRoute path="/index" exact component={App}/>
                 <PrivateRoute path="/user/:username" component={UserProfile}/>
                 <PrivateRoute path="/search/:query" component={SearchResult}/>
                 <Route path="/sign_in" component={LoginPage}/>
@@ -96,7 +97,7 @@ const PrivateHomeRoute = ({component: Component, ...rest}) => {
                 ) : (
                     <Redirect
                         to={{
-                            pathname: "/index",
+                            pathname: "/",
                         }}
                     />
                 )

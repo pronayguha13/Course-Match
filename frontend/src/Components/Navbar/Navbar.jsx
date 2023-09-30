@@ -27,13 +27,13 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) history.push("/");
+    if (isLoggedIn) history.push("/index");
   }, [isLoggedIn, history]);
 
   return (
     <div className={styles.Navbar}>
       <span className={styles.CompanyLogoWrapper}>
-        <Link to="/" style={{ width: "60px" }}>
+        <Link to={isLoggedIn ? "/index" : "/"} style={{ width: "60px" }}>
           <img
             src="/coursematch.png"
             alt="logo"
