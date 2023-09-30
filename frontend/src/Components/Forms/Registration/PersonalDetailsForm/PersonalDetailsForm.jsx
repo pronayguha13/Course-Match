@@ -36,6 +36,19 @@ const PersonalDetailsForm = ({
   const [isRollActive, SetIsRollActive] = useState(false);
   const [isPwdActive, SetIsPwdActive] = useState(false);
   const [isVerifyPwdActive, SetIsVerifyPwdActive] = useState(false);
+  const [hover, setHover] = useState(false); // initial false
+
+  const HoverData = "Click or pinch to Zoom Image";
+
+  const onHover = (e) => {
+    e.preventDefault();
+    setHover(true);
+    console.log("hovered");
+  };
+  const onHoverOver = (e) => {
+    e.preventDefault(); // turn false
+    setHover(false);
+  };
 
   useEffect(() => {
     if (isValidationError) {
@@ -126,7 +139,16 @@ const PersonalDetailsForm = ({
                   : styles.PlaceHolder
               }
             >
-              <p>Full Name</p>
+              <p>
+                Full Name
+                <img
+                  src="/assets/images/icons/info-icon.svg"
+                  style={{ height: "18px" }}
+                  onMouseEnter={(e) => onHover(e)}
+                  onMouseLeave={(e) => onHoverOver(e)}
+                  />
+                  {hover && <span>{HoverData}</span>}
+              </p>
             </span>
             <input
               type="text"

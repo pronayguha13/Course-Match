@@ -16,7 +16,7 @@ const LandingPage = () => {
       </span>
       <div className={styles.bannerSection}>
         <div className={`${styles.TextBanner} ${styles.bannerOne}`}>
-          <span>Lay but don't fell back...</span>
+          <span>Lay but don't fall back...</span>
         </div>
         <div className={`${styles.TextBanner} ${styles.bannerTwo}`}>
           <span>Get along with your peers😎</span>
